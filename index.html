@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS-0057-F — The Interoperability & Prior Authorization Final Rule Explained</title>
+  <meta name="description" content="Everything health plans need to know about CMS-0057-F: compliance deadlines, required FHIR APIs, prior authorization reforms, and how to meet the January 2027 mandate without ripping out your core admin system.">
+  <meta name="keywords" content="CMS-0057-F, interoperability, prior authorization, FHIR API, health plan compliance, Medicare Advantage, Medicaid, CHIP, Patient Access API, Provider Access API, Payer-to-Payer API, Prior Authorization API">
+  <meta property="og:title" content="CMS-0057-F — Interoperability & Prior Authorization Final Rule">
+  <meta property="og:description" content="Compliance deadlines, required APIs, and what health plans need to do before January 2027.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cms-0057-f.com">
+  <link rel="canonical" href="https://cms-0057-f.com">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is CMS-0057-F?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CMS-0057-F is the CMS Interoperability and Prior Authorization Final Rule, published January 17, 2024. It requires impacted health plan payers to implement FHIR-based APIs for patient access, provider access, payer-to-payer data exchange, and electronic prior authorization by January 1, 2027."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who must comply with CMS-0057-F?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Medicare Advantage organizations, State Medicaid and CHIP Fee-for-Service programs, Medicaid managed care plans, CHIP managed care entities, and Qualified Health Plan issuers on the Federally Facilitated Exchanges."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is the CMS-0057-F compliance deadline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Operational requirements like faster prior authorization decisions took effect January 1, 2026. All four required FHIR APIs must be live in production by January 1, 2027."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050508;
+      --surface: #0a0a10;
+      --surface-raised: #10101a;
+      --border: rgba(0, 255, 255, 0.1);
+      --border-strong: rgba(0, 255, 255, 0.25);
+      --cyan: #00ffff;
+      --cyan-dim: rgba(0, 255, 255, 0.6);
+      --green: #00ff88;
+      --amber: #ffaa00;
+      --red: #ff4466;
+      --text: #e8e8ef;
+      --text-muted: #8888a0;
+      --text-dim: #55556a;
+      --font: 'DM Sans', -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      background: rgba(5, 5, 8, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .rule-id {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--cyan);
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--cyan); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 160px 0 100px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(0, 255, 255, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero .badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--amber);
+      background: rgba(255, 170, 0, 0.08);
+      border: 1px solid rgba(255, 170, 0, 0.2);
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: #ffffff;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    h1 span {
+      color: var(--cyan);
+    }
+
+    .hero .subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .hero .meta-line {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 80px 0;
+    }
+
+    section + section {
+      border-top: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+
+    h2 .num {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--cyan-dim);
+      display: block;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
+
+    .section-intro {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin-bottom: 40px;
+      line-height: 1.8;
+    }
+
+    /* ── AFFECTED ORGS ── */
+    .org-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .org-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+
+    .org-card:hover {
+      border-color: var(--border-strong);
+    }
+
+    .org-card .label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--cyan);
+      margin-bottom: 6px;
+    }
+
+    .org-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--cyan), var(--green), var(--border));
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 48px;
+    }
+
+    .tl-item:last-child { margin-bottom: 0; }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -40px;
+      top: 6px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 2px solid var(--cyan);
+      background: var(--bg);
+    }
+
+    .tl-item.active::before {
+      background: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.4);
+    }
+
+    .tl-item.past::before {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .tl-date {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--cyan);
+      margin-bottom: 4px;
+    }
+
+    .tl-item.past .tl-date { color: var(--green); }
+
+    .tl-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .tl-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .tl-status {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .tl-status.done {
+      color: var(--green);
+      background: rgba(0, 255, 136, 0.08);
+      border: 1px solid rgba(0, 255, 136, 0.2);
+    }
+
+    .tl-status.now {
+      color: var(--amber);
+      background: rgba(255, 170, 0, 0.08);
+      border: 1px solid rgba(255, 170, 0, 0.2);
+    }
+
+    .tl-status.upcoming {
+      color: var(--cyan);
+      background: rgba(0, 255, 255, 0.06);
+      border: 1px solid rgba(0, 255, 255, 0.15);
+    }
+
+    /* ── API CARDS ── */
+    .api-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .api-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .api-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      opacity: 0.6;
+    }
+
+    .api-card .api-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .api-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .api-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .api-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--cyan-dim);
+      background: rgba(0, 255, 255, 0.05);
+      border: 1px solid rgba(0, 255, 255, 0.12);
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    /* ── REQUIREMENTS ── */
+    .req-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .req-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    .req-card .req-icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+
+    .req-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .req-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .req-card .highlight {
+      font-family: var(--mono);
+      font-weight: 500;
+      color: var(--cyan);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 100px 0;
+    }
+
+    .cta-box {
+      background: var(--surface-raised);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 60px 40px;
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--green), transparent);
+    }
+
+    .cta-box h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .cta-box p {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.8;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      color: #000000;
+      background: var(--cyan);
+      padding: 14px 36px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+
+    .cta-btn:hover {
+      background: #ffffff;
+      box-shadow: 0 0 24px rgba(0, 255, 255, 0.3);
+    }
+
+    .cta-sub {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-top: 16px;
+    }
+
+    .cta-sub a {
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--cyan); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .hero { padding: 120px 0 60px; }
+      section { padding: 60px 0; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 22px; }
+      .org-grid, .api-grid, .req-grid { grid-template-columns: 1fr; }
+      .cta-box { padding: 40px 24px; }
+      nav { padding: 12px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="rule-id">CMS-0057-F</span>
+    <a href="https://cloudhealthoffice.com" target="_blank" rel="noopener">How to comply →</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="container">
+    <section class="hero">
+      <div class="badge">API DEADLINES: JANUARY 1, 2027</div>
+      <h1>The <span>CMS-0057-F</span><br>Compliance Guide</h1>
+      <p class="subtitle">
+        The Interoperability and Prior Authorization Final Rule requires health plan payers to implement four FHIR APIs, reform prior authorization timelines, and publicly report approval metrics. Here's what you need to know.
+      </p>
+      <p class="meta-line">Published by CMS on January 17, 2024 &nbsp;·&nbsp; 42 CFR Parts 406, 407, 422, 431, 438, 457, and 505</p>
+    </section>
+
+    <!-- WHO'S AFFECTED -->
+    <section>
+      <h2><span class="num">01</span>Who Must Comply</h2>
+      <p class="section-intro">
+        CMS estimates roughly 365 payer organizations are directly impacted. The rule applies to any organization that administers benefits under these federal programs.
+      </p>
+      <div class="org-grid">
+        <div class="org-card">
+          <div class="label">Medicare Advantage</div>
+          <p>All MA organizations offering Part C coverage must comply with API and prior authorization requirements.</p>
+        </div>
+        <div class="org-card">
+          <div class="label">Medicaid Managed Care</div>
+          <p>Managed care plans under Medicaid and CHIP, including both FFS programs and managed care entities.</p>
+        </div>
+        <div class="org-card">
+          <div class="label">CHIP Programs</div>
+          <p>State CHIP FFS programs and CHIP managed care entities fall under the same compliance mandates.</p>
+        </div>
+        <div class="org-card">
+          <div class="label">QHP Issuers on FFEs</div>
+          <p>Qualified Health Plan issuers on the Federally Facilitated Exchanges, excluding standalone dental and SHOP issuers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section>
+      <h2><span class="num">02</span>Compliance Timeline</h2>
+      <p class="section-intro">
+        CMS structured the rule with two major milestones: operational changes first, API mandates second. The clock is running.
+      </p>
+      <div class="timeline">
+        <div class="tl-item past">
+          <div class="tl-date">January 17, 2024</div>
+          <div class="tl-title">Rule Published</div>
+          <div class="tl-desc">CMS releases the Interoperability and Prior Authorization Final Rule, building on CMS-9115-F from 2020.</div>
+          <span class="tl-status done">FINAL</span>
+        </div>
+        <div class="tl-item past">
+          <div class="tl-date">January 1, 2026</div>
+          <div class="tl-title">Operational Requirements Take Effect</div>
+          <div class="tl-desc">
+            Faster prior authorization decision timeframes go live: 72 hours for urgent requests, 7 calendar days for standard. Payers must provide specific denial reasons. Patient Access API metric collection begins.
+          </div>
+          <span class="tl-status done">IN EFFECT</span>
+        </div>
+        <div class="tl-item active">
+          <div class="tl-date">March 31, 2026</div>
+          <div class="tl-title">First Public Metrics Due</div>
+          <div class="tl-desc">
+            Payers must submit the first round of prior authorization performance metrics to CMS — total requests, approvals, denials, and average processing times.
+          </div>
+          <span class="tl-status now">DUE NOW</span>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">January 1, 2027</div>
+          <div class="tl-title">All Four FHIR APIs Must Be Live</div>
+          <div class="tl-desc">
+            Patient Access API (enhanced), Provider Access API, Payer-to-Payer API, and Prior Authorization API must be in production. Managed care and QHP plans align to their respective rating periods.
+          </div>
+          <span class="tl-status upcoming">9 MONTHS</span>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">March 31, 2027</div>
+          <div class="tl-title">Prior Authorization Metrics Published</div>
+          <div class="tl-desc">
+            Beginning in 2027, payers must publicly publish prior authorization metrics — approvals, denials, average turnaround — making performance visible to members, providers, and competitors.
+          </div>
+          <span class="tl-status upcoming">2027</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUR REQUIRED APIs -->
+    <section>
+      <h2><span class="num">03</span>The Four Required APIs</h2>
+      <p class="section-intro">
+        CMS mandates four FHIR R4 APIs that together create a comprehensive interoperability framework. Each API must be live by January 1, 2027.
+      </p>
+      <div class="api-grid">
+        <div class="api-card">
+          <div class="api-num">API 01</div>
+          <h3>Patient Access API</h3>
+          <p>Enhanced from CMS-9115-F. Must now include prior authorization data (excluding drugs) — status, dates, approved items, and denial reasons — accessible via member-facing apps.</p>
+          <span class="api-tag">FHIR R4</span>
+          <span class="api-tag">SMART on FHIR</span>
+          <span class="api-tag">Claims + PA Data</span>
+        </div>
+        <div class="api-card">
+          <div class="api-num">API 02</div>
+          <h3>Provider Access API</h3>
+          <p>New API giving in-network providers access to their patients' claims, encounters, clinical data, and prior authorization information. Supports individual and bulk access.</p>
+          <span class="api-tag">FHIR R4</span>
+          <span class="api-tag">Bulk FHIR</span>
+          <span class="api-tag">Provider Directory</span>
+        </div>
+        <div class="api-card">
+          <div class="api-num">API 03</div>
+          <h3>Payer-to-Payer API</h3>
+          <p>Enables data exchange when members switch plans. Claims, encounters, and USCDI data with service dates within five years. Members must opt in; payers must provide educational resources.</p>
+          <span class="api-tag">FHIR R4</span>
+          <span class="api-tag">USCDI</span>
+          <span class="api-tag">Opt-In Consent</span>
+        </div>
+        <div class="api-card">
+          <div class="api-num">API 04</div>
+          <h3>Prior Authorization API</h3>
+          <p>Must publish covered items/services requiring PA, identify documentation requirements, and support electronic request/response workflows. CMS allows all-FHIR or FHIR+X12 278 under enforcement discretion.</p>
+          <span class="api-tag">FHIR R4</span>
+          <span class="api-tag">Da Vinci PAS</span>
+          <span class="api-tag">X12 278 Optional</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY REQUIREMENTS -->
+    <section>
+      <h2><span class="num">04</span>Key Operational Requirements</h2>
+      <p class="section-intro">
+        Beyond the APIs, CMS-0057-F introduces operational mandates that change how payers handle prior authorization day-to-day.
+      </p>
+      <div class="req-grid">
+        <div class="req-card">
+          <div class="req-icon">⏱</div>
+          <h3>Decision Timeframes</h3>
+          <p>Urgent requests: <span class="highlight">72 hours</span>. Standard requests: <span class="highlight">7 calendar days</span>. CMS noted this represents a 50% improvement for some payers.</p>
+        </div>
+        <div class="req-card">
+          <div class="req-icon">📋</div>
+          <h3>Specific Denial Reasons</h3>
+          <p>Every denial must include a clear, specific explanation — regardless of whether the request came via portal, fax, email, or phone. No more generic denials.</p>
+        </div>
+        <div class="req-card">
+          <div class="req-icon">📊</div>
+          <h3>Public PA Metrics</h3>
+          <p>Payers must report and publicly publish prior authorization volume, approval rates, denial rates, and average turnaround times. Performance becomes visible to everyone.</p>
+        </div>
+        <div class="req-card">
+          <div class="req-icon">🔄</div>
+          <h3>FHIR-Only PA Option</h3>
+          <p>HHS announced enforcement discretion allowing payers to use an all-FHIR prior auth workflow instead of the X12 278 standard — a significant flexibility for modern platforms.</p>
+        </div>
+        <div class="req-card">
+          <div class="req-icon">📈</div>
+          <h3>API Usage Reporting</h3>
+          <p>Payers must track and report to CMS how many members actively use the Patient Access API and how frequently — ensuring adoption, not just availability.</p>
+        </div>
+        <div class="req-card">
+          <div class="req-icon">🎓</div>
+          <h3>Education Requirements</h3>
+          <p>Payers must develop and distribute educational resources to both members and providers about the new APIs, data exchange capabilities, and opt-in/opt-out processes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="cta-box">
+        <h2>You don't have to rip and replace.</h2>
+        <p>
+          Cloud Health Office is a vendor-neutral compliance layer that sits on top of your existing core admin system — QNXT, Facets, HealthEdge, Amisys — and delivers the FHIR APIs, X12 EDI, and prior authorization automation CMS-0057-F requires. No migration. No downtime.
+        </p>
+        <a href="https://cloudhealthoffice.com" class="cta-btn">See how it works</a>
+        <p class="cta-sub">
+          Built by <a href="https://aurelianware.com" target="_blank" rel="noopener">Aurelianware</a> &nbsp;·&nbsp; Kubernetes-Native &nbsp;·&nbsp; HIPAA Compliant &nbsp;·&nbsp; BSL 1.1
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      This page is an independent educational resource. CMS-0057-F is the Interoperability and Prior Authorization Final Rule published by the Centers for Medicare &amp; Medicaid Services.<br>
+      For the official rule text, visit <a href="https://www.cms.gov/cms-interoperability-and-prior-authorization-final-rule-cms-0057-f" target="_blank" rel="noopener">cms.gov</a>.<br><br>
+      &copy; 2026 <a href="https://aurelianware.com" target="_blank" rel="noopener">Aurelianware, Inc.</a> &nbsp;·&nbsp; <a href="https://cloudhealthoffice.com" target="_blank" rel="noopener">Cloud Health Office</a>
+    </p>
+  </footer>
+
+</body>
+</html>
