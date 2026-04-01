@@ -1,0 +1,81 @@
+From 595fb12caf4890ad6c236b22b5fb43c3cd28c976 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Wed, 1 Apr 2026 23:07:12 +0000
+Subject: [PATCH] Update GitHub clone count from 34K/42K/100K to 250K+ across
+ all pages
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Reflects current repository clone milestone of 250,000+. Updates:
+- index.html: ticker (100,000+ → 250,000+) and stat badge (100K+ → 250K+)
+- cms-0057f-compliance.html: stat display (34K+ → 250K+)
+- Welcome.razor: portal stat (42K+ → 250K+)
+
+https://claude.ai/code/session_01VA1EPWKHJmP92mQJHigFeZ
+---
+ src/portal/CloudHealthOffice.Portal/Pages/Welcome.razor | 2 +-
+ src/site/cms-0057f-compliance.html                      | 2 +-
+ src/site/index.html                                     | 6 +++---
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/portal/CloudHealthOffice.Portal/Pages/Welcome.razor b/src/portal/CloudHealthOffice.Portal/Pages/Welcome.razor
+index 34d4ec6c..9173b418 100644
+--- a/src/portal/CloudHealthOffice.Portal/Pages/Welcome.razor
++++ b/src/portal/CloudHealthOffice.Portal/Pages/Welcome.razor
+@@ -69,7 +69,7 @@
+             <a href="https://github.com/aurelianware/cloudhealthoffice" target="_blank" class="w-stat-link">
+                 <div class="w-stat-icon">⭐</div>
+                 <div class="w-stat-title">GitHub</div>
+-                <div class="w-stat-desc">BSL 1.1 · 42K+ clones</div>
++                <div class="w-stat-desc">BSL 1.1 · 250K+ clones</div>
+             </a>
+         </MudItem>
+     </MudGrid>
+diff --git a/src/site/cms-0057f-compliance.html b/src/site/cms-0057f-compliance.html
+index 0aef7ad2..5d2388d1 100644
+--- a/src/site/cms-0057f-compliance.html
++++ b/src/site/cms-0057f-compliance.html
+@@ -348,7 +348,7 @@
+       <div class="stat-label">Security<br/>Vulnerabilities</div>
+     </div>
+     <div class="stat">
+-      <div class="stat-num cyan">34K+</div>
++      <div class="stat-num cyan">250K+</div>
+       <div class="stat-label">Repository<br/>Clones</div>
+     </div>
+     <div class="stat">
+diff --git a/src/site/index.html b/src/site/index.html
+index 4b188ddb..23225621 100644
+--- a/src/site/index.html
++++ b/src/site/index.html
+@@ -153,7 +153,7 @@
+     <!-- ===== TICKER ===== -->
+     <div class="ticker-section" aria-label="Platform highlights">
+       <div class="ticker-track" aria-hidden="true">
+-        <span class="ticker-item"><span>100,000+ Repository Clones</span><span class="ticker-dot">&#9670;</span></span>
++        <span class="ticker-item"><span>250,000+ Repository Clones</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>Zero Security Vulnerabilities</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>1,018 Tests Passing</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>CMS-0057-F Compliant &mdash; 18 Months Early</span><span class="ticker-dot">&#9670;</span></span>
+@@ -162,7 +162,7 @@
+         <span class="ticker-item"><span>&lt;1 Hour Deployment</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>HIPAA-Compliant Infrastructure</span><span class="ticker-dot">&#9670;</span></span>
+         <!-- Repeat for seamless loop -->
+-        <span class="ticker-item"><span>100,000+ Repository Clones</span><span class="ticker-dot">&#9670;</span></span>
++        <span class="ticker-item"><span>250,000+ Repository Clones</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>Zero Security Vulnerabilities</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>1,018 Tests Passing</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>CMS-0057-F Compliant &mdash; 18 Months Early</span><span class="ticker-dot">&#9670;</span></span>
+@@ -177,7 +177,7 @@
+     <section class="stats-section" aria-label="Platform statistics">
+       <div class="stats-inner">
+         <div class="stat-item">
+-          <span class="stat-number">100K+</span>
++          <span class="stat-number">250K+</span>
+           <span class="stat-label">GitHub Clones<br></span>
+         </div>
+         <div class="stat-item">
+-- 
+2.43.0
+
