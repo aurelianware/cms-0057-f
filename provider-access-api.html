@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provider Access API | CMS-0057-F Requirements & Implementation Guide</title>
+    <meta name="description" content="Guide to the Provider Access API mandated by CMS-0057-F. New FHIR-based API enabling providers to access patient claims, clinical data, and prior authorization information directly from payers for coordinated care delivery.">
+    <meta name="keywords" content="Provider Access API, CMS-0057-F, FHIR provider API, provider data access, payer provider interoperability, claims data provider, USCDI, care coordination API, value-based care, HL7 FHIR R4">
+    <link rel="canonical" href="https://cms-0057-f.com/provider-access-api">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Provider Access API Requirements Under CMS-0057-F",
+        "url": "https://cms-0057-f.com/provider-access-api",
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cms-0057-f.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Provider Access API", "item": "https://cms-0057-f.com/provider-access-api" }
+            ]
+        }
+    }
+    </script>
+    <style>
+        :root{--bg-primary:#0a0e17;--bg-secondary:#0f1420;--bg-card:#141925;--bg-card-hover:#1a2030;--border:#1e2738;--border-accent:#2a3a5c;--text-primary:#e8ecf4;--text-secondary:#8b95a8;--text-muted:#5c6578;--accent-blue:#4a9eff;--accent-cyan:#22d3ee;--accent-green:#34d399;--accent-amber:#f59e0b;--accent-purple:#a78bfa;--font-body:'DM Sans',-apple-system,sans-serif;--font-display:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);line-height:1.7;-webkit-font-smoothing:antialiased}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,23,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem}
+        .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+        .nav-logo{font-family:var(--font-mono);font-size:.85rem;font-weight:500;color:var(--accent-blue);text-decoration:none;letter-spacing:.05em}
+        .nav-logo span{color:var(--text-muted)}
+        .nav-links{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap}
+        .nav-links a{color:var(--text-secondary);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.02em;transition:color .2s}
+        .nav-links a:hover{color:var(--text-primary)}.nav-links a.active{color:var(--accent-green)}
+        .page-header{padding:8rem 2rem 4rem;max-width:900px;margin:0 auto}
+        .breadcrumb{font-size:.75rem;color:var(--text-muted);margin-bottom:2rem;font-family:var(--font-mono)}
+        .breadcrumb a{color:var(--text-muted);text-decoration:none}.breadcrumb a:hover{color:var(--accent-blue)}
+        .page-header h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.2rem);font-weight:400;line-height:1.2;margin-bottom:1.25rem}
+        .page-header h1 em{font-style:italic;color:var(--accent-green)}
+        .page-header .lead{font-size:1.1rem;color:var(--text-secondary);line-height:1.8;max-width:700px}
+        .content{max-width:900px;margin:0 auto;padding:0 2rem 5rem}
+        .content h2{font-family:var(--font-display);font-size:1.8rem;font-weight:400;margin:3.5rem 0 1rem;padding-top:2rem;border-top:1px solid var(--border)}
+        .content h3{font-size:1.1rem;font-weight:600;margin:2rem 0 .75rem;color:var(--accent-green)}
+        .content p{color:var(--text-secondary);margin-bottom:1.25rem;font-size:.95rem;line-height:1.85}
+        .content ul,.content ol{color:var(--text-secondary);margin:0 0 1.5rem 1.5rem;font-size:.95rem}
+        .content li{margin-bottom:.65rem;line-height:1.7}
+        .content strong{color:var(--text-primary);font-weight:600}
+        .info-box{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent-green);border-radius:0 8px 8px 0;padding:1.5rem 1.75rem;margin:2rem 0;font-size:.9rem;color:var(--text-secondary);line-height:1.8}
+        .info-box strong{color:var(--accent-green)}
+        .data-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin:2rem 0}
+        .data-item{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem}
+        .data-item h4{font-size:.85rem;font-weight:600;margin-bottom:.5rem;color:var(--text-primary)}
+        .data-item p{font-size:.82rem;color:var(--text-secondary);margin:0;line-height:1.65}
+        .cta-inline{display:flex;gap:1rem;margin:3rem 0;flex-wrap:wrap}
+        .cta-inline a{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;border-radius:8px;font-size:.88rem;font-weight:600;text-decoration:none;transition:all .2s}
+        .cta-primary{background:var(--accent-blue);color:#fff}.cta-primary:hover{background:#5aabff;transform:translateY(-1px)}
+        .cta-secondary{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border)}.cta-secondary:hover{border-color:var(--border-accent)}
+        footer{padding:3rem 2rem;border-top:1px solid var(--border);text-align:center}
+        footer p{font-size:.78rem;color:var(--text-muted);line-height:1.8;max-width:700px;margin:0 auto}
+        @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
+    </style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+    <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+    <ul class="nav-links">
+        <li><a href="/">Overview</a></li>
+        <li><a href="/patient-access-api">Patient Access API</a></li>
+        <li><a href="/provider-access-api" class="active">Provider Access API</a></li>
+        <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+        <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+        <li><a href="/compliance-timeline">Timeline</a></li>
+    </ul>
+</div></nav>
+
+<div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> / Provider Access API</div>
+    <h1>The <em>Provider Access API</em> Under CMS-0057-F</h1>
+    <p class="lead">A brand-new mandate requiring impacted payers to build a FHIR-based API that gives in-network providers programmatic access to their patients' claims, clinical data, and prior authorization information — enabling coordinated care and supporting the shift to value-based payment.</p>
+</div>
+
+<div class="content">
+
+```
+<h2>Why a Provider Access API</h2>
+<p>Today, providers lack a standardized mechanism to retrieve patient data held by payers. This gap creates redundant testing, delayed care decisions, and fragmented patient records. The Provider Access API closes this gap by requiring payers to expose a FHIR endpoint that providers can query within their clinical workflows — aligning payer data access with the same technical standards used for EHR interoperability.</p>
+
+<h2>Data Available Through the Provider Access API</h2>
+<div class="data-grid">
+    <div class="data-item">
+        <h4>Adjudicated Claims &amp; Encounters</h4>
+        <p>Claims and encounter data — <strong>excluding</strong> provider remittances and patient cost-sharing information.</p>
+    </div>
+    <div class="data-item">
+        <h4>USCDI Clinical Data</h4>
+        <p>All data classes and elements in the content standard at 45 CFR 170.213 (currently USCDI v1 transitioning to USCDI v3).</p>
+    </div>
+    <div class="data-item">
+        <h4>Prior Authorization Information</h4>
+        <p>Status, decisions, and details of active and historical prior authorizations for the provider's attributed patients.</p>
+    </div>
+</div>
+
+<div class="info-box">
+    <strong>Key Distinction from Patient Access API:</strong> The Provider Access API deliberately excludes provider remittance and patient cost-sharing data. This scoping protects contractual rate confidentiality while still giving providers the clinical and administrative data they need for care delivery.
+</div>
+
+<h2>Patient Opt-Out Rights</h2>
+<p>Patients must have the ability to opt out of having their data shared with providers through this API. Payers are required to implement a clear opt-out process and disseminate educational resources to both patients and providers about the API's purpose, the types of data shared, and how to exercise opt-out rights.</p>
+
+<h2>Compliance Dates</h2>
+<ul>
+    <li><strong>MA organizations &amp; state Medicaid/CHIP FFS programs:</strong> January 1, 2027</li>
+    <li><strong>Medicaid managed care plans &amp; CHIP managed care entities:</strong> Rating period beginning on or after January 1, 2027</li>
+    <li><strong>QHP issuers on the FFEs:</strong> Plan years beginning on or after January 1, 2027</li>
+</ul>
+
+<h2>Technical Implementation</h2>
+<h3>Required Standards</h3>
+<p>The Provider Access API must conform to the same base technical standards as the Patient Access API:</p>
+<ul>
+    <li>HL7 FHIR Release 4.0.1 (45 CFR 170.215(a)(1))</li>
+    <li>US Core IG STU 3.1.1 (45 CFR 170.215(b)(1)(i))</li>
+    <li>FHIR Bulk Data Access IG v1.0.0 (45 CFR 170.215(d)(1)) — for bulk data retrieval by provider organizations</li>
+</ul>
+
+<h3>Authentication &amp; Authorization</h3>
+<p>Unlike the Patient Access API (which uses SMART App Launch for consumer-facing OAuth flows), the Provider Access API will use backend service authentication patterns appropriate for system-to-system data exchange. CMS has strongly recommended the SMART Backend Services authorization profile for this purpose.</p>
+
+<h3>Recommended Implementation Guides</h3>
+<p>CMS strongly recommends payers use the HL7 Da Vinci Payer Data Exchange (PDex) Implementation Guide and the Da Vinci Prior Authorization Support (PAS) IG to profile the FHIR resources exposed through this API. These IGs define payer-specific resource profiles, search parameters, and capability statements that help ensure consistent implementation across payers.</p>
+
+<h2>Relationship to Value-Based Care</h2>
+<p>The Provider Access API is explicitly designed to accelerate the transition to value-based care models. By giving providers real-time access to adjudicated claims and prior authorization data, payers enable risk-bearing providers to manage population health more effectively, reduce unnecessary utilization, and close gaps in care — all without building custom point-to-point integrations with each payer.</p>
+
+<div class="cta-inline">
+    <a href="/payer-to-payer-api" class="cta-primary">Next: Payer-to-Payer API →</a>
+    <a href="/patient-access-api" class="cta-secondary">← Patient Access API</a>
+</div>
+```
+
+</div>
+
+<footer><p>CMS-0057-F.com is an independent educational resource. Not affiliated with CMS or HHS.<br>&copy; 2024–2026 CMS-0057-F.com</p></footer>
+</body>
+</html>
