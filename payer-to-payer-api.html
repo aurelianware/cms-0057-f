@@ -1,1 +1,160 @@
+<!DOCTYPE html>
 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payer-to-Payer API | CMS-0057-F Data Exchange Requirements</title>
+    <meta name="description" content="Guide to the Payer-to-Payer API under CMS-0057-F. Requirements for automated health data exchange between payers when patients change coverage — including five-year data lookback, quarterly concurrent payer exchange, and patient opt-in processes.">
+    <meta name="keywords" content="Payer-to-Payer API, CMS-0057-F, payer data exchange, health plan data portability, patient data transfer, care continuity, concurrent payer exchange, five year data lookback, FHIR payer exchange, health plan interoperability">
+    <link rel="canonical" href="https://cms-0057-f.com/payer-to-payer-api">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Payer-to-Payer API Requirements Under CMS-0057-F",
+        "url": "https://cms-0057-f.com/payer-to-payer-api",
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cms-0057-f.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Payer-to-Payer API", "item": "https://cms-0057-f.com/payer-to-payer-api" }
+            ]
+        }
+    }
+    </script>
+    <style>
+        :root{--bg-primary:#0a0e17;--bg-secondary:#0f1420;--bg-card:#141925;--bg-card-hover:#1a2030;--border:#1e2738;--border-accent:#2a3a5c;--text-primary:#e8ecf4;--text-secondary:#8b95a8;--text-muted:#5c6578;--accent-blue:#4a9eff;--accent-cyan:#22d3ee;--accent-green:#34d399;--accent-amber:#f59e0b;--accent-purple:#a78bfa;--font-body:'DM Sans',-apple-system,sans-serif;--font-display:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);line-height:1.7;-webkit-font-smoothing:antialiased}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,23,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem}
+        .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+        .nav-logo{font-family:var(--font-mono);font-size:.85rem;font-weight:500;color:var(--accent-blue);text-decoration:none;letter-spacing:.05em}.nav-logo span{color:var(--text-muted)}
+        .nav-links{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap}
+        .nav-links a{color:var(--text-secondary);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.02em;transition:color .2s}
+        .nav-links a:hover{color:var(--text-primary)}.nav-links a.active{color:var(--accent-purple)}
+        .page-header{padding:8rem 2rem 4rem;max-width:900px;margin:0 auto}
+        .breadcrumb{font-size:.75rem;color:var(--text-muted);margin-bottom:2rem;font-family:var(--font-mono)}
+        .breadcrumb a{color:var(--text-muted);text-decoration:none}.breadcrumb a:hover{color:var(--accent-blue)}
+        .page-header h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.2rem);font-weight:400;line-height:1.2;margin-bottom:1.25rem}
+        .page-header h1 em{font-style:italic;color:var(--accent-purple)}
+        .page-header .lead{font-size:1.1rem;color:var(--text-secondary);line-height:1.8;max-width:700px}
+        .content{max-width:900px;margin:0 auto;padding:0 2rem 5rem}
+        .content h2{font-family:var(--font-display);font-size:1.8rem;font-weight:400;margin:3.5rem 0 1rem;padding-top:2rem;border-top:1px solid var(--border)}
+        .content h3{font-size:1.1rem;font-weight:600;margin:2rem 0 .75rem;color:var(--accent-purple)}
+        .content p{color:var(--text-secondary);margin-bottom:1.25rem;font-size:.95rem;line-height:1.85}
+        .content ul{color:var(--text-secondary);margin:0 0 1.5rem 1.5rem;font-size:.95rem}
+        .content li{margin-bottom:.65rem;line-height:1.7}
+        .content strong{color:var(--text-primary);font-weight:600}
+        .info-box{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent-purple);border-radius:0 8px 8px 0;padding:1.5rem 1.75rem;margin:2rem 0;font-size:.9rem;color:var(--text-secondary);line-height:1.8}
+        .info-box strong{color:var(--accent-purple)}
+        .highlight-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;margin:2rem 0}
+        .highlight-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.75rem}
+        .highlight-card h4{font-size:.95rem;font-weight:600;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+        .highlight-card p{font-size:.88rem;color:var(--text-secondary);margin:0;line-height:1.7}
+        .cta-inline{display:flex;gap:1rem;margin:3rem 0;flex-wrap:wrap}
+        .cta-inline a{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;border-radius:8px;font-size:.88rem;font-weight:600;text-decoration:none;transition:all .2s}
+        .cta-primary{background:var(--accent-blue);color:#fff}.cta-primary:hover{background:#5aabff;transform:translateY(-1px)}
+        .cta-secondary{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border)}.cta-secondary:hover{border-color:var(--border-accent)}
+        footer{padding:3rem 2rem;border-top:1px solid var(--border);text-align:center}
+        footer p{font-size:.78rem;color:var(--text-muted);line-height:1.8;max-width:700px;margin:0 auto}
+        @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
+    </style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+    <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+    <ul class="nav-links">
+        <li><a href="/">Overview</a></li>
+        <li><a href="/patient-access-api">Patient Access API</a></li>
+        <li><a href="/provider-access-api">Provider Access API</a></li>
+        <li><a href="/payer-to-payer-api" class="active">Payer-to-Payer API</a></li>
+        <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+        <li><a href="/compliance-timeline">Timeline</a></li>
+    </ul>
+</div></nav>
+
+<div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> / Payer-to-Payer API</div>
+    <h1>The <em>Payer-to-Payer API</em> Under CMS-0057-F</h1>
+    <p class="lead">When patients change health plans, their data shouldn't get left behind. CMS-0057-F mandates automated, FHIR-based data exchange between payers to ensure continuity of care — including up to five years of claims, clinical data, and prior authorization history.</p>
+</div>
+
+<div class="content">
+
+```
+<h2>Core Requirements</h2>
+<p>The Payer-to-Payer API establishes a bidirectional data exchange obligation between impacted payers. When a patient enrolls with a new payer, the new payer must request data from the previous payer — with the patient's permission — and integrate that data into the patient's record.</p>
+
+<div class="highlight-grid">
+    <div class="highlight-card">
+        <h4>📅 One-Week Trigger</h4>
+        <p>The new payer must request data from the previous payer no later than <strong>one week from the start of coverage</strong>, or at the patient's request — whichever comes first.</p>
+    </div>
+    <div class="highlight-card">
+        <h4>🗂️ Five-Year Lookback</h4>
+        <p>Payers exchange up to <strong>five years</strong> of patient data. CMS modified this from the proposed rule (which would have required the entire record), determining five years is sufficient for care continuity.</p>
+    </div>
+    <div class="highlight-card">
+        <h4>🔄 Quarterly Concurrent Exchange</h4>
+        <p>If a patient has <strong>two or more concurrent payers</strong>, those payers must exchange the patient's data at least quarterly to maintain a complete record across all plans.</p>
+    </div>
+    <div class="highlight-card">
+        <h4>✅ Patient Opt-In</h4>
+        <p>Data exchange requires <strong>patient permission</strong>. Payers must implement opt-in processes and disseminate educational resources explaining the purpose of the exchange.</p>
+    </div>
+</div>
+
+<h2>Data Scope</h2>
+<p>The Payer-to-Payer API must exchange:</p>
+<ul>
+    <li><strong>Adjudicated claims and encounter data</strong> — excluding provider remittances and patient cost-sharing information</li>
+    <li><strong>All USCDI data classes and elements</strong> (45 CFR 170.213) — clinical data including labs, medications, conditions, procedures, and more</li>
+    <li><strong>Prior authorization information</strong> — active and historical PA decisions, enabling the new payer to honor or extend existing authorizations</li>
+</ul>
+
+<div class="info-box">
+    <strong>Prior Authorization Continuity:</strong> The inclusion of PA data in payer-to-payer exchange is one of the most impactful provisions of CMS-0057-F. When a patient changes plans mid-treatment, the new payer receives the prior authorization history — reducing the likelihood that patients will face treatment interruptions or have to restart the authorization process from scratch.
+</div>
+
+<h2>Compliance Dates</h2>
+<ul>
+    <li><strong>MA organizations &amp; state Medicaid/CHIP FFS programs:</strong> January 1, 2027</li>
+    <li><strong>Medicaid managed care plans &amp; CHIP managed care entities:</strong> Rating period beginning on or after January 1, 2027</li>
+    <li><strong>QHP issuers on the FFEs:</strong> Plan years beginning on or after January 1, 2027</li>
+</ul>
+
+<h2>Technical Architecture</h2>
+<h3>System-to-System Exchange</h3>
+<p>Unlike the Patient Access API (which is consumer-facing), the Payer-to-Payer API operates as a backend service-to-service integration. CMS requires FHIR R4 as the base standard and strongly recommends the SMART Backend Services authorization profile for mutual authentication between payer systems.</p>
+
+<h3>Data Integration Obligation</h3>
+<p>Receiving payers are not just required to accept data — they must <strong>integrate</strong> the received information into the patient's record. This means incorporating claims history, clinical data, and PA information into the payer's core administrative and clinical data systems in a way that supports downstream care coordination, utilization management, and patient access via the Patient Access API.</p>
+
+<h3>Previous/Concurrent Payer Discovery</h3>
+<p>Payers must implement processes to gather information about a patient's previous and concurrent payers. CMS acknowledges this is operationally complex and allows payers flexibility in how they collect this information — whether through enrollment forms, patient attestation, or other mechanisms.</p>
+
+<h2>Operational Challenges</h2>
+<p>The Payer-to-Payer API introduces several unique operational challenges that differentiate it from the other mandated APIs:</p>
+<ul>
+    <li><strong>Payer identity resolution</strong> — determining which FHIR endpoint belongs to the patient's previous payer</li>
+    <li><strong>Data reconciliation</strong> — merging claims and clinical data from different systems with different coding practices and data models</li>
+    <li><strong>Consent management at scale</strong> — tracking opt-in status across potentially millions of members with multiple prior payers</li>
+    <li><strong>Concurrent exchange cadence</strong> — establishing quarterly batch processes for dual-eligible and multi-plan populations</li>
+</ul>
+
+<div class="cta-inline">
+    <a href="/prior-authorization-api" class="cta-primary">Next: Prior Authorization API →</a>
+    <a href="/provider-access-api" class="cta-secondary">← Provider Access API</a>
+</div>
+```
+
+</div>
+
+<footer><p>CMS-0057-F.com is an independent educational resource. Not affiliated with CMS or HHS.<br>&copy; 2024–2026 CMS-0057-F.com</p></footer>
+</body>
+</html>
