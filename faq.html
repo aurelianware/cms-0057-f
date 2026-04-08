@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS-0057-F FAQ | Frequently Asked Questions About the Interoperability & Prior Authorization Rule</title>
+    <meta name="description" content="Answers to the most common questions about CMS-0057-F: who must comply, compliance deadlines, FHIR API requirements, prior authorization reforms, drug exclusions, extensions, exemptions, enforcement, MIPS measures, and technical standards.">
+    <meta name="keywords" content="CMS-0057-F FAQ, CMS-0057-F questions, interoperability rule FAQ, prior authorization rule questions, CMS-0057-F compliance questions, FHIR API FAQ, prior auth reform FAQ, Medicare Advantage interoperability, Medicaid FHIR API, QHP prior authorization, CMS interoperability FAQ 2024">
+    <link rel="canonical" href="https://cms-0057-f.com/faq">
+    <meta property="og:title" content="CMS-0057-F Frequently Asked Questions">
+    <meta property="og:description" content="Comprehensive FAQ covering compliance, APIs, timelines, enforcement, and technical standards under the CMS Interoperability and Prior Authorization final rule.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is CMS-0057-F?",
+                "acceptedAnswer": { "@type": "Answer", "text": "CMS-0057-F is a federal final rule published by the Centers for Medicare & Medicaid Services in January 2024. It requires impacted payers — including Medicare Advantage organizations, Medicaid managed care plans, state Medicaid and CHIP FFS programs, and QHP issuers on the FFEs — to implement FHIR-based APIs for health data exchange and to streamline prior authorization processes." }
+            },
+            {
+                "@type": "Question",
+                "name": "Who must comply with CMS-0057-F?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Six categories of impacted payers: Medicare Advantage organizations, state Medicaid FFS programs, state CHIP FFS programs, Medicaid managed care plans (MCOs, PIHPs, PAHPs), CHIP managed care entities, and QHP issuers on the Federally-facilitated Exchanges. Stand-alone dental plans, FF-SHOP issuers, and State-based Exchange issuers are excluded." }
+            },
+            {
+                "@type": "Question",
+                "name": "When are the CMS-0057-F compliance deadlines?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Prior authorization process requirements (response timeframes, specific denial reasons, public metrics) are due January 1, 2026. All four FHIR API requirements (Patient Access API enhancement, Provider Access API, Payer-to-Payer API, Prior Authorization API) are due January 1, 2027." }
+            },
+            {
+                "@type": "Question",
+                "name": "Does CMS-0057-F apply to prescription drug prior authorizations?",
+                "acceptedAnswer": { "@type": "Answer", "text": "No. The prior authorization API and process requirements explicitly exclude drugs of any type — including self-administered, provider-administered, pharmacy-dispensed, and hospital-administered drugs. Drug claims data is still shared through the Patient Access API, but the PA workflow provisions do not apply to drug authorizations." }
+            },
+            {
+                "@type": "Question",
+                "name": "What are the mandated prior authorization response times?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Impacted payers (except QHP issuers on the FFEs) must respond to urgent/expedited PA requests within 72 hours and standard requests within 7 calendar days. These process requirements take effect January 1, 2026." }
+            },
+            {
+                "@type": "Question",
+                "name": "What FHIR standard version is required?",
+                "acceptedAnswer": { "@type": "Answer", "text": "HL7 FHIR Release 4.0.1 is the base standard, codified at 45 CFR 170.215(a)(1). Additional required standards include US Core IG STU 3.1.1, SMART App Launch 1.0.0, Bulk Data Access v1.0.0, and OpenID Connect Core 1.0." }
+            },
+            {
+                "@type": "Question",
+                "name": "Can payers request extensions to the compliance deadlines?",
+                "acceptedAnswer": { "@type": "Answer", "text": "State Medicaid and CHIP FFS programs may request extensions or exemptions. QHP issuers on the FFEs may apply for an annual exception with CMS approval. Medicare Advantage organizations do not have an extension pathway." }
+            },
+            {
+                "@type": "Question",
+                "name": "Does CMS-0057-F apply to Medicare Fee-for-Service?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Not directly. However, CMS has stated its intention for Medicare FFS to comply voluntarily as a market leader in data exchange by the same compliance dates." }
+            }
+        ]
+    }
+    </script>
+    <style>
+        :root{--bg-primary:#0a0e17;--bg-secondary:#0f1420;--bg-card:#141925;--bg-card-hover:#1a2030;--border:#1e2738;--border-accent:#2a3a5c;--text-primary:#e8ecf4;--text-secondary:#8b95a8;--text-muted:#5c6578;--accent-blue:#4a9eff;--accent-cyan:#22d3ee;--accent-green:#34d399;--accent-amber:#f59e0b;--accent-rose:#f472b6;--accent-purple:#a78bfa;--font-body:'DM Sans',-apple-system,sans-serif;--font-display:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);line-height:1.7;-webkit-font-smoothing:antialiased}
+
+```
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,23,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem}
+    .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+    .nav-logo{font-family:var(--font-mono);font-size:.85rem;font-weight:500;color:var(--accent-blue);text-decoration:none;letter-spacing:.05em}.nav-logo span{color:var(--text-muted)}
+    .nav-links{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap}
+    .nav-links a{color:var(--text-secondary);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.02em;transition:color .2s}
+    .nav-links a:hover{color:var(--text-primary)}.nav-links a.active{color:var(--accent-cyan)}
+
+    .page-header{padding:8rem 2rem 4rem;max-width:900px;margin:0 auto}
+    .breadcrumb{font-size:.75rem;color:var(--text-muted);margin-bottom:2rem;font-family:var(--font-mono)}
+    .breadcrumb a{color:var(--text-muted);text-decoration:none}.breadcrumb a:hover{color:var(--accent-blue)}
+    .page-header h1{font-family:var(--font-display);font-size:clamp(2.4rem,5vw,3.4rem);font-weight:400;line-height:1.15;margin-bottom:1.25rem}
+    .page-header h1 em{font-style:italic;color:var(--accent-cyan)}
+    .page-header .lead{font-size:1.1rem;color:var(--text-secondary);line-height:1.8;max-width:720px}
+
+    .content{max-width:900px;margin:0 auto;padding:0 2rem 5rem}
+
+    /* CATEGORY LABELS */
+    .faq-category{font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin:3rem 0 1.25rem;padding-top:2rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:.6rem}
+    .faq-category:first-of-type{border-top:none;padding-top:0;margin-top:1rem}
+    .cat-dot{width:8px;height:8px;border-radius:2px}
+    .cat-general .cat-dot{background:var(--accent-blue)}
+    .cat-api .cat-dot{background:var(--accent-cyan)}
+    .cat-pa .cat-dot{background:var(--accent-amber)}
+    .cat-compliance .cat-dot{background:var(--accent-green)}
+    .cat-technical .cat-dot{background:var(--accent-purple)}
+    .cat-scope .cat-dot{background:var(--accent-rose)}
+    .cat-general{color:var(--accent-blue)}.cat-api{color:var(--accent-cyan)}.cat-pa{color:var(--accent-amber)}.cat-compliance{color:var(--accent-green)}.cat-technical{color:var(--accent-purple)}.cat-scope{color:var(--accent-rose)}
+
+    /* FAQ ITEMS */
+    .faq-list{display:flex;flex-direction:column;gap:.75rem}
+    .faq-item{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .2s}
+    .faq-item:hover{border-color:var(--border-accent)}
+    .faq-q{padding:1.25rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:.95rem;gap:1rem;transition:background .2s;user-select:none}
+    .faq-q:hover{background:var(--bg-card-hover)}
+    .faq-q::after{content:'+';font-family:var(--font-mono);color:var(--text-muted);font-size:1.2rem;transition:transform .3s;flex-shrink:0}
+    .faq-item.open .faq-q::after{transform:rotate(45deg)}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .5s ease}
+    .faq-a-inner{padding:0 1.5rem 1.5rem;font-size:.9rem;color:var(--text-secondary);line-height:1.85}
+    .faq-a-inner p{margin-bottom:.75rem}
+    .faq-a-inner p:last-child{margin-bottom:0}
+    .faq-a-inner strong{color:var(--text-primary)}
+    .faq-a-inner a{color:var(--accent-blue);text-decoration:none}.faq-a-inner a:hover{text-decoration:underline}
+    .faq-a-inner ul{margin:.75rem 0 .75rem 1.5rem}
+    .faq-a-inner li{margin-bottom:.4rem}
+    .faq-item.open .faq-a{max-height:800px}
+
+    .cta-section{padding:3rem 0;text-align:center}
+    .cta-box{max-width:700px;margin:0 auto;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:3rem 2.5rem;position:relative;overflow:hidden}
+    .cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent-blue),transparent)}
+    .cta-box h2{font-family:var(--font-display);font-size:1.8rem;margin-bottom:.75rem}
+    .cta-box p{color:var(--text-secondary);font-size:.95rem;margin-bottom:1.5rem;max-width:480px;margin-inline:auto}
+    .cta-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent-blue);color:#fff;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;font-size:.9rem;transition:all .2s}
+    .cta-btn:hover{background:#5aabff;transform:translateY(-1px)}
+
+    footer{padding:3rem 2rem;border-top:1px solid var(--border);text-align:center}
+    footer p{font-size:.78rem;color:var(--text-muted);line-height:1.8;max-width:700px;margin:0 auto}
+    @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
+</style>
+```
+
+</head>
+<body>
+
+<nav><div class="nav-inner">
+    <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+    <ul class="nav-links">
+        <li><a href="/">Overview</a></li>
+        <li><a href="/patient-access-api">Patient Access API</a></li>
+        <li><a href="/provider-access-api">Provider Access API</a></li>
+        <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+        <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+        <li><a href="/compliance-timeline">Timeline</a></li>
+        <li><a href="/fact-sheet">Fact Sheet</a></li>
+        <li><a href="/faq" class="active">FAQ</a></li>
+    </ul>
+</div></nav>
+
+<div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> / FAQ</div>
+    <h1><em>Frequently Asked Questions</em> About CMS-0057-F</h1>
+    <p class="lead">Answers to the most common questions about the CMS Interoperability and Prior Authorization final rule — organized by topic for quick reference.</p>
+</div>
+
+<div class="content">
+
+```
+<!-- GENERAL -->
+<div class="faq-category cat-general"><span class="cat-dot"></span> General</div>
+<div class="faq-list">
+
+    <div class="faq-item">
+        <div class="faq-q">What is CMS-0057-F?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>CMS-0057-F is a federal final rule titled <strong>"Advancing Interoperability and Improving Prior Authorization Processes."</strong> Published by the Centers for Medicare &amp; Medicaid Services in January 2024, it requires impacted payers to implement FHIR-based APIs for health data exchange and to reform prior authorization processes with faster decision timelines and public transparency reporting.</p>
+            <p>It amends 42 CFR Parts 422, 431, 435, 438, 440, 457, and 45 CFR Part 156 (RIN 0938-AU87), and builds on the 2020 CMS Interoperability and Patient Access final rule (85 FR 25510).</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Who must comply with CMS-0057-F?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>CMS identifies 365 parent payer organizations across six categories:</p>
+            <ul>
+                <li>Medicare Advantage (MA) organizations</li>
+                <li>State Medicaid fee-for-service (FFS) programs</li>
+                <li>State CHIP FFS programs</li>
+                <li>Medicaid managed care plans (MCOs, PIHPs, PAHPs)</li>
+                <li>CHIP managed care entities (MCOs, PIHPs, PAHPs)</li>
+                <li>Qualified Health Plan (QHP) issuers on the Federally-facilitated Exchanges (FFEs)</li>
+            </ul>
+            <p><strong>Excluded:</strong> Stand-alone dental plans (SADPs), FF-SHOP-only issuers, State-based Exchanges on the Federal Platform (SBE-FPs), and State-based Exchanges operating their own platforms (SBEs).</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Does CMS-0057-F apply to Medicare Fee-for-Service?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>Not directly. The rule does not mandate Medicare FFS compliance. However, CMS stated its intention for Medicare FFS to be a "market leader on data exchange" and to voluntarily comply by the same compliance dates. CMS solicited public comments on applying these provisions to Medicare FFS and is considering them for future rulemaking.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Does CMS-0057-F apply to employer-sponsored health plans?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>No. CMS-0057-F applies only to the payer categories listed above — primarily government-regulated health programs and QHPs on the federal exchanges. Employer-sponsored plans (group health plans under ERISA) are not subject to these requirements, though CMS has encouraged all payers to consider voluntary adoption.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">How many public comments did CMS receive?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>CMS received nearly <strong>900 timely pieces of correspondence</strong> in response to the proposed rule published in December 2022 (87 FR 76238). The final rule addresses in-scope comments and incorporates modifications based on commenter feedback, most notably delaying API compliance dates from 2026 to 2027.</p>
+        </div></div>
+    </div>
+
+</div>
+
+<!-- APIs -->
+<div class="faq-category cat-api"><span class="cat-dot"></span> API Requirements</div>
+<div class="faq-list">
+
+    <div class="faq-item">
+        <div class="faq-q">What are the four APIs required by CMS-0057-F?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>CMS-0057-F mandates four FHIR-based APIs:</p>
+            <ul>
+                <li><strong><a href="/patient-access-api">Patient Access API</a></strong> — enhanced to include prior authorization data alongside existing claims and clinical data</li>
+                <li><strong><a href="/provider-access-api">Provider Access API</a></strong> — new API giving providers access to patient data held by payers</li>
+                <li><strong><a href="/payer-to-payer-api">Payer-to-Payer API</a></strong> — new API for automated data exchange when patients change health plans</li>
+                <li><strong><a href="/prior-authorization-api">Prior Authorization API</a></strong> — new API enabling electronic PA requirement discovery, documentation retrieval, and request submission</li>
+            </ul>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Can a payer implement one API to cover multiple requirements?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>Yes. CMS refers to each API as a single API to describe the required <em>functionality</em>, but acknowledges that payers may implement each using one or multiple APIs depending on their architecture. The rule is functionally prescriptive — not technically prescriptive about how many endpoints or services a payer deploys, so long as all required capabilities are available.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What data must the Patient Access API provide?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>Through the Patient Access API, payers must give patients access to:</p>
+            <ul>
+                <li>Adjudicated claims and encounter data (including provider remittances and patient cost-sharing)</li>
+                <li>All data classes and elements in the USCDI content standard (45 CFR 170.213)</li>
+                <li>Laboratory results maintained by the payer</li>
+                <li><strong>Prior authorization information</strong> (new in CMS-0057-F)</li>
+            </ul>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">How does the Provider Access API differ from the Patient Access API?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>Two key differences: First, the Provider Access API <strong>excludes provider remittances and patient cost-sharing</strong> to protect contractual rate confidentiality. Second, it uses <strong>backend service authentication</strong> (system-to-system) rather than the consumer-facing SMART App Launch flow used by the Patient Access API. The Provider Access API also includes a <strong>patient opt-out</strong> mechanism, whereas the Patient Access API is always available to the patient directly.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">How much data must be exchanged through the Payer-to-Payer API?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>Payers must exchange up to <strong>five years</strong> of patient data. The proposed rule would have required the entire patient health record, but CMS modified this in the final rule, determining that five years of data is sufficient for care continuity and prior authorization continuation without imposing excessive burden. For patients with concurrent payers, data must be exchanged at least quarterly.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What was the "PARDD API"?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>The proposed rule referred to the Prior Authorization API as the <strong>"Prior Authorization Requirements, Documentation, and Decision API" (PARDD API)</strong>. CMS simplified the name to just "Prior Authorization API" in the final rule for clarity. This name change does not alter any substantive requirements — the capabilities (PA requirement discovery, documentation retrieval, and request/decision exchange) remain the same.</p>
+        </div></div>
+    </div>
+
+</div>
+
+<!-- PRIOR AUTH -->
+<div class="faq-category cat-pa"><span class="cat-dot"></span> Prior Authorization</div>
+<div class="faq-list">
+
+    <div class="faq-item">
+        <div class="faq-q">What are the mandated prior authorization response timeframes?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>Impacted payers (except QHP issuers on the FFEs) must respond to:</p>
+            <ul>
+                <li><strong>Urgent/expedited PA requests:</strong> within 72 hours</li>
+                <li><strong>Standard PA requests:</strong> within 7 calendar days</li>
+            </ul>
+            <p>These timeframes apply regardless of how the PA request is received — whether through the API, fax, phone, or portal. They take effect <strong>January 1, 2026</strong>, one year before the API mandate.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Does CMS-0057-F cover drug prior authorizations?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>No. The prior authorization API and process requirements <strong>explicitly exclude drugs of any type</strong>: prescription drugs, self-administered drugs, provider-administered drugs, pharmacy-dispensed drugs, and hospital-administered drugs. Drug PA involves distinct processes, standards, and regulatory frameworks not addressed in this rule. However, drug <em>claims data</em> is still included in the Patient Access API as part of the patient's health record.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What must payers include when denying a prior authorization?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>Payers must provide a <strong>specific reason for the denial</strong> in the notice sent to providers. Generic or boilerplate denial language — such as "does not meet medical necessity criteria" without further detail — is no longer compliant. This requirement addresses one of the most persistent provider pain points cited in public comments and takes effect January 1, 2026.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What PA metrics must payers publicly report?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>All impacted payers must publicly report prior authorization metrics including approval rates, denial rates, average response times, and related performance measures. This public reporting requirement is designed to create transparency and allow providers, patients, and regulators to compare payer performance. Reporting begins <strong>January 1, 2026</strong>.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What Da Vinci Implementation Guides are recommended?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>CMS strongly recommends three HL7 Da Vinci IGs for the Prior Authorization API:</p>
+            <ul>
+                <li><strong>Da Vinci CRD (Coverage Requirements Discovery)</strong> — real-time checks from EHR to determine if PA is needed</li>
+                <li><strong>Da Vinci DTR (Documentation Templates &amp; Rules)</strong> — FHIR Questionnaires defining required clinical data, enabling auto-population from EHR</li>
+                <li><strong>Da Vinci PAS (Prior Authorization Support)</strong> — structured electronic submission of PA requests and receipt of decisions</li>
+            </ul>
+            <p>These are <em>strongly recommended</em> but not formally mandated. The required base standard is HL7 FHIR R4.0.1.</p>
+        </div></div>
+    </div>
+
+</div>
+
+<!-- COMPLIANCE -->
+<div class="faq-category cat-compliance"><span class="cat-dot"></span> Compliance &amp; Enforcement</div>
+<div class="faq-list">
+
+    <div class="faq-item">
+        <div class="faq-q">Why were the API deadlines delayed from 2026 to 2027?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>CMS originally proposed API compliance dates in 2026 but delayed to 2027 in response to commenter feedback. CMS determined that an approximately <strong>three-year implementation window</strong> (from rule finalization in early 2024 to January 2027) would be sufficient time for payers to recruit and train staff, build or update APIs, and update operational procedures. The prior authorization <em>process</em> requirements remain at 2026.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Can payers request extensions to the deadlines?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>It depends on the payer type:</p>
+            <ul>
+                <li><strong>State Medicaid &amp; CHIP FFS programs:</strong> May request an <strong>extension</strong> of the compliance dates or a full <strong>exemption</strong> from certain requirements in specific circumstances</li>
+                <li><strong>QHP issuers on the FFEs:</strong> May request an <strong>exception</strong> from API requirements, conditioned on annual CMS approval of a narrative justification</li>
+                <li><strong>MA organizations:</strong> <strong>No extension pathway</strong> — must meet the January 1, 2027 deadline</li>
+                <li><strong>Medicaid managed care plans &amp; CHIP managed care entities:</strong> Compliance is enforced through their state's managed care contracts</li>
+            </ul>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">How will CMS enforce compliance?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>CMS will use <strong>existing enforcement mechanisms</strong> specific to each payer type. For MA organizations, this may include compliance actions, civil monetary penalties, or contract termination. For Medicaid managed care plans, states enforce compliance through managed care contracts. For QHP issuers, CMS acts through the FFE oversight process. CMS has emphasized that the three-year implementation window should be sufficient for all payers.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Are QHP issuers on the FFEs subject to the PA response timeframes?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>No. QHP issuers on the FFEs are <strong>exempt from the mandated PA response timeframes</strong> (72 hours urgent / 7 days standard). However, they are required to implement the Prior Authorization API, publicly report PA metrics, and include specific denial reasons in PA notices.</p>
+        </div></div>
+    </div>
+
+</div>
+
+<!-- TECHNICAL -->
+<div class="faq-category cat-technical"><span class="cat-dot"></span> Technical Standards</div>
+<div class="faq-list">
+
+    <div class="faq-item">
+        <div class="faq-q">What FHIR version is required?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>HL7 FHIR Release 4.0.1</strong>, codified at 45 CFR 170.215(a)(1). This is the base interoperability standard for all four mandated APIs. CMS allows payers to voluntarily adopt newer FHIR versions ahead of regulatory updates, provided the newer version does not disrupt end users' ability to access data.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What content standard governs the clinical data that must be shared?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>The <strong>United States Core Data for Interoperability (USCDI)</strong>, referenced at 45 CFR 170.213. CMS finalized a direct reference to this regulation, meaning the content requirement <strong>automatically updates</strong> as ONC adopts new USCDI versions — payers don't need to wait for new CMS rulemaking. Currently, USCDI v1 (expiring January 1, 2026) and USCDI v3 are the adopted standards.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Can payers adopt newer versions of the required standards early?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>Yes. CMS finalized a policy allowing payers to <strong>voluntarily use updated versions</strong> of any required standard, specification, or implementation guide before CMS formally adopts them through regulation. The only condition is that the updated version must not disrupt end users' ability to access data through the API. This gives payers flexibility to stay current with evolving HL7 and ONC standards.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What is the relationship between CMS-0057-F and the ONC HTI-1 rule?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>The ONC HTI-1 final rule (89 FR 1192, January 9, 2024) reorganized the structure of <strong>45 CFR 170.215</strong> to more clearly delineate the purpose and scope of each technical standard. CMS-0057-F references the updated HTI-1 citations for all required standards, ensuring alignment between the two rules. The standards themselves are substantively the same; HTI-1 primarily affected the regulatory citation structure.</p>
+        </div></div>
+    </div>
+
+</div>
+
+<!-- SCOPE -->
+<div class="faq-category cat-scope"><span class="cat-dot"></span> Scope &amp; Special Populations</div>
+<div class="faq-list">
+
+    <div class="faq-item">
+        <div class="faq-q">Are State-based Exchanges affected?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>No. The rule applies to QHP issuers on the <strong>Federally-facilitated Exchanges (FFEs)</strong> only. State-based Exchanges on the Federal Platform (SBE-FPs) — even though they enroll through HealthCare.gov — are not FFEs and are not subject to these requirements. State-based Exchanges operating their own platforms are also excluded. CMS encourages these exchanges to adopt similar policies voluntarily.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">How does CMS-0057-F address health equity?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>CMS aligns the rule with Executive Order 13985 on advancing racial equity and notes that some patient populations are disproportionately affected by current PA inefficiencies. The rule emphasizes ensuring that app-based data access is available to individuals with disabilities, limited English proficiency, low literacy, and those facing geographic or economic barriers to technology. CMS solicited comments on preventing the rule's policies from exacerbating disparities or creating unintended inequities.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Can personal representatives access data on behalf of patients?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>Yes. Under the HIPAA Privacy Rule (45 CFR 164.502(g)), a personal representative — such as a parent, guardian, or person with medical power of attorney — may generally exercise the patient's right to access health information. For many processes in CMS-0057-F, including Patient Access API data retrieval and Payer-to-Payer API opt-in, a personal representative can act on the patient's behalf as permitted by applicable law.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What about the MIPS Electronic Prior Authorization measure?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>Starting with the <strong>CY 2027 performance period</strong> (affecting MIPS 2029 payment year), eligible clinicians must report an "Electronic Prior Authorization" measure under the Promoting Interoperability performance category. CMS modified this from the proposed numerator/denominator approach to a <strong>yes/no attestation</strong> (or exclusion if applicable). The same measure applies to eligible hospitals and CAHs under the Medicare Promoting Interoperability Program beginning with the CY 2027 EHR reporting period.</p>
+        </div></div>
+    </div>
+
+</div>
+
+<div class="cta-section">
+    <div class="cta-box">
+        <h2>Build for CMS-0057-F Compliance</h2>
+        <p>Cloud Health Office is a vendor-neutral, Kubernetes-native platform purpose-built for CMS-0057-F — from FHIR APIs to prior authorization decision automation.</p>
+        <a href="https://cloudhealthoffice.com" class="cta-btn">Explore Cloud Health Office →</a>
+    </div>
+</div>
+```
+
+</div>
+
+<footer>
+    <p>CMS-0057-F.com is an independent educational resource. Not affiliated with CMS or HHS.<br>
+    Content is based on the publicly available CMS-0057-F final rule (RIN 0938-AU87). For official regulatory text, refer to the <a href="https://www.federalregister.gov/" style="color:var(--accent-blue);">Federal Register</a>.<br>
+    &copy; 2024–2026 CMS-0057-F.com. All rights reserved.</p>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+        const item = q.parentElement;
+        // Close siblings in same category
+        const list = item.parentElement;
+        list.querySelectorAll('.faq-item.open').forEach(open => {
+            if (open !== item) open.classList.remove('open');
+        });
+        item.classList.toggle('open');
+    });
+});
+</script>
+
+</body>
+</html>
