@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prior Authorization API | CMS-0057-F Requirements, Timelines & Da Vinci IGs</title>
+    <meta name="description" content="Complete guide to the Prior Authorization API under CMS-0057-F. Learn about the FHIR-based API for streamlining prior auth — including Da Vinci CRD, DTR, and PAS implementation guides, response timeframe mandates, denial reason requirements, and public reporting obligations.">
+    <meta name="keywords" content="Prior Authorization API, CMS-0057-F, PARDD API, Da Vinci CRD, Da Vinci DTR, Da Vinci PAS, prior authorization FHIR, electronic prior authorization, prior auth automation, prior authorization denial reasons, prior auth response times, healthcare prior authorization reform">
+    <link rel="canonical" href="https://cms-0057-f.com/prior-authorization-api">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Prior Authorization API Requirements Under CMS-0057-F",
+        "url": "https://cms-0057-f.com/prior-authorization-api",
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cms-0057-f.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Prior Authorization API", "item": "https://cms-0057-f.com/prior-authorization-api" }
+            ]
+        }
+    }
+    </script>
+    <style>
+        :root{--bg-primary:#0a0e17;--bg-secondary:#0f1420;--bg-card:#141925;--bg-card-hover:#1a2030;--border:#1e2738;--border-accent:#2a3a5c;--text-primary:#e8ecf4;--text-secondary:#8b95a8;--text-muted:#5c6578;--accent-blue:#4a9eff;--accent-cyan:#22d3ee;--accent-green:#34d399;--accent-amber:#f59e0b;--accent-purple:#a78bfa;--font-body:'DM Sans',-apple-system,sans-serif;--font-display:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);line-height:1.7;-webkit-font-smoothing:antialiased}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,23,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem}
+        .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+        .nav-logo{font-family:var(--font-mono);font-size:.85rem;font-weight:500;color:var(--accent-blue);text-decoration:none;letter-spacing:.05em}.nav-logo span{color:var(--text-muted)}
+        .nav-links{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap}
+        .nav-links a{color:var(--text-secondary);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.02em;transition:color .2s}
+        .nav-links a:hover{color:var(--text-primary)}.nav-links a.active{color:var(--accent-amber)}
+        .page-header{padding:8rem 2rem 4rem;max-width:900px;margin:0 auto}
+        .breadcrumb{font-size:.75rem;color:var(--text-muted);margin-bottom:2rem;font-family:var(--font-mono)}
+        .breadcrumb a{color:var(--text-muted);text-decoration:none}.breadcrumb a:hover{color:var(--accent-blue)}
+        .page-header h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.2rem);font-weight:400;line-height:1.2;margin-bottom:1.25rem}
+        .page-header h1 em{font-style:italic;color:var(--accent-amber)}
+        .page-header .lead{font-size:1.1rem;color:var(--text-secondary);line-height:1.8;max-width:700px}
+        .content{max-width:900px;margin:0 auto;padding:0 2rem 5rem}
+        .content h2{font-family:var(--font-display);font-size:1.8rem;font-weight:400;margin:3.5rem 0 1rem;padding-top:2rem;border-top:1px solid var(--border)}
+        .content h3{font-size:1.1rem;font-weight:600;margin:2rem 0 .75rem;color:var(--accent-amber)}
+        .content p{color:var(--text-secondary);margin-bottom:1.25rem;font-size:.95rem;line-height:1.85}
+        .content ul,.content ol{color:var(--text-secondary);margin:0 0 1.5rem 1.5rem;font-size:.95rem}
+        .content li{margin-bottom:.65rem;line-height:1.7}
+        .content strong{color:var(--text-primary);font-weight:600}
+        .info-box{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent-amber);border-radius:0 8px 8px 0;padding:1.5rem 1.75rem;margin:2rem 0;font-size:.9rem;color:var(--text-secondary);line-height:1.8}
+        .info-box strong{color:var(--accent-amber)}
+        .stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:2rem 0}
+        .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;text-align:center}
+        .stat-card .num{font-family:var(--font-mono);font-size:2rem;font-weight:700;margin-bottom:.35rem}
+        .stat-card .label{font-size:.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em}
+        .num-amber{color:var(--accent-amber)}.num-green{color:var(--accent-green)}.num-blue{color:var(--accent-blue)}
+        .ig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin:2rem 0}
+        .ig-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.75rem}
+        .ig-card h4{font-size:.95rem;font-weight:600;margin-bottom:.5rem;color:var(--text-primary)}
+        .ig-card .ig-tag{font-family:var(--font-mono);font-size:.7rem;display:inline-block;padding:.2rem .5rem;border-radius:3px;background:rgba(245,158,11,.1);color:var(--accent-amber);margin-bottom:.75rem}
+        .ig-card p{font-size:.85rem;color:var(--text-secondary);margin:0;line-height:1.7}
+        .cta-inline{display:flex;gap:1rem;margin:3rem 0;flex-wrap:wrap}
+        .cta-inline a{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;border-radius:8px;font-size:.88rem;font-weight:600;text-decoration:none;transition:all .2s}
+        .cta-primary{background:var(--accent-blue);color:#fff}.cta-primary:hover{background:#5aabff;transform:translateY(-1px)}
+        .cta-secondary{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border)}.cta-secondary:hover{border-color:var(--border-accent)}
+        footer{padding:3rem 2rem;border-top:1px solid var(--border);text-align:center}
+        footer p{font-size:.78rem;color:var(--text-muted);line-height:1.8;max-width:700px;margin:0 auto}
+        @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
+    </style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+    <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+    <ul class="nav-links">
+        <li><a href="/">Overview</a></li>
+        <li><a href="/patient-access-api">Patient Access API</a></li>
+        <li><a href="/provider-access-api">Provider Access API</a></li>
+        <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+        <li><a href="/prior-authorization-api" class="active">Prior Auth API</a></li>
+        <li><a href="/compliance-timeline">Timeline</a></li>
+    </ul>
+</div></nav>
+
+<div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> / Prior Authorization API</div>
+    <h1>The <em>Prior Authorization API</em> Under CMS-0057-F</h1>
+    <p class="lead">The most operationally transformative provision of CMS-0057-F: a FHIR-based API that lets providers determine PA requirements, retrieve documentation rules, and submit authorization requests electronically — directly from their EHR workflow.</p>
+</div>
+
+<div class="content">
+
+```
+<h2>What the Prior Authorization API Does</h2>
+<p>The Prior Authorization API (originally proposed as the "PARDD API" — Prior Authorization Requirements, Documentation, and Decision API) enables three critical capabilities through a single standards-based interface:</p>
+<ol>
+    <li><strong>Determine if prior authorization is required</strong> — Providers query the payer to check whether a specific item or service requires PA for a given patient and plan</li>
+    <li><strong>Retrieve documentation requirements</strong> — The API returns what clinical documentation must be submitted, enabling automated compilation from the provider's EHR</li>
+    <li><strong>Submit PA requests and receive decisions</strong> — Requests flow electronically with structured data, and payers return decisions through the same channel</li>
+</ol>
+
+<div class="info-box">
+    <strong>Name Change:</strong> CMS proposed this as the "PARDD API" but finalized it simply as the "Prior Authorization API" for clarity. This renaming does not change any substantive requirements.
+</div>
+
+<h2>Prior Authorization Process Requirements</h2>
+<p>Separate from the API itself, CMS finalized process improvements that apply <strong>regardless of how</strong> a payer receives a PA request — whether through the API, fax, phone, or portal. These requirements take effect in 2026, one year before the API mandate:</p>
+
+<div class="stat-row">
+    <div class="stat-card">
+        <div class="num num-amber">72 hrs</div>
+        <div class="label">Urgent PA Decisions</div>
+    </div>
+    <div class="stat-card">
+        <div class="num num-green">7 days</div>
+        <div class="label">Standard PA Decisions</div>
+    </div>
+    <div class="stat-card">
+        <div class="num num-blue">2026</div>
+        <div class="label">Process Requirements</div>
+    </div>
+</div>
+
+<h3>Denial Reason Specificity</h3>
+<p>When denying a prior authorization request, impacted payers must provide a <strong>specific reason</strong> for the denial in the notice sent to providers. Generic denials are no longer acceptable under the rule. This requirement addresses one of the most persistent pain points cited by providers in the rulemaking comment process.</p>
+
+<h3>Public Metrics Reporting</h3>
+<p>All impacted payers must publicly report prior authorization metrics, creating unprecedented transparency. These metrics will include approval and denial rates, average response times, and other measures that allow stakeholders to compare payer performance. This reporting requirement takes effect in 2026.</p>
+
+<h3>Medicaid Notice &amp; Fair Hearings</h3>
+<p>CMS finalized clarifications to existing Medicaid beneficiary notice and fair hearing regulations as they apply to prior authorization decisions. These are characterized as clarifications to existing requirements and took effect on the rule's effective date.</p>
+
+<h2>Scope: Items &amp; Services Only</h2>
+<p>The Prior Authorization API and process requirements apply exclusively to <strong>items and services</strong> — not drugs. This means prescription drugs (whether self-administered, provider-administered, pharmacy-dispensed, or hospital-administered) are outside the scope of the PA provisions. Drug prior authorization involves different processes, standards, and regulatory frameworks that CMS chose not to address in this rule.</p>
+
+<h2>Recommended Implementation Guides</h2>
+<p>CMS strongly recommends the HL7 Da Vinci Implementation Guides as the technical foundation for the Prior Authorization API. These three IGs work together to cover the full PA workflow:</p>
+
+<div class="ig-grid">
+    <div class="ig-card">
+        <div class="ig-tag">Da Vinci CRD</div>
+        <h4>Coverage Requirements Discovery</h4>
+        <p>Enables real-time queries from the EHR to the payer to determine if prior authorization is required for a given service, and what documentation rules apply — triggered during the clinical ordering workflow.</p>
+    </div>
+    <div class="ig-card">
+        <div class="ig-tag">Da Vinci DTR</div>
+        <h4>Documentation Templates &amp; Rules</h4>
+        <p>Provides FHIR Questionnaire resources that define the specific clinical data elements required for a PA request, enabling auto-population from the EHR and reducing manual documentation burden.</p>
+    </div>
+    <div class="ig-card">
+        <div class="ig-tag">Da Vinci PAS</div>
+        <h4>Prior Authorization Support</h4>
+        <p>Handles the actual submission of PA requests and receipt of decisions through FHIR, replacing fax-based and portal-based workflows with structured electronic exchange.</p>
+    </div>
+</div>
+
+<h2>Compliance Dates</h2>
+<h3>API Implementation (2027)</h3>
+<ul>
+    <li><strong>MA organizations &amp; state Medicaid/CHIP FFS programs:</strong> January 1, 2027</li>
+    <li><strong>Medicaid managed care plans &amp; CHIP managed care entities:</strong> Rating period beginning on or after January 1, 2027</li>
+    <li><strong>QHP issuers on the FFEs:</strong> Plan years beginning on or after January 1, 2027</li>
+</ul>
+<h3>Process Requirements (2026)</h3>
+<ul>
+    <li><strong>MA organizations &amp; state Medicaid/CHIP FFS programs:</strong> January 1, 2026</li>
+    <li><strong>Managed care &amp; CHIP managed care:</strong> Rating period beginning on or after January 1, 2026</li>
+    <li><strong>QHP issuers on the FFEs:</strong> Plan years beginning on or after January 1, 2026</li>
+</ul>
+
+<p><strong>Note:</strong> QHP issuers on the FFEs are required to implement the PA API and the public metrics reporting but are exempt from the mandated response timeframes (72-hour/7-day requirements).</p>
+
+<h2>Electronic Prior Authorization Measures (MIPS &amp; Promoting Interoperability)</h2>
+<p>To drive provider-side adoption of the Prior Authorization API, CMS added new "Electronic Prior Authorization" measures under both the MIPS Promoting Interoperability performance category and the Medicare Promoting Interoperability Program. Starting with the CY 2027 performance period, eligible clinicians, hospitals, and CAHs must report a yes/no attestation (modified from the originally proposed numerator/denominator approach) regarding their use of the Prior Authorization API.</p>
+
+<div class="cta-inline">
+    <a href="/compliance-timeline" class="cta-primary">Next: Compliance Timeline →</a>
+    <a href="/payer-to-payer-api" class="cta-secondary">← Payer-to-Payer API</a>
+</div>
+```
+
+</div>
+
+<footer><p>CMS-0057-F.com is an independent educational resource. Not affiliated with CMS or HHS.<br>&copy; 2024–2026 CMS-0057-F.com</p></footer>
+</body>
+</html>
