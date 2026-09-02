@@ -1,0 +1,9 @@
+{
+  "name": "cms-0057-f",
+  "private": true,
+  "description": "Static educational site for cms-0057-f.com",
+  "scripts": {
+    "build": "node -e \"console.log('static site, nothing to compile')\"",
+    "deploy": "wrangler deploy"
+  }
+}
