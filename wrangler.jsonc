@@ -2,7 +2,6 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "cms-0057-f",
   "compatibility_date": "2025-09-27",
-  "preview_urls": true,
   "observability": {
     "enabled": true
   },
@@ -10,5 +9,8 @@
     "directory": "./public",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
-  }
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
 }
