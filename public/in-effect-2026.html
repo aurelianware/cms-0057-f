@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS-0057-F in 2026 | What is in effect vs January 2027 APIs</title>
+    <meta name="description" content="What CMS-0057-F already requires in 2026 (72-hour / 7-day prior auth, denial reasons, public metrics) versus the four FHIR APIs still due January 1, 2027. Independent guide from Aurelianware.">
+    <meta name="keywords" content="Patient Access API, CMS-0057-F, FHIR Patient Access, HL7 FHIR R4, USCDI, patient health data API, claims data API, prior authorization patient access, SMART App Launch, OAuth 2.0, healthcare interoperability">
+    <link rel="canonical" href="https://cms-0057-f.com/in-effect-2026">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <link rel="stylesheet" href="/css/nav-extra.css">
+    <meta property="og:title" content="CMS-0057-F in 2026 — what is in effect">
+    <meta property="og:description" content="Operational provisions are in force. FHIR APIs remain a 2027 deadline. Independent educational guide.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "CMS-0057-F in 2026: operational provisions vs API deadline",
+        "description": "Status of CMS-0057-F as of September 2026: process requirements in effect, FHIR APIs due 2027.",
+        "url": "https://cms-0057-f.com/in-effect-2026",
+        "about": { "@type": "Thing", "name": "CMS-0057-F 2026 operational requirements" },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cms-0057-f.com/" },
+                { "@type": "ListItem", "position": 2, "name": "2026 status", "item": "https://cms-0057-f.com/in-effect-2026" }
+            ]
+        }
+    }
+    </script>
+    <style>
+        :root{--bg-primary:#0a0e17;--bg-secondary:#0f1420;--bg-card:#141925;--bg-card-hover:#1a2030;--border:#1e2738;--border-accent:#2a3a5c;--text-primary:#e8ecf4;--text-secondary:#8b95a8;--text-muted:#5c6578;--accent-blue:#4a9eff;--accent-cyan:#22d3ee;--accent-green:#34d399;--accent-amber:#f59e0b;--accent-rose:#f472b6;--accent-purple:#a78bfa;--font-body:'DM Sans',-apple-system,sans-serif;--font-display:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);line-height:1.7;-webkit-font-smoothing:antialiased}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,23,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem}
+        .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+        .nav-logo{font-family:var(--font-mono);font-size:.85rem;font-weight:500;color:var(--accent-blue);text-decoration:none;letter-spacing:.05em}
+        .nav-logo span{color:var(--text-muted)}
+        .nav-links{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap}
+        .nav-links a{color:var(--text-secondary);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.02em;transition:color .2s}
+        .nav-links a:hover{color:var(--text-primary)}
+        .nav-links a.active{color:var(--accent-cyan)}
+
+    .page-header{padding:8rem 2rem 4rem;max-width:900px;margin:0 auto}
+    .breadcrumb{font-size:.75rem;color:var(--text-muted);margin-bottom:2rem;font-family:var(--font-mono)}
+    .breadcrumb a{color:var(--text-muted);text-decoration:none}
+    .breadcrumb a:hover{color:var(--accent-blue)}
+    .page-header h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.2rem);font-weight:400;line-height:1.2;margin-bottom:1.25rem}
+    .page-header h1 em{font-style:italic;color:var(--accent-cyan)}
+    .page-header .lead{font-size:1.1rem;color:var(--text-secondary);line-height:1.8;max-width:700px}
+
+    .content{max-width:900px;margin:0 auto;padding:0 2rem 5rem}
+    .content h2{font-family:var(--font-display);font-size:1.8rem;font-weight:400;margin:3.5rem 0 1rem;padding-top:2rem;border-top:1px solid var(--border)}
+    .content h3{font-size:1.1rem;font-weight:600;margin:2rem 0 .75rem;color:var(--accent-cyan)}
+    .content p{color:var(--text-secondary);margin-bottom:1.25rem;font-size:.95rem;line-height:1.85}
+    .content ul,.content ol{color:var(--text-secondary);margin:0 0 1.5rem 1.5rem;font-size:.95rem}
+    .content li{margin-bottom:.65rem;line-height:1.7}
+    .content strong{color:var(--text-primary);font-weight:600}
+
+    .info-box{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent-cyan);border-radius:0 8px 8px 0;padding:1.5rem 1.75rem;margin:2rem 0;font-size:.9rem;color:var(--text-secondary);line-height:1.8}
+    .info-box strong{color:var(--accent-cyan)}
+
+    .data-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin:2rem 0}
+    .data-item{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem}
+    .data-item h4{font-size:.85rem;font-weight:600;margin-bottom:.5rem;color:var(--text-primary)}
+    .data-item p{font-size:.82rem;color:var(--text-secondary);margin:0;line-height:1.65}
+
+    .cta-inline{display:flex;gap:1rem;margin:3rem 0;flex-wrap:wrap}
+    .cta-inline a{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;border-radius:8px;font-size:.88rem;font-weight:600;text-decoration:none;transition:all .2s}
+    .cta-primary{background:var(--accent-blue);color:#fff}
+    .cta-primary:hover{background:#5aabff;transform:translateY(-1px)}
+    .cta-secondary{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border)}
+    .cta-secondary:hover{border-color:var(--border-accent)}
+
+    footer{padding:3rem 2rem;border-top:1px solid var(--border);text-align:center}
+    footer p{font-size:.78rem;color:var(--text-muted);line-height:1.8;max-width:700px;margin:0 auto}
+
+    @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
+</style>
+
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/in-effect-2026" class="active">2026 status</a></li>
+            <li><a href="/patient-access-api">Patient Access API</a></li>
+            <li><a href="/provider-access-api">Provider Access API</a></li>
+            <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+            <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+            <li><a href="/compliance-timeline">Timeline</a></li>
+            <li><a href="/fact-sheet">Fact Sheet</a></li>
+            <li><a href="/faq">FAQ</a></li>
+        </ul>
+    </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+</nav>
+
+<div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> / 2026 status</div>
+    <h1>CMS-0057-F <em>in 2026</em></h1>
+    <p class="lead">As of September 2026 the operational prior-authorization provisions are in force. The four FHIR APIs are still a January 1, 2027 problem. Do not conflate the two.</p>
+</div>
+<div class="content">
+<h2>What is already in effect</h2>
+<p>Impacted payers (except QHP issuers on the FFEs) have been required, since <strong>January 1, 2026</strong>, to:</p>
+<ul>
+  <li>Respond to urgent / expedited prior authorization requests within <strong>72 hours</strong>.</li>
+  <li>Respond to standard requests within <strong>7 calendar days</strong>.</li>
+  <li>Include a <strong>specific reason</strong> when denying a prior authorization.</li>
+  <li><strong>Publicly report</strong> prior authorization metrics (approvals, denials, response times).</li>
+  <li>Begin <strong>annual Patient Access API utilization reporting</strong> to CMS.</li>
+</ul>
+<p>Source: the <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> and the <a href="https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability">Federal Register text of CMS-0057-F</a>.</p>
+
+<div class="info-box">
+  <strong>Not yet due:</strong> standing up the four FHIR APIs. CMS delayed those from 2026 to <strong>January 1, 2027</strong> after comments. Treating “we post PA metrics” as “we are API-compliant” is a category error.
+</div>
+
+<h2>What is still January 1, 2027</h2>
+<div class="data-grid">
+  <div class="data-item"><h4>Patient Access API</h4><p>Enhanced with prior authorization data. Builds on the 2020 Patient Access mandate.</p></div>
+  <div class="data-item"><h4>Provider Access API</h4><p>New. In-network providers retrieve claims, encounter, USCDI, and PA data for attributed patients, with opt-out.</p></div>
+  <div class="data-item"><h4>Payer-to-Payer API</h4><p>Up to five years of claims, clinical, and PA history when a member changes plans. Opt-in.</p></div>
+  <div class="data-item"><h4>Prior Authorization API</h4><p>Electronic requirement check, documentation, submit, and decision. Da Vinci CRD / DTR / PAS are the practical path; the rule does not name those IGs as the only legal option.</p></div>
+</div>
+<p>Date trigger varies by payer type: MA and state Medicaid/CHIP FFS use the hard January 1 date. Managed care and QHP issuers on FFEs use the rating / plan year beginning on or after that date. See the <a href="/compliance-timeline">timeline</a>.</p>
+
+<h2>Standards: rule text vs what teams ship</h2>
+<p>The final rule still points at 45 CFR 170.215 versions that include US Core IG STU 3.1.1, SMART App Launch 1.0.0, and USCDI v1. Several of those HTI-1 expiration dates have passed. CMS allows voluntary adoption of later versions. Production teams commonly implement a later US Core as a superset of the rule-text profiles. <strong>Document the version you actually serve</strong> in your capability statement and conformance evidence.</p>
+
+<h2>What this site is not</h2>
+<p>cms-0057-f.com is an independent educational resource published by Aurelianware, Inc. It is not CMS, not HHS, and not a certification. For a vendor-neutral overlay that implements the APIs beside QNXT, Facets, or HealthEdge, see the product page — not this explainer.</p>
+
+<div class="cta-inline">
+  <a class="cta-primary" href="https://cloudhealthoffice.com/cms-0057f-compliance">CHO compliance layer →</a>
+  <a class="cta-secondary" href="/compliance-timeline">Full timeline →</a>
+</div>
+</div>
+<footer>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS rule page</a> ·
+      <a href="https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability">Federal Register (CMS-0057-F)</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87). Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
+</footer>
+
+    <script src="/js/site.js" defer></script>
+</body>
+</html>

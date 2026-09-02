@@ -8,6 +8,15 @@
     <meta name="description" content="Answers to the most common questions about CMS-0057-F: who must comply, compliance deadlines, FHIR API requirements, prior authorization reforms, drug exclusions, extensions, exemptions, enforcement, MIPS measures, and technical standards.">
     <meta name="keywords" content="CMS-0057-F FAQ, CMS-0057-F questions, interoperability rule FAQ, prior authorization rule questions, CMS-0057-F compliance questions, FHIR API FAQ, prior auth reform FAQ, Medicare Advantage interoperability, Medicaid FHIR API, QHP prior authorization, CMS interoperability FAQ 2024">
     <link rel="canonical" href="https://cms-0057-f.com/faq">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <link rel="stylesheet" href="/css/nav-extra.css">
     <meta property="og:title" content="CMS-0057-F Frequently Asked Questions">
     <meta property="og:description" content="Comprehensive FAQ covering compliance, APIs, timelines, enforcement, and technical standards under the CMS Interoperability and Prior Authorization final rule.">
     <meta property="og:type" content="article">
@@ -32,7 +41,7 @@
             {
                 "@type": "Question",
                 "name": "When are the CMS-0057-F compliance deadlines?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Prior authorization process requirements (response timeframes, specific denial reasons, public metrics) are due January 1, 2026. All four FHIR API requirements (Patient Access API enhancement, Provider Access API, Payer-to-Payer API, Prior Authorization API) are due January 1, 2027." }
+                "acceptedAnswer": { "@type": "Answer", "text": "Prior authorization process requirements (response timeframes, specific denial reasons, public metrics) took effect January 1, 2026. All four FHIR API requirements (Patient Access API enhancement, Provider Access API, Payer-to-Payer API, Prior Authorization API) are due January 1, 2027." }
             },
             {
                 "@type": "Question",
@@ -42,7 +51,7 @@
             {
                 "@type": "Question",
                 "name": "What are the mandated prior authorization response times?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Impacted payers (except QHP issuers on the FFEs) must respond to urgent/expedited PA requests within 72 hours and standard requests within 7 calendar days. These process requirements take effect January 1, 2026." }
+                "acceptedAnswer": { "@type": "Answer", "text": "Impacted payers (except QHP issuers on the FFEs) must respond to urgent/expedited PA requests within 72 hours and standard requests within 7 calendar days. These process requirements took effect January 1, 2026." }
             },
             {
                 "@type": "Question",
@@ -67,7 +76,6 @@
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);line-height:1.7;-webkit-font-smoothing:antialiased}
 
-```
     nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,23,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem}
     .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
     .nav-logo{font-family:var(--font-mono);font-size:.85rem;font-weight:500;color:var(--accent-blue);text-decoration:none;letter-spacing:.05em}.nav-logo span{color:var(--text-muted)}
@@ -126,24 +134,28 @@
     footer p{font-size:.78rem;color:var(--text-muted);line-height:1.8;max-width:700px;margin:0 auto}
     @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
 </style>
-```
 
 </head>
 <body>
 
-<nav><div class="nav-inner">
-    <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
-    <ul class="nav-links">
-        <li><a href="/">Overview</a></li>
-        <li><a href="/patient-access-api">Patient Access API</a></li>
-        <li><a href="/provider-access-api">Provider Access API</a></li>
-        <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
-        <li><a href="/prior-authorization-api">Prior Auth API</a></li>
-        <li><a href="/compliance-timeline">Timeline</a></li>
-        <li><a href="/fact-sheet">Fact Sheet</a></li>
-        <li><a href="/faq" class="active">FAQ</a></li>
-    </ul>
-</div></nav>
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/in-effect-2026">2026 status</a></li>
+            <li><a href="/patient-access-api">Patient Access API</a></li>
+            <li><a href="/provider-access-api">Provider Access API</a></li>
+            <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+            <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+            <li><a href="/compliance-timeline">Timeline</a></li>
+            <li><a href="/fact-sheet">Fact Sheet</a></li>
+            <li><a href="/faq" class="active">FAQ</a></li>
+        </ul>
+    </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+</nav>
 
 <div class="page-header">
     <div class="breadcrumb"><a href="/">Home</a> / FAQ</div>
@@ -153,7 +165,6 @@
 
 <div class="content">
 
-```
 <!-- GENERAL -->
 <div class="faq-category cat-general"><span class="cat-dot"></span> General</div>
 <div class="faq-list">
@@ -429,32 +440,23 @@
     <div class="cta-box">
         <h2>Build for CMS-0057-F Compliance</h2>
         <p>Cloud Health Office is a vendor-neutral, Kubernetes-native platform purpose-built for CMS-0057-F — from FHIR APIs to prior authorization decision automation.</p>
-        <a href="https://cloudhealthoffice.com" class="cta-btn">Explore Cloud Health Office →</a>
+        <a href="https://cloudhealthoffice.com/cms-0057f-compliance" class="cta-btn">Read the CHO compliance layer →</a>
     </div>
 </div>
-```
 
 </div>
 
 <footer>
-    <p>CMS-0057-F.com is an independent educational resource. Not affiliated with CMS or HHS.<br>
-    Content is based on the publicly available CMS-0057-F final rule (RIN 0938-AU87). For official regulatory text, refer to the <a href="https://www.federalregister.gov/" style="color:var(--accent-blue);">Federal Register</a>.<br>
-    &copy; 2024–2026 CMS-0057-F.com. All rights reserved.</p>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS rule page</a> ·
+      <a href="https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability">Federal Register (CMS-0057-F)</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87). Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
 </footer>
 
-<script>
-document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-        const item = q.parentElement;
-        // Close siblings in same category
-        const list = item.parentElement;
-        list.querySelectorAll('.faq-item.open').forEach(open => {
-            if (open !== item) open.classList.remove('open');
-        });
-        item.classList.toggle('open');
-    });
-});
-</script>
-
+    <script src="/js/site.js" defer></script>
 </body>
 </html>

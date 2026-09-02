@@ -9,6 +9,15 @@
     <meta name="description" content="Complete CMS-0057-F compliance timeline for 2026 and 2027 deadlines. Prior authorization process requirements, FHIR API mandates, MIPS measures, extension and exemption pathways for Medicaid, CHIP, and QHP issuers.">
     <meta name="keywords" content="CMS-0057-F compliance dates, CMS-0057-F timeline, January 2026 deadline, January 2027 deadline, prior authorization compliance, FHIR API deadline, Medicaid compliance extension, CHIP exemption, QHP exception, CMS interoperability enforcement, MIPS promoting interoperability 2027">
     <link rel="canonical" href="https://cms-0057-f.com/compliance-timeline">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <link rel="stylesheet" href="/css/nav-extra.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -51,7 +60,6 @@
         .content li{margin-bottom:.65rem;line-height:1.7}
         .content strong{color:var(--text-primary);font-weight:600}
 
-```
     /* TIMELINE BLOCKS */
     .tl-block{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem;margin:1.5rem 0;position:relative;overflow:hidden}
     .tl-block::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px}
@@ -87,34 +95,37 @@
     footer p{font-size:.78rem;color:var(--text-muted);line-height:1.8;max-width:700px;margin:0 auto}
     @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
 </style>
-```
 
 </head>
 <body>
 
-<nav><div class="nav-inner">
-    <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
-    <ul class="nav-links">
-        <li><a href="/">Overview</a></li>
-        <li><a href="/patient-access-api">Patient Access API</a></li>
-        <li><a href="/provider-access-api">Provider Access API</a></li>
-        <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
-        <li><a href="/prior-authorization-api">Prior Auth API</a></li>
-        <li><a href="/compliance-timeline">Timeline</a></li>
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/in-effect-2026">2026 status</a></li>
+            <li><a href="/patient-access-api">Patient Access API</a></li>
+            <li><a href="/provider-access-api">Provider Access API</a></li>
+            <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+            <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+            <li><a href="/compliance-timeline" class="active">Timeline</a></li>
             <li><a href="/fact-sheet">Fact Sheet</a></li>
             <li><a href="/faq">FAQ</a></li>
-    </ul>
-</div></nav>
+        </ul>
+    </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+</nav>
 
 <div class="page-header">
     <div class="breadcrumb"><a href="/">Home</a> / Compliance Timeline</div>
     <h1>CMS-0057-F <em>Compliance Timeline</em></h1>
-    <p class="lead">A phased compliance schedule spanning 2024 through 2029, with prior authorization process improvements in 2026, full FHIR API mandates in 2027, and MIPS/Promoting Interoperability measures following in 2027–2029.</p>
+    <p class="lead">As of September 2026 the operational prior-authorization provisions are in force. FHIR API go-live remains January 1, 2027 (with payer-type date variations). MIPS electronic prior authorization attestation begins in the CY 2027 performance period.</p>
 </div>
 
 <div class="content">
 
-```
 <h2>Complete Timeline</h2>
 
 <div class="tl-block tl-2024">
@@ -129,7 +140,7 @@
 </div>
 
 <div class="tl-block tl-2026">
-    <div class="tl-year tl-year-amber">January 1, 2026</div>
+    <div class="tl-year tl-year-amber">January 1, 2026 — IN EFFECT</div>
     <div class="tl-subtitle">Prior Authorization Process & Reporting Requirements</div>
     <ul class="tl-items">
         <li><strong>PA response timeframes enforced:</strong> 72 hours for urgent requests, 7 calendar days for standard (all impacted payers except QHP issuers on FFEs)</li>
@@ -198,13 +209,22 @@
 <p>CMS has emphasized that the approximately three-year implementation window is intended to be sufficient for all impacted payers to meet these requirements. The availability of extensions, exemptions, and exceptions is meant for genuinely exceptional circumstances — not as a routine accommodation.</p>
 
 <div class="cta-inline">
-    <a href="https://cloudhealthoffice.com" class="cta-cho">Explore Cloud Health Office →</a>
+    <a href="https://cloudhealthoffice.com/cms-0057f-compliance" class="cta-cho">CHO compliance layer →</a>
     <a href="/" class="cta-secondary">← Back to Overview</a>
 </div>
-```
 
 </div>
 
-<footer><p>CMS-0057-F.com is an independent educational resource. Not affiliated with CMS or HHS.<br>&copy; 2024–2026 CMS-0057-F.com</p></footer>
+<footer>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS rule page</a> ·
+      <a href="https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability">Federal Register (CMS-0057-F)</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87). Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
+</footer>
+    <script src="/js/site.js" defer></script>
 </body>
 </html>

@@ -8,6 +8,15 @@
     <meta name="description" content="Complete guide to the Patient Access API requirements under CMS-0057-F. Learn about FHIR R4 implementation, USCDI data classes, prior authorization data sharing, compliance dates, and reporting obligations for impacted payers.">
     <meta name="keywords" content="Patient Access API, CMS-0057-F, FHIR Patient Access, HL7 FHIR R4, USCDI, patient health data API, claims data API, prior authorization patient access, SMART App Launch, OAuth 2.0, healthcare interoperability">
     <link rel="canonical" href="https://cms-0057-f.com/patient-access-api">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <link rel="stylesheet" href="/css/nav-extra.css">
     <meta property="og:title" content="Patient Access API — CMS-0057-F Requirements">
     <meta property="og:description" content="What health plans need to know about implementing the Patient Access API under the CMS Interoperability and Prior Authorization final rule.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +52,6 @@
         .nav-links a:hover{color:var(--text-primary)}
         .nav-links a.active{color:var(--accent-cyan)}
 
-```
     .page-header{padding:8rem 2rem 4rem;max-width:900px;margin:0 auto}
     .breadcrumb{font-size:.75rem;color:var(--text-muted);margin-bottom:2rem;font-family:var(--font-mono)}
     .breadcrumb a{color:var(--text-muted);text-decoration:none}
@@ -80,7 +88,6 @@
 
     @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
 </style>
-```
 
 </head>
 <body>
@@ -88,8 +95,10 @@
 <nav>
     <div class="nav-inner">
         <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
-        <ul class="nav-links">
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
             <li><a href="/">Overview</a></li>
+            <li><a href="/in-effect-2026">2026 status</a></li>
             <li><a href="/patient-access-api" class="active">Patient Access API</a></li>
             <li><a href="/provider-access-api">Provider Access API</a></li>
             <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
@@ -99,6 +108,7 @@
             <li><a href="/faq">FAQ</a></li>
         </ul>
     </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
 </nav>
 
 <div class="page-header">
@@ -109,7 +119,6 @@
 
 <div class="content">
 
-```
 <h2>What the Patient Access API Requires</h2>
 <p>The Patient Access API must allow patients to access their health data through third-party applications of their choice. Using HL7 FHIR Release 4.0.1 as the foundational standard, payers expose a standards-based endpoint secured with OAuth 2.0 and SMART App Launch protocols that any authorized consumer app can connect to.</p>
 
@@ -177,13 +186,20 @@
     <a href="/provider-access-api" class="cta-primary">Next: Provider Access API →</a>
     <a href="/" class="cta-secondary">← Back to Overview</a>
 </div>
-```
 
 </div>
 
 <footer>
-    <p>CMS-0057-F.com is an independent educational resource. Not affiliated with CMS or HHS.<br>&copy; 2024–2026 CMS-0057-F.com</p>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS rule page</a> ·
+      <a href="https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability">Federal Register (CMS-0057-F)</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87). Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
 </footer>
 
+    <script src="/js/site.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,16 @@
+{
+  "name": "cms-0057-f",
+  "private": true,
+  "description": "Static educational site for cms-0057-f.com",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "echo static site",
+    "preview": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.128.0"
+  }
+}

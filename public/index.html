@@ -8,6 +8,15 @@
     <meta name="description" content="Comprehensive guide to the CMS-0057-F final rule on advancing interoperability and improving prior authorization for Medicare Advantage, Medicaid, CHIP, and QHP payers. Compliance deadlines, API requirements, and implementation guidance.">
     <meta name="keywords" content="CMS-0057-F, interoperability, prior authorization, FHIR API, Patient Access API, Provider Access API, Payer-to-Payer API, Prior Authorization API, Medicare Advantage, Medicaid managed care, CHIP, QHP, HL7 FHIR, healthcare compliance">
     <link rel="canonical" href="https://cms-0057-f.com/">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <link rel="stylesheet" href="/css/nav-extra.css">
     <meta property="og:title" content="CMS-0057-F Final Rule | Complete Compliance Guide">
     <meta property="og:description" content="Everything health plans need to know about the CMS Interoperability and Prior Authorization final rule — APIs, timelines, and implementation requirements.">
     <meta property="og:type" content="website">
@@ -25,15 +34,13 @@
         "url": "https://cms-0057-f.com/",
         "publisher": {
             "@type": "Organization",
-            "name": "CMS-0057-F.com"
+            "name": "Aurelianware, Inc.",
+            "url": "https://cloudhealthoffice.com"
         },
         "about": {
-            "@type": "GovernmentService",
-            "name": "CMS Interoperability and Prior Authorization Final Rule",
-            "serviceOperator": {
-                "@type": "GovernmentOrganization",
-                "name": "Centers for Medicare & Medicaid Services"
-            }
+            "@type": "Legislation",
+            "name": "CMS Interoperability and Prior Authorization Final Rule (CMS-0057-F)",
+            "legislationIdentifier": "CMS-0057-F"
         },
         "breadcrumb": {
             "@type": "BreadcrumbList",
@@ -70,7 +77,6 @@
             --font-mono: 'JetBrains Mono', monospace;
         }
 
-```
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -365,16 +371,42 @@
         .timeline-item { gap: 1.25rem; }
     }
 </style>
-```
 
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://cms-0057-f.com/#org",
+            "name": "Aurelianware, Inc.",
+            "url": "https://cloudhealthoffice.com",
+            "sameAs": [
+              "https://github.com/aurelianware/cloudhealthoffice",
+              "https://cloudhealthoffice.com"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://cms-0057-f.com/#site",
+            "url": "https://cms-0057-f.com/",
+            "name": "CMS-0057-F.com",
+            "description": "Independent educational guide to the CMS Interoperability and Prior Authorization final rule.",
+            "publisher": { "@id": "https://cms-0057-f.com/#org" }
+          }
+        ]
+    }
+    </script>
 </head>
 <body>
 
 <nav>
     <div class="nav-inner">
         <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
-        <ul class="nav-links">
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
             <li><a href="/" class="active">Overview</a></li>
+            <li><a href="/in-effect-2026">2026 status</a></li>
             <li><a href="/patient-access-api">Patient Access API</a></li>
             <li><a href="/provider-access-api">Provider Access API</a></li>
             <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
@@ -384,11 +416,12 @@
             <li><a href="/faq">FAQ</a></li>
         </ul>
     </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
 </nav>
 
 <header class="hero">
     <div class="hero-inner">
-        <div class="hero-badge">Final Rule — Published January 2024</div>
+        <div class="hero-badge">Independent guide · Updated September 2026</div>
         <h1>CMS-0057-F:<br>Advancing <em>Interoperability</em> &amp; Prior Authorization</h1>
         <p class="hero-sub">
             The definitive guide to the CMS final rule requiring Medicare Advantage organizations, Medicaid managed care plans, state Medicaid and CHIP agencies, and QHP issuers to implement FHIR-based APIs and streamline prior authorization processes.
@@ -421,7 +454,6 @@
         CMS-0057-F establishes enforceable requirements for impacted payers to implement standards-based FHIR APIs, accelerate prior authorization decisions, and publicly report transparency metrics. It builds upon the 2020 CMS Interoperability and Patient Access final rule and represents the most significant federal push toward real-time health data exchange.
     </p>
 
-```
 <div class="api-grid">
     <a href="/patient-access-api" class="api-card">
         <div class="api-card-icon icon-patient">👤</div>
@@ -460,7 +492,6 @@
         </div>
     </a>
 </div>
-```
 
 </section>
 
@@ -488,15 +519,15 @@
     <div class="section-label">Key Dates</div>
     <h2>Compliance Timeline</h2>
     <p class="section-desc">
-        CMS finalized a phased compliance schedule. Prior authorization process improvements take effect in 2026, while API development requirements are due in 2027.
+        CMS finalized a phased schedule. <strong style="color:var(--text-primary)">Prior authorization process requirements have been in effect since January 1, 2026.</strong> The four FHIR APIs remain due January 1, 2027.
     </p>
     <div class="timeline">
         <div class="timeline-item">
             <div class="timeline-dot dot-active">&#10003;</div>
             <div class="timeline-content">
-                <div class="timeline-date">January 1, 2026</div>
+                <div class="timeline-date">January 1, 2026 — in effect</div>
                 <h4>Prior Authorization Process Requirements</h4>
-                <p>Payers must provide specific denial reasons, respond within mandated timeframes (72 hours urgent / 7 calendar days standard), and publicly report prior authorization metrics. Patient Access API metrics reporting to CMS also begins.</p>
+                <p>Now in force. Impacted payers (except QHP issuers on the FFEs) must provide specific denial reasons, respond within 72 hours (urgent) / 7 calendar days (standard), and publicly report prior authorization metrics. Annual Patient Access API metrics reporting to CMS also began.</p>
             </div>
         </div>
         <div class="timeline-item">
@@ -524,7 +555,7 @@
     <div class="section-label">Technical Standards</div>
     <h2>Required Interoperability Standards</h2>
     <p class="section-desc">
-        CMS mandates specific HL7 FHIR standards codified at 45 CFR 170.215, aligned with the ONC HTI-1 final rule. Payers may voluntarily adopt newer versions ahead of regulatory updates.
+        The rule text at 45 CFR 170.215 still cites the versions below. Several of those HTI-1 expiration dates have passed. Payers may voluntarily adopt later US Core / USCDI versions as a superset — document what you actually serve. See <a href="/in-effect-2026" style="color:var(--accent-blue)">2026 status</a>.
     </p>
     <div style="overflow-x:auto;">
     <table class="standards-table">
@@ -543,12 +574,12 @@
             </tr>
             <tr>
                 <td style="color:var(--text-primary);font-weight:500;">US Core IG</td>
-                <td>HL7 FHIR US Core IG STU 3.1.1 (expires Jan 1, 2026)</td>
+                <td>HL7 FHIR US Core IG STU 3.1.1 (rule text; HTI-1 expiration was Jan 1, 2026)</td>
                 <td><code>45 CFR 170.215(b)(1)(i)</code></td>
             </tr>
             <tr>
                 <td style="color:var(--text-primary);font-weight:500;">SMART App Launch</td>
-                <td>SMART Application Launch Framework IG 1.0.0 (expires Jan 1, 2026)</td>
+                <td>SMART Application Launch Framework IG 1.0.0 (rule text; HTI-1 expiration was Jan 1, 2026)</td>
                 <td><code>45 CFR 170.215(c)(1)</code></td>
             </tr>
             <tr>
@@ -563,7 +594,7 @@
             </tr>
             <tr>
                 <td style="color:var(--text-primary);font-weight:500;">Content Standard</td>
-                <td>USCDI v1 (expires Jan 1, 2026) → USCDI v3</td>
+                <td>USCDI v1 (rule text) — later USCDI versions may be adopted voluntarily</td>
                 <td><code>45 CFR 170.213</code></td>
             </tr>
         </tbody>
@@ -606,26 +637,25 @@
 
 <section class="cta-section">
     <div class="cta-box">
-        <h2>Need a Compliance Platform?</h2>
-        <p>Cloud Health Office is a vendor-neutral, Kubernetes-native platform purpose-built for CMS-0057-F compliance — from FHIR APIs to prior authorization automation.</p>
-        <a href="https://cloudhealthoffice.com" class="cta-btn">Explore Cloud Health Office →</a>
+        <h2>Implementing this on a core admin system?</h2>
+        <p>Cloud Health Office is a vendor-neutral overlay for CMS-0057-F — FHIR APIs and prior authorization support without replacing QNXT, Facets, or HealthEdge. Source-available.</p>
+        <a href="https://cloudhealthoffice.com/cms-0057f-compliance" class="cta-btn">Read the CHO compliance layer →</a>
     </div>
 </section>
 
 <footer>
-    <p>CMS-0057-F.com is an independent educational resource. Not affiliated with CMS or HHS.<br>
-    Content is based on the publicly available CMS-0057-F final rule (RIN 0938-AU87). For official regulatory text, refer to the <a href="https://www.federalregister.gov/" style="color:var(--accent-blue);">Federal Register</a>.<br>
-    &copy; 2024–2026 CMS-0057-F.com. All rights reserved.</p>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS rule page</a> ·
+      <a href="https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability">Federal Register (CMS-0057-F)</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87). Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
 </footer>
 
-<script>
-document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-        const item = q.parentElement;
-        item.classList.toggle('open');
-    });
-});
-</script>
 
+
+    <script src="/js/site.js" defer></script>
 </body>
 </html>
