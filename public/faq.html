@@ -76,7 +76,6 @@
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);line-height:1.7;-webkit-font-smoothing:antialiased}
 
-```
     nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,23,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem}
     .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
     .nav-logo{font-family:var(--font-mono);font-size:.85rem;font-weight:500;color:var(--accent-blue);text-decoration:none;letter-spacing:.05em}.nav-logo span{color:var(--text-muted)}
@@ -135,7 +134,6 @@
     footer p{font-size:.78rem;color:var(--text-muted);line-height:1.8;max-width:700px;margin:0 auto}
     @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
 </style>
-```
 
 </head>
 <body>
@@ -167,7 +165,6 @@
 
 <div class="content">
 
-```
 <!-- GENERAL -->
 <div class="faq-category cat-general"><span class="cat-dot"></span> General</div>
 <div class="faq-list">
@@ -446,7 +443,6 @@
         <a href="https://cloudhealthoffice.com/cms-0057f-compliance" class="cta-btn">Read the CHO compliance layer →</a>
     </div>
 </div>
-```
 
 </div>
 
@@ -460,20 +456,6 @@
     <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87). Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
     &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
 </footer>
-
-<script>
-document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-        const item = q.parentElement;
-        // Close siblings in same category
-        const list = item.parentElement;
-        list.querySelectorAll('.faq-item.open').forEach(open => {
-            if (open !== item) open.classList.remove('open');
-        });
-        item.classList.toggle('open');
-    });
-});
-</script>
 
     <script src="/js/site.js" defer></script>
 </body>

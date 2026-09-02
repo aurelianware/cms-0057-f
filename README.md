@@ -17,7 +17,7 @@ Product implementation (separate site, commercial intent):
 
 ## Deploy
 
-Cloudflare Workers static assets (`wrangler.toml`). After merging this tree:
+Cloudflare Workers static assets (`wrangler.jsonc`, files in `public/`). After merging this tree:
 
 ```
 npx wrangler deploy

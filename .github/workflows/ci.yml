@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Guard against stray Markdown fences in HTML
+        run: |
+          if grep -R --include='*.html' -n '```' public; then
+            echo "Stray Markdown code fences found in HTML" >&2
+            exit 1
+          fi
+      - name: Validate Wrangler config
+        run: npx wrangler deploy --dry-run --outdir /tmp/wrangler-dist
