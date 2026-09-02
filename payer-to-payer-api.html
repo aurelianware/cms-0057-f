@@ -8,6 +8,15 @@
     <meta name="description" content="Guide to the Payer-to-Payer API under CMS-0057-F. Requirements for automated health data exchange between payers when patients change coverage — including five-year data lookback, quarterly concurrent payer exchange, and patient opt-in processes.">
     <meta name="keywords" content="Payer-to-Payer API, CMS-0057-F, payer data exchange, health plan data portability, patient data transfer, care continuity, concurrent payer exchange, five year data lookback, FHIR payer exchange, health plan interoperability">
     <link rel="canonical" href="https://cms-0057-f.com/payer-to-payer-api">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <link rel="stylesheet" href="/css/nav-extra.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -66,19 +75,24 @@
 </head>
 <body>
 
-<nav><div class="nav-inner">
-    <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
-    <ul class="nav-links">
-        <li><a href="/">Overview</a></li>
-        <li><a href="/patient-access-api">Patient Access API</a></li>
-        <li><a href="/provider-access-api">Provider Access API</a></li>
-        <li><a href="/payer-to-payer-api" class="active">Payer-to-Payer API</a></li>
-        <li><a href="/prior-authorization-api">Prior Auth API</a></li>
-        <li><a href="/compliance-timeline">Timeline</a></li>
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/in-effect-2026">2026 status</a></li>
+            <li><a href="/patient-access-api">Patient Access API</a></li>
+            <li><a href="/provider-access-api">Provider Access API</a></li>
+            <li><a href="/payer-to-payer-api" class="active">Payer-to-Payer API</a></li>
+            <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+            <li><a href="/compliance-timeline">Timeline</a></li>
             <li><a href="/fact-sheet">Fact Sheet</a></li>
             <li><a href="/faq">FAQ</a></li>
-    </ul>
-</div></nav>
+        </ul>
+    </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+</nav>
 
 <div class="page-header">
     <div class="breadcrumb"><a href="/">Home</a> / Payer-to-Payer API</div>
@@ -157,6 +171,16 @@
 
 </div>
 
-<footer><p>CMS-0057-F.com is an independent educational resource. Not affiliated with CMS or HHS.<br>&copy; 2024–2026 CMS-0057-F.com</p></footer>
+<footer>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS rule page</a> ·
+      <a href="https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability">Federal Register (CMS-0057-F)</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87). Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
+</footer>
+    <script src="/js/site.js" defer></script>
 </body>
 </html>
