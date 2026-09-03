@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS-0057-F Implementation Guides | FHIR, Da Vinci & Payer Architecture</title>
+    <meta name="description" content="Practical CMS-0057-F implementation guides for health plan technology teams: FHIR for payers, CRD/DTR/PAS prior authorization, payer architecture, and core administration integration (QNXT, Facets, HealthEdge). Independent educational resource — not affiliated with CMS.">
+    <meta name="keywords" content="CMS-0057-F guides, FHIR for payers, Da Vinci implementation guides, CRD DTR PAS, payer interoperability architecture, CMS interoperability implementation, prior authorization API implementation">
+    <link rel="canonical" href="https://cms-0057-f.com/guides">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="CMS-0057-F Implementation Guides for Health Plans">
+    <meta property="og:description" content="Practical, vendor-neutral implementation guidance for CMS-0057-F: FHIR, Da Vinci CRD/DTR/PAS, payer architecture, and core administration integration.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cms-0057-f.com/guides">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <meta name="twitter:title" content="CMS-0057-F Implementation Guides for Health Plans">
+    <meta name="twitter:description" content="Practical, vendor-neutral CMS-0057-F implementation guidance for payer technology teams.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/nav-extra.css">
+    <link rel="stylesheet" href="/css/guides.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "CMS-0057-F Implementation Guides",
+        "description": "Practical implementation guides for CMS-0057-F: FHIR for payers, Da Vinci CRD/DTR/PAS, payer architecture, and core administration integration.",
+        "url": "https://cms-0057-f.com/guides",
+        "isPartOf": { "@type": "WebSite", "name": "CMS-0057-F.com", "url": "https://cms-0057-f.com/" },
+        "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cms-0057-f.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://cms-0057-f.com/guides" }
+            ]
+        }
+    }
+    </script>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/in-effect-2026">2026 status</a></li>
+            <li><a href="/patient-access-api">Patient Access API</a></li>
+            <li><a href="/provider-access-api">Provider Access API</a></li>
+            <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+            <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+            <li><a href="/compliance-timeline">Timeline</a></li>
+            <li><a href="/fact-sheet">Fact Sheet</a></li>
+            <li><a href="/guides" class="active">Guides</a></li>
+            <li><a href="/faq">FAQ</a></li>
+        </ul>
+    </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+</nav>
+
+<div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> / <span aria-current="page">Guides</span></div>
+    <span class="eyebrow">Implementation Guides</span>
+    <h1>CMS-0057-F <em>Implementation Guides</em></h1>
+    <p class="lead">Practical, vendor-neutral guidance for the health plan technology teams building toward CMS-0057-F. These evergreen guides pick up where the regulatory summaries leave off — moving from what the rule requires to how payer engineering, architecture, and interoperability teams can actually deliver it.</p>
+</div>
+
+<div class="content">
+
+<h2>CMS-0057-F Fundamentals</h2>
+<p>Start here if you are new to the rule. These pages summarize the regulation, its deadlines, and what is already in force.</p>
+<div class="card-grid">
+    <a href="/fact-sheet" class="card">
+        <span class="tag">Fact Sheet</span>
+        <h4>CMS-0057-F Fact Sheet</h4>
+        <p>Requirements, the four APIs, FHIR standards, and implementation deadlines at a glance — the primary reference hub.</p>
+    </a>
+    <a href="/in-effect-2026" class="card">
+        <span class="tag">Status</span>
+        <h4>What's in Effect in 2026</h4>
+        <p>Which prior authorization process requirements are already live versus the January 2027 API deadlines.</p>
+    </a>
+    <a href="/compliance-timeline" class="card">
+        <span class="tag">Timeline</span>
+        <h4>Compliance Timeline</h4>
+        <p>Phased deadlines, extension pathways, and enforcement across payer types.</p>
+    </a>
+</div>
+
+<h2>Required APIs</h2>
+<p>Detailed references for each of the four FHIR APIs mandated by the rule.</p>
+<div class="card-grid">
+    <a href="/patient-access-api" class="card">
+        <span class="tag">API</span>
+        <h4>Patient Access API</h4>
+        <p>Consumer-facing FHIR access to claims, clinical data, and prior authorization information.</p>
+    </a>
+    <a href="/provider-access-api" class="card">
+        <span class="tag">API</span>
+        <h4>Provider Access API</h4>
+        <p>Attributed-patient data access for in-network providers, including architecture and a payer checklist.</p>
+    </a>
+    <a href="/payer-to-payer-api" class="card">
+        <span class="tag">API</span>
+        <h4>Payer-to-Payer API</h4>
+        <p>Automated data exchange when members change plans — consent, provenance, reconciliation, and build-vs-buy.</p>
+    </a>
+    <a href="/prior-authorization-api" class="card">
+        <span class="tag">API</span>
+        <h4>Prior Authorization API</h4>
+        <p>Electronic PA discovery, documentation, and submission via the Da Vinci CRD/DTR/PAS workflow.</p>
+    </a>
+</div>
+
+<h2>FHIR and Da Vinci</h2>
+<p>Deeper technical guides for the standards and Da Vinci implementation guides that underpin the rule's APIs.</p>
+<div class="card-grid">
+    <a href="/guides/fhir-for-cms-0057-f" class="card">
+        <span class="tag">Guide</span>
+        <h4>FHIR for CMS-0057-F</h4>
+        <p>A practical FHIR guide for health plans: where FHIR fits across all four APIs, US Core, Da Vinci, SMART on FHIR, terminology, and mapping FHIR to existing payer data models.</p>
+    </a>
+    <a href="/guides/crd-dtr-pas-cms-0057-f" class="card">
+        <span class="tag">Guide</span>
+        <h4>CRD, DTR &amp; PAS Explained</h4>
+        <p>How the three Da Vinci prior authorization implementation guides fit together, where the payer API boundary sits, and where X12 still appears.</p>
+    </a>
+</div>
+
+<h2>Payer Architecture &amp; Core Administration</h2>
+<p>How the CMS-0057-F interoperability layer fits with established core administration platforms.</p>
+<div class="card-grid">
+    <a href="/guides/cms-0057-f-qnxt" class="card">
+        <span class="tag">Guide</span>
+        <h4>CMS-0057-F with QNXT</h4>
+        <p>A reference architecture for implementing the interoperability layer in front of a QNXT core administration platform using adapters.</p>
+    </a>
+</div>
+
+<div class="info-box">
+    <strong>Independent educational resource.</strong> These guides describe the regulation and common implementation patterns. They are not official CMS guidance, and they do not assert capabilities of any specific commercial product beyond what that product's own documentation supports. Always validate architectural decisions against the <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">official CMS materials</a> and the relevant HL7 / Da Vinci implementation guides.
+</div>
+
+</div>
+
+<footer>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS rule page</a> ·
+      <a href="https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability">Federal Register (CMS-0057-F)</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87). Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
+</footer>
+
+    <script src="/js/site.js" defer></script>
+</body>
+</html>

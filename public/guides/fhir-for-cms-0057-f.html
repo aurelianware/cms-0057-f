@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHIR for CMS-0057-F: A Practical Guide for Health Plans</title>
+    <meta name="description" content="A practical FHIR guide for CMS-0057-F written for payer technology teams. Where FHIR fits across the Patient Access, Provider Access, Payer-to-Payer, and Prior Authorization APIs; US Core and Da Vinci IGs; SMART on FHIR and OAuth; terminology; and mapping FHIR to existing payer data models and legacy core administration platforms.">
+    <meta name="keywords" content="FHIR for CMS-0057-F, FHIR for payers, FHIR health plan implementation, US Core, Da Vinci implementation guides, SMART on FHIR, SMART Backend Services, payer FHIR API, FHIR data mapping payer, CMS interoperability FHIR">
+    <link rel="canonical" href="https://cms-0057-f.com/guides/fhir-for-cms-0057-f">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="FHIR for CMS-0057-F: A Practical Guide for Health Plans">
+    <meta property="og:description" content="Where FHIR fits across all four CMS-0057-F APIs, plus US Core, Da Vinci, SMART on FHIR, terminology, and mapping FHIR to existing payer data models.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://cms-0057-f.com/guides/fhir-for-cms-0057-f">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <meta name="twitter:title" content="FHIR for CMS-0057-F: A Practical Guide for Health Plans">
+    <meta name="twitter:description" content="A practical FHIR guide for payer technology teams implementing CMS-0057-F.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/nav-extra.css">
+    <link rel="stylesheet" href="/css/guides.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "FHIR for CMS-0057-F: A Practical Guide for Health Plans",
+        "description": "Where FHIR fits across all four CMS-0057-F APIs, plus US Core, Da Vinci implementation guides, SMART on FHIR, terminology, and mapping FHIR to existing payer data models and legacy core administration platforms.",
+        "url": "https://cms-0057-f.com/guides/fhir-for-cms-0057-f",
+        "datePublished": "2026-09-03",
+        "dateModified": "2026-09-03",
+        "author": { "@type": "Organization", "name": "Aurelianware, Inc." },
+        "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
+        "about": { "@type": "Thing", "name": "HL7 FHIR for CMS-0057-F" },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cms-0057-f.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://cms-0057-f.com/guides" },
+                { "@type": "ListItem", "position": 3, "name": "FHIR for CMS-0057-F", "item": "https://cms-0057-f.com/guides/fhir-for-cms-0057-f" }
+            ]
+        }
+    }
+    </script>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/in-effect-2026">2026 status</a></li>
+            <li><a href="/patient-access-api">Patient Access API</a></li>
+            <li><a href="/provider-access-api">Provider Access API</a></li>
+            <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+            <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+            <li><a href="/compliance-timeline">Timeline</a></li>
+            <li><a href="/fact-sheet">Fact Sheet</a></li>
+            <li><a href="/guides" class="active">Guides</a></li>
+            <li><a href="/faq">FAQ</a></li>
+        </ul>
+    </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+</nav>
+
+<div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> / <a href="/guides">Guides</a> / <span aria-current="page">FHIR for CMS-0057-F</span></div>
+    <span class="eyebrow">FHIR &amp; Da Vinci Guide</span>
+    <h1><em>FHIR for CMS-0057-F</em>: A Practical Guide for Health Plans</h1>
+    <p class="lead">CMS-0057-F is, at its core, a FHIR mandate for payers. This guide is written for the health plan technology teams who have to build it — not as a generic FHIR introduction, but as a map of where FHIR fits across the four required APIs, how it connects to your existing data, and what a defensible implementation looks like.</p>
+</div>
+
+<div class="content">
+
+<nav class="toc" aria-label="Table of contents">
+    <h2>On this page</h2>
+    <ul>
+        <li><a href="#why-apis">Why CMS-0057-F uses APIs</a></li>
+        <li><a href="#where-fhir-fits">Where FHIR fits across the four APIs</a></li>
+        <li><a href="#us-core">US Core and USCDI</a></li>
+        <li><a href="#da-vinci">Relevant Da Vinci IGs</a></li>
+        <li><a href="#smart">SMART on FHIR &amp; OAuth</a></li>
+        <li><a href="#terminology">Terminology</a></li>
+        <li><a href="#mapping">Mapping FHIR to payer data models</a></li>
+        <li><a href="#architecture">Reference architecture</a></li>
+        <li><a href="#operational">Operational considerations</a></li>
+        <li><a href="#roadmap">Implementation roadmap</a></li>
+    </ul>
+</nav>
+
+<h2 id="why-apis">Why CMS-0057-F uses APIs</h2>
+<p>The CMS Interoperability and Prior Authorization final rule (CMS-0057-F) does not simply ask payers to "share more data." It requires <strong>standards-based application programming interfaces</strong> so that patients, providers, and other payers can retrieve data programmatically, on demand, using off-the-shelf clients. The rule builds on the 2020 CMS Interoperability and Patient Access rule, which first mandated a FHIR-based Patient Access API.</p>
+<p>APIs matter because the alternative — bespoke files, portals, and faxes — does not scale across hundreds of payers and thousands of trading partners. By standardizing on HL7 FHIR, CMS lets a single provider EHR or patient app work against every impacted payer without custom integration for each one. It is worth being precise about what is mandated: CMS mandates the <em>API outcome and the standards</em>, not a specific internal architecture. How you assemble the services behind the API is an implementation decision.</p>
+
+<h2 id="where-fhir-fits">Where FHIR fits across the four APIs</h2>
+<p>All four required APIs are FHIR APIs, but they differ in who calls them, how they authorize, and which resources they surface. Treat the table below as the anchor for the rest of this guide.</p>
+<div class="table-scroll">
+<table class="data-table">
+    <thead>
+        <tr><th>API</th><th>Primary caller</th><th>Authorization pattern</th><th>Representative FHIR resources</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="row-head"><a href="/patient-access-api">Patient Access</a></td>
+            <td>Patient's chosen app</td>
+            <td>SMART App Launch (user-facing OAuth 2.0)</td>
+            <td><code>Patient</code>, <code>ExplanationOfBenefit</code>, <code>Coverage</code>, USCDI clinical resources</td>
+        </tr>
+        <tr>
+            <td class="row-head"><a href="/provider-access-api">Provider Access</a></td>
+            <td>Provider system / EHR</td>
+            <td>SMART Backend Services (system-to-system)</td>
+            <td><code>ExplanationOfBenefit</code>, USCDI clinical resources, PA via <code>Claim</code>/<code>ClaimResponse</code></td>
+        </tr>
+        <tr>
+            <td class="row-head"><a href="/payer-to-payer-api">Payer-to-Payer</a></td>
+            <td>Another payer</td>
+            <td>SMART Backend Services (system-to-system)</td>
+            <td>Same clinical + claims set, exchanged as a bulk/query payload with <code>Provenance</code></td>
+        </tr>
+        <tr>
+            <td class="row-head"><a href="/prior-authorization-api">Prior Authorization</a></td>
+            <td>Provider system / EHR</td>
+            <td>SMART Backend Services + CDS Hooks (CRD)</td>
+            <td><code>Claim</code>, <code>ClaimResponse</code>, <code>Questionnaire</code>, <code>QuestionnaireResponse</code>, <code>Bundle</code></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<p>A single member's data therefore needs to be projectable into FHIR for three very different audiences. That is the central engineering fact of CMS-0057-F: you are building one FHIR data layer with several authorization surfaces on top of it.</p>
+
+<figure class="diagram" role="group" aria-label="CMS-0057-F API landscape: four APIs connected to a shared payer interoperability platform">
+    <div class="landscape">
+        <div class="landscape-row">
+            <div class="landscape-node c-cyan"><div class="n-title">Patient Access API</div><div class="n-sub">Member apps · SMART App Launch</div></div>
+            <div class="landscape-node c-green"><div class="n-title">Provider Access API</div><div class="n-sub">In-network providers · backend auth</div></div>
+            <div class="landscape-node c-purple"><div class="n-title">Payer-to-Payer API</div><div class="n-sub">Prior / concurrent payers</div></div>
+            <div class="landscape-node c-amber"><div class="n-title">Prior Authorization API</div><div class="n-sub">CRD · DTR · PAS</div></div>
+        </div>
+        <div class="landscape-connector" aria-hidden="true"></div>
+        <div class="landscape-hub"><div class="n-title">Payer interoperability platform</div><div class="n-sub">FHIR API gateway · OAuth · mapping · terminology · orchestration</div></div>
+    </div>
+    <figcaption>Figure 1 — The four CMS-0057-F APIs share a single payer interoperability platform.</figcaption>
+</figure>
+
+<h2 id="us-core">US Core and USCDI</h2>
+<p>The rule's clinical data requirement is expressed through the content standard at <code>45 CFR 170.213</code> (USCDI) and profiled with the HL7 US Core Implementation Guide. USCDI defines <em>what</em> data classes and elements must be exchangeable; US Core defines <em>how</em> those elements are represented as FHIR profiles (for example, US Core Patient, Condition, Observation, and MedicationRequest).</p>
+<div class="info-box amber">
+    <strong>Version nuance.</strong> The regulation text references US Core STU 3.1.1 and USCDI v1, and several of the ONC HTI-1 "expiration" dates for those versions have now passed. In practice many payers serve a later US Core / USCDI version as a superset. Document exactly which versions your endpoints serve in your FHIR <code>CapabilityStatement</code>, and confirm current expectations against the <a href="/in-effect-2026">2026 status</a> page and official ONC/ASTP guidance rather than assuming a single fixed version.
+</div>
+
+<h2 id="da-vinci">Relevant Da Vinci implementation guides</h2>
+<p>CMS strongly recommends the HL7 Da Vinci implementation guides to profile payer FHIR resources consistently. You are not strictly required to use them, but interoperability with providers is far easier if you do.</p>
+<ul>
+    <li><strong>PDex (Payer Data Exchange)</strong> — profiles for exchanging clinical and claims data; the backbone of Provider Access and Payer-to-Payer payloads.</li>
+    <li><strong>CARIN Blue Button</strong> — <code>ExplanationOfBenefit</code> profiles for consumer-facing claims in the Patient Access API.</li>
+    <li><strong>CRD, DTR, and PAS</strong> — the three prior authorization IGs. These get a dedicated treatment in <a href="/guides/crd-dtr-pas-cms-0057-f">CRD, DTR and PAS explained</a>.</li>
+    <li><strong>Formulary / plan-net</strong> — supporting directories where applicable.</li>
+</ul>
+
+<h2 id="smart">SMART on FHIR &amp; OAuth</h2>
+<p>Authorization is where the four APIs diverge most. Two patterns cover the rule:</p>
+<h3>SMART App Launch (Patient Access)</h3>
+<p>The Patient Access API is consumer-facing, so it uses the SMART App Launch framework — an OAuth 2.0 profile with OpenID Connect for identity — to let a member authorize a third-party app to read their data. The member authenticates, consents to scopes, and the app receives a token scoped to that member's compartment.</p>
+<h3>SMART Backend Services (Provider, Payer-to-Payer, PA)</h3>
+<p>The system-to-system APIs use the SMART Backend Services authorization profile: asymmetric client authentication (a registered client key), the OAuth 2.0 <code>client_credentials</code> grant, and no interactive user. This is the right pattern for a provider organization or a peer payer pulling data on behalf of many patients.</p>
+<div class="info-box">
+    <strong>Design implication.</strong> Because the same underlying resources are exposed through both a user-facing flow and a backend flow, keep <em>authorization</em> (who is asking, and for whom) separate from <em>data access</em> (projecting the record into FHIR). A shared FHIR data service with pluggable authorization is more maintainable than four independent stacks.
+</div>
+
+<h2 id="terminology">Terminology</h2>
+<p>FHIR is only interoperable when codes are. Payer source systems frequently carry proprietary or legacy code sets that must be normalized to the standard terminologies providers expect: ICD-10-CM, CPT/HCPCS, LOINC, SNOMED CT, RxNorm, NDC, and the various FHIR/US Core value sets. Plan for a terminology service (or a well-governed mapping layer) as a first-class component, not an afterthought — mismatched or missing codes are among the most common causes of failed provider integration.</p>
+
+<h2 id="mapping">Mapping FHIR APIs to existing payer data models</h2>
+<p>Most impacted payers already hold the required data — in claims systems, care management systems, enrollment systems, and clinical repositories. The work is projecting that data into conformant FHIR resources. A few mappings recur:</p>
+<div class="table-scroll">
+<table class="data-table">
+    <thead><tr><th>Payer source concept</th><th>Typical FHIR representation</th></tr></thead>
+    <tbody>
+        <tr><td class="row-head">Member / enrollment record</td><td><code>Patient</code> + <code>Coverage</code></td></tr>
+        <tr><td class="row-head">Adjudicated claim / encounter</td><td><code>ExplanationOfBenefit</code> (CARIN BB / PDex profiles)</td></tr>
+        <tr><td class="row-head">Clinical data (labs, conditions, meds)</td><td>US Core <code>Observation</code>, <code>Condition</code>, <code>MedicationRequest</code>, …</td></tr>
+        <tr><td class="row-head">Prior authorization record</td><td><code>Claim</code> (use=preauthorization) + <code>ClaimResponse</code></td></tr>
+        <tr><td class="row-head">Data source / lineage</td><td><code>Provenance</code></td></tr>
+    </tbody>
+</table>
+</div>
+<p>The mapping layer is also where you enforce scoping rules that the rule requires — for example, excluding provider remittances and cost-sharing detail from the Provider Access and Payer-to-Payer payloads.</p>
+
+<h2 id="architecture">Reference architecture: integration with legacy core administration platforms</h2>
+<p>A defensible CMS-0057-F architecture treats the FHIR API as a boundary, with an interoperability/orchestration layer behind it that adapts to whatever payer domain services and core administration platform you already run. It should <strong>not</strong> be thought of as exposing the core administration database directly.</p>
+
+<figure class="diagram" role="group" aria-label="Layered payer FHIR architecture from external consumers through the interoperability layer to a legacy or modern payer core">
+    <div class="flow">
+        <div class="flow-node accent-blue"><div class="n-title">External consumers</div><div class="n-sub">Member apps · provider EHRs · other payers</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-cyan"><div class="n-title">FHIR / API layer</div><div class="n-sub">FHIR gateway · OAuth (SMART App Launch &amp; Backend Services)</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-green"><div class="n-title">Interoperability / orchestration layer</div><div class="n-sub">Mapping · terminology · consent · Provenance · reconciliation</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node"><div class="n-title">Payer domain services</div><div class="n-sub">Members · claims · clinical · prior authorization · utilization management</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-label" aria-hidden="true">adapters</div>
+        <div class="flow-split">
+            <div class="flow-node muted"><div class="n-title">Legacy core administration</div><div class="n-sub">e.g. QNXT, Facets, HealthEdge, or a custom platform</div></div>
+            <div class="flow-node muted"><div class="n-title">Modern payer backend</div><div class="n-sub">e.g. a modern payer platform such as CloudHealthOffice</div></div>
+        </div>
+    </div>
+    <figcaption>Figure 2 — The interoperability layer can integrate with an existing core administration system, a modern payer backend, or both, through adapters.</figcaption>
+</figure>
+
+<p>The interoperability layer can sit in front of an existing core system as an overlay, or a modern payer backend can provide these capabilities natively. <strong>A modern payer platform such as CloudHealthOffice can serve as either an interoperability layer integrated with an existing core administration system or, depending on the implementation model, as part of the core backend itself.</strong> Either way, the vendor-specific integration is an adapter concern — do not assume any core administration product natively provides CMS-0057-F FHIR APIs unless that product's documentation states so.</p>
+
+<h2 id="operational">Operational considerations</h2>
+<h3>Security</h3>
+<p>Enforce TLS, strong client registration and key rotation for backend services, granular OAuth scopes, and audit logging of every access. Treat the Patient Access consent event and the member's app authorization as security-relevant records.</p>
+<h3>Observability</h3>
+<p>Instrument request latency, error rates by resource type, token issuance, and per-partner volumes. The rule also requires reporting Patient Access API usage metrics to CMS, so capture unique-member counts by design.</p>
+<h3>Testing</h3>
+<p>Validate resources against the declared profiles (US Core, CARIN, PDex, PAS) using the HL7 validator and tools such as Inferno/Touchstone. Test the full SMART flows, not just resource reads. Include negative tests for opt-out and consent.</p>
+
+<h2 id="roadmap">Implementation roadmap</h2>
+<ol>
+    <li><strong>Confirm scope and versions.</strong> Which payer lines are in scope; which US Core / USCDI versions you will serve; which Da Vinci IGs you will conform to.</li>
+    <li><strong>Stand up the FHIR gateway and OAuth.</strong> SMART App Launch for Patient Access; SMART Backend Services for the system-to-system APIs.</li>
+    <li><strong>Build the mapping + terminology layer.</strong> Project members, claims, and clinical data into conformant resources with <code>Provenance</code>.</li>
+    <li><strong>Deliver the APIs in dependency order.</strong> Patient Access first (it reuses the most existing work), then Provider Access, Payer-to-Payer, and Prior Authorization (CRD → DTR → PAS).</li>
+    <li><strong>Wire consent and opt-out.</strong> Patient opt-out for Provider Access; member permission for Payer-to-Payer.</li>
+    <li><strong>Validate, load-test, and instrument.</strong> Conformance testing plus the CMS usage metrics you must report.</li>
+</ol>
+
+<div class="info-box green">
+    <strong>Regulatory vs. architectural.</strong> The FHIR standards, USCDI content, and API existence are <em>regulatory requirements</em>. The Da Vinci IGs are <em>strongly recommended</em> implementation guides. The layered architecture above is an <em>architectural recommendation</em> — CMS mandates the API outcome, not a specific internal design.
+</div>
+
+<div class="related" aria-label="Related pages">
+    <h2>Continue reading</h2>
+    <div class="related-grid">
+        <a href="/guides/crd-dtr-pas-cms-0057-f"><span class="rl-title">CRD, DTR &amp; PAS explained</span><span class="rl-desc">How the Da Vinci prior authorization IGs fit CMS-0057-F.</span></a>
+        <a href="/guides/cms-0057-f-qnxt"><span class="rl-title">CMS-0057-F with QNXT</span><span class="rl-desc">A reference architecture for a core-administration integration.</span></a>
+        <a href="/fact-sheet"><span class="rl-title">CMS-0057-F Fact Sheet</span><span class="rl-desc">Requirements, APIs, and deadlines at a glance.</span></a>
+        <a href="/provider-access-api"><span class="rl-title">Provider Access API</span><span class="rl-desc">Architecture, auth, and a payer checklist.</span></a>
+    </div>
+</div>
+
+<div class="cta-inline">
+    <a href="/guides/crd-dtr-pas-cms-0057-f" class="cta-primary">Next: CRD, DTR &amp; PAS →</a>
+    <a href="/guides" class="cta-secondary">← All guides</a>
+</div>
+
+</div>
+
+<footer>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS rule page</a> ·
+      <a href="https://hl7.org/fhir/us/core/">HL7 US Core IG</a> ·
+      <a href="https://www.hl7.org/about/davinci/">HL7 Da Vinci</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87) and public HL7 implementation guides. Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
+</footer>
+
+    <script src="/js/site.js" defer></script>
+</body>
+</html>

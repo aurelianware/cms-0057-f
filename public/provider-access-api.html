@@ -16,7 +16,14 @@
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:title" content="FHIR Provider Access API — CMS-0057-F Requirements & Architecture">
+    <meta property="og:description" content="What the CMS-0057-F Provider Access API is, who must implement it, what data it exposes, how FHIR and SMART Backend Services authorization work, plus a reference architecture and payer checklist.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://cms-0057-f.com/provider-access-api">
+    <meta name="twitter:title" content="FHIR Provider Access API — CMS-0057-F">
+    <meta name="twitter:description" content="Requirements, FHIR, authorization, architecture, and a payer checklist for the CMS-0057-F Provider Access API.">
     <link rel="stylesheet" href="/css/nav-extra.css">
+    <link rel="stylesheet" href="/css/guides.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -25,7 +32,13 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "Provider Access API Requirements Under CMS-0057-F",
+        "description": "What the CMS-0057-F Provider Access API is, who must implement it, what data must be exposed, how FHIR and SMART Backend Services authorization work, a reference architecture, and a payer implementation checklist.",
         "url": "https://cms-0057-f.com/provider-access-api",
+        "datePublished": "2026-09-03",
+        "dateModified": "2026-09-03",
+        "author": { "@type": "Organization", "name": "Aurelianware, Inc." },
+        "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
+        "about": { "@type": "Thing", "name": "CMS Provider Access API" },
         "breadcrumb": {
             "@type": "BreadcrumbList",
             "itemListElement": [
@@ -89,6 +102,7 @@
             <li><a href="/prior-authorization-api">Prior Auth API</a></li>
             <li><a href="/compliance-timeline">Timeline</a></li>
             <li><a href="/fact-sheet">Fact Sheet</a></li>
+            <li><a href="/guides">Guides</a></li>
             <li><a href="/faq">FAQ</a></li>
         </ul>
     </div>
@@ -96,17 +110,28 @@
 </nav>
 
 <div class="page-header">
-    <div class="breadcrumb"><a href="/">Home</a> / Provider Access API</div>
-    <h1>The <em>Provider Access API</em> Under CMS-0057-F</h1>
-    <p class="lead">A brand-new mandate requiring impacted payers to build a FHIR-based API that gives in-network providers programmatic access to their patients' claims, clinical data, and prior authorization information — enabling coordinated care and supporting the shift to value-based payment.</p>
+    <div class="breadcrumb"><a href="/">Home</a> / <span aria-current="page">Provider Access API</span></div>
+    <h1>The <em>FHIR Provider Access API</em> Under CMS-0057-F</h1>
+    <p class="lead">A brand-new mandate requiring impacted payers to build a FHIR-based API that gives in-network providers programmatic access to their patients' claims, clinical data, and prior authorization information — enabling coordinated care and supporting the shift to value-based payment. This page covers what the CMS Provider Access API is, who must implement it, the data and standards involved, its architecture, and how it compares to the Patient Access API.</p>
 </div>
 
 <div class="content">
 
-<h2>Why a Provider Access API</h2>
-<p>Today, providers lack a standardized mechanism to retrieve patient data held by payers. This gap creates redundant testing, delayed care decisions, and fragmented patient records. The Provider Access API closes this gap by requiring payers to expose a FHIR endpoint that providers can query within their clinical workflows — aligning payer data access with the same technical standards used for EHR interoperability.</p>
+<h2>What Is the CMS Provider Access API?</h2>
+<p>The <strong>Provider Access API</strong> is a FHIR-based application programming interface that CMS-0057-F requires impacted payers to build so that <strong>in-network providers can retrieve the data a payer holds about their attributed patients</strong> — claims and encounter data, USCDI clinical data, and prior authorization information. Today, providers lack a standardized mechanism to retrieve patient data held by payers, which creates redundant testing, delayed care decisions, and fragmented records. The Provider Access API closes that gap by exposing a standards-based FHIR endpoint providers can query from their own systems, using the same technical standards that already underpin EHR interoperability.</p>
+<p>It is one of the four APIs mandated by the rule. For how it sits alongside the others, see the <a href="/fact-sheet">CMS-0057-F fact sheet</a>; for the underlying standards, see <a href="/guides/fhir-for-cms-0057-f">FHIR for CMS-0057-F</a>.</p>
 
-<h2>Data Available Through the Provider Access API</h2>
+<h2>Who Must Implement the Provider Access API?</h2>
+<p>The same impacted payers covered by the rest of the rule must build the Provider Access API:</p>
+<ul>
+    <li>Medicare Advantage organizations</li>
+    <li>State Medicaid and CHIP fee-for-service (FFS) programs</li>
+    <li>Medicaid managed care plans (MCOs, PIHPs, PAHPs) and CHIP managed care entities</li>
+    <li>Qualified Health Plan (QHP) issuers on the Federally-facilitated Exchanges (FFEs)</li>
+</ul>
+<p>Stand-alone dental plans, FF-SHOP issuers, and State-based Exchange issuers are excluded. Medicare FFS is not directly mandated, though CMS has stated its intent to comply voluntarily.</p>
+
+<h2>What Data Must Be Exposed Through the Provider Access API</h2>
 <div class="data-grid">
     <div class="data-item">
         <h4>Adjudicated Claims &amp; Encounters</h4>
@@ -136,23 +161,92 @@
     <li><strong>QHP issuers on the FFEs:</strong> Plan years beginning on or after January 1, 2027</li>
 </ul>
 
-<h2>Technical Implementation</h2>
-<h3>Required Standards</h3>
+<h2>How FHIR Is Used</h2>
+<p>The Provider Access API is a FHIR R4 API. Payers expose the required data as conformant FHIR resources — <code>ExplanationOfBenefit</code> for adjudicated claims, US Core clinical resources (<code>Condition</code>, <code>Observation</code>, <code>MedicationRequest</code>, and the rest) for USCDI data, and <code>Claim</code>/<code>ClaimResponse</code> for prior authorization information. Because providers query by attributed patient population rather than one patient at a time, the FHIR Bulk Data Access (Flat FHIR) specification is central: it lets a provider organization export data for a group of patients efficiently. For a deeper treatment of how FHIR maps to existing payer data, see <a href="/guides/fhir-for-cms-0057-f">FHIR for CMS-0057-F</a>.</p>
+
+<h2>Required Standards</h2>
 <p>The Provider Access API must conform to the same base technical standards as the Patient Access API:</p>
 <ul>
     <li>HL7 FHIR Release 4.0.1 (45 CFR 170.215(a)(1))</li>
-    <li>US Core IG STU 3.1.1 (45 CFR 170.215(b)(1)(i))</li>
+    <li>US Core IG STU 3.1.1 (45 CFR 170.215(b)(1)(i)) — payers may serve a later version as a superset</li>
     <li>FHIR Bulk Data Access IG v1.0.0 (45 CFR 170.215(d)(1)) — for bulk data retrieval by provider organizations</li>
 </ul>
 
-<h3>Authentication &amp; Authorization</h3>
-<p>Unlike the Patient Access API (which uses SMART App Launch for consumer-facing OAuth flows), the Provider Access API will use backend service authentication patterns appropriate for system-to-system data exchange. CMS has strongly recommended the SMART Backend Services authorization profile for this purpose.</p>
+<h2>Authentication and Authorization</h2>
+<p>Unlike the Patient Access API — which uses <strong>SMART App Launch</strong> for consumer-facing OAuth 2.0 flows — the Provider Access API is a system-to-system integration and uses the <strong>SMART Backend Services</strong> authorization profile. Backend Services relies on asymmetric client authentication (a registered client key rather than an interactive login) and the OAuth 2.0 <code>client_credentials</code> grant, which is the appropriate pattern for a provider organization pulling data on behalf of many attributed patients.</p>
+<p>Key authorization concerns for payers:</p>
+<ul>
+    <li><strong>Provider attribution</strong> — the payer must resolve which patients a requesting provider is entitled to, and scope every response accordingly.</li>
+    <li><strong>Patient opt-out</strong> — opt-out status must be enforced at the authorization/scoping layer, before any data is released.</li>
+    <li><strong>Client registration and key rotation</strong> — trading partners register keys; plan for rotation and revocation.</li>
+</ul>
 
 <h3>Recommended Implementation Guides</h3>
 <p>CMS strongly recommends payers use the HL7 Da Vinci Payer Data Exchange (PDex) Implementation Guide and the Da Vinci Prior Authorization Support (PAS) IG to profile the FHIR resources exposed through this API. These IGs define payer-specific resource profiles, search parameters, and capability statements that help ensure consistent implementation across payers.</p>
 
+<h2>Provider Access API Architecture</h2>
+<p>A defensible implementation treats the FHIR endpoint as a boundary in front of an interoperability layer that adapts to your existing payer systems — it should not be a direct window onto the core administration database.</p>
+
+<figure class="diagram" role="group" aria-label="Provider Access API architecture from a provider application or EHR through authorization and a FHIR API gateway to interoperability services, payer data services, and core administration or claims and member systems">
+    <div class="flow">
+        <div class="flow-node accent-green"><div class="n-title">Provider application / EHR</div><div class="n-sub">Requests attributed-patient data</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-cyan"><div class="n-title">Authorization</div><div class="n-sub">SMART Backend Services · attribution · opt-out</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-cyan"><div class="n-title">FHIR API gateway</div><div class="n-sub">Conformance, search, Bulk Data export</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-green"><div class="n-title">Interoperability services</div><div class="n-sub">Mapping · terminology · Provenance · scoping</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-purple"><div class="n-title">Payer data services</div><div class="n-sub">Members · claims · clinical · prior authorization</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node muted"><div class="n-title">Core administration / claims / member systems</div><div class="n-sub">via adapters — legacy or modern backend</div></div>
+    </div>
+    <figcaption>Figure 1 — Provider Access API request flow, from EHR through the interoperability layer to core payer systems.</figcaption>
+</figure>
+
+<p>For how this layered approach maps onto an established core platform, see <a href="/guides/cms-0057-f-qnxt">CMS-0057-F with QNXT</a>.</p>
+
+<h2>Provider Access vs. Patient Access API</h2>
+<p>The two APIs share a technical foundation but differ in audience, authorization, and scope. The Provider Access API is not simply "Patient Access for providers."</p>
+<div class="table-scroll">
+<table class="data-table">
+    <thead><tr><th>Dimension</th><th>Provider Access API</th><th>Patient Access API</th></tr></thead>
+    <tbody>
+        <tr><td class="row-head">Primary caller</td><td>In-network provider system / EHR</td><td>The patient's chosen third-party app</td></tr>
+        <tr><td class="row-head">Authorization</td><td>SMART Backend Services (system-to-system)</td><td>SMART App Launch (user-facing OAuth)</td></tr>
+        <tr><td class="row-head">Patient control</td><td>Opt-out of provider sharing</td><td>Opt-in by authorizing an app</td></tr>
+        <tr><td class="row-head">Cost-sharing / remittances</td><td>Excluded</td><td>Cost-sharing included</td></tr>
+        <tr><td class="row-head">Scale pattern</td><td>Attributed populations (Bulk Data)</td><td>One patient at a time</td></tr>
+        <tr><td class="row-head">Compliance date</td><td>January 1, 2027</td><td>Existing API; PA data by Jan 1, 2027</td></tr>
+    </tbody>
+</table>
+</div>
+
 <h2>Relationship to Value-Based Care</h2>
 <p>The Provider Access API is explicitly designed to accelerate the transition to value-based care models. By giving providers real-time access to adjudicated claims and prior authorization data, payers enable risk-bearing providers to manage population health more effectively, reduce unnecessary utilization, and close gaps in care — all without building custom point-to-point integrations with each payer.</p>
+
+<h2>Payer Implementation Checklist</h2>
+<ul class="checklist">
+    <li>Stand up a FHIR R4 endpoint with a published <code>CapabilityStatement</code> for the Provider Access API.</li>
+    <li>Implement SMART Backend Services authorization with client registration and key rotation.</li>
+    <li>Build provider attribution resolution and enforce it on every response.</li>
+    <li>Implement patient opt-out and enforce it at the scoping layer.</li>
+    <li>Support FHIR Bulk Data export for attributed-patient populations.</li>
+    <li>Map claims, USCDI clinical data, and PA records to conformant US Core / PDex / PAS profiles.</li>
+    <li>Exclude provider remittances and patient cost-sharing from the payload.</li>
+    <li>Add <code>Provenance</code>, audit logging, and conformance testing before onboarding trading partners.</li>
+</ul>
+
+<div class="related" aria-label="Related pages">
+    <h2>Related pages</h2>
+    <div class="related-grid">
+        <a href="/fact-sheet"><span class="rl-title">CMS-0057-F Fact Sheet</span><span class="rl-desc">Requirements, APIs, and deadlines at a glance.</span></a>
+        <a href="/patient-access-api"><span class="rl-title">Patient Access API</span><span class="rl-desc">The consumer-facing companion API.</span></a>
+        <a href="/payer-to-payer-api"><span class="rl-title">Payer-to-Payer API</span><span class="rl-desc">Data exchange when members change plans.</span></a>
+        <a href="/prior-authorization-api"><span class="rl-title">Prior Authorization API</span><span class="rl-desc">Electronic PA via Da Vinci CRD/DTR/PAS.</span></a>
+        <a href="/guides/fhir-for-cms-0057-f"><span class="rl-title">FHIR for CMS-0057-F</span><span class="rl-desc">How FHIR maps to existing payer data.</span></a>
+    </div>
+</div>
 
 <div class="cta-inline">
     <a href="/payer-to-payer-api" class="cta-primary">Next: Payer-to-Payer API →</a>

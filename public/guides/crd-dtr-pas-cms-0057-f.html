@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRD, DTR and PAS Explained: Da Vinci Prior Authorization for CMS-0057-F</title>
+    <meta name="description" content="How the Da Vinci CRD, DTR, and PAS implementation guides fit CMS-0057-F prior authorization. What each does, how they work together, where the payer API boundary sits, how the workflow interacts with utilization management and core administration, where X12 278 still appears, and a payer implementation checklist.">
+    <meta name="keywords" content="CRD DTR PAS, Da Vinci prior authorization, Coverage Requirements Discovery, Documentation Templates and Rules, Prior Authorization Support, CMS-0057-F prior authorization API, X12 278, PAS FHIR, electronic prior authorization payer">
+    <link rel="canonical" href="https://cms-0057-f.com/guides/crd-dtr-pas-cms-0057-f">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="CRD, DTR and PAS Explained: Da Vinci Prior Authorization for CMS-0057-F">
+    <meta property="og:description" content="What CRD, DTR, and PAS each do, how they fit together, where the payer API boundary sits, and where X12 278 still appears.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://cms-0057-f.com/guides/crd-dtr-pas-cms-0057-f">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <meta name="twitter:title" content="CRD, DTR and PAS Explained for CMS-0057-F">
+    <meta name="twitter:description" content="How the three Da Vinci prior authorization IGs fit CMS-0057-F.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/nav-extra.css">
+    <link rel="stylesheet" href="/css/guides.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "CRD, DTR and PAS Explained: How Da Vinci Prior Authorization Fits CMS-0057-F",
+        "description": "What the Da Vinci CRD, DTR, and PAS implementation guides do, how they work together, where the payer API boundary sits, and where X12 278 still appears under CMS-0057-F.",
+        "url": "https://cms-0057-f.com/guides/crd-dtr-pas-cms-0057-f",
+        "datePublished": "2026-09-03",
+        "dateModified": "2026-09-03",
+        "author": { "@type": "Organization", "name": "Aurelianware, Inc." },
+        "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
+        "about": { "@type": "Thing", "name": "Da Vinci CRD, DTR, and PAS" },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cms-0057-f.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://cms-0057-f.com/guides" },
+                { "@type": "ListItem", "position": 3, "name": "CRD, DTR and PAS", "item": "https://cms-0057-f.com/guides/crd-dtr-pas-cms-0057-f" }
+            ]
+        }
+    }
+    </script>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/in-effect-2026">2026 status</a></li>
+            <li><a href="/patient-access-api">Patient Access API</a></li>
+            <li><a href="/provider-access-api">Provider Access API</a></li>
+            <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+            <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+            <li><a href="/compliance-timeline">Timeline</a></li>
+            <li><a href="/fact-sheet">Fact Sheet</a></li>
+            <li><a href="/guides" class="active">Guides</a></li>
+            <li><a href="/faq">FAQ</a></li>
+        </ul>
+    </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+</nav>
+
+<div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> / <a href="/guides">Guides</a> / <span aria-current="page">CRD, DTR and PAS</span></div>
+    <span class="eyebrow">FHIR &amp; Da Vinci Guide</span>
+    <h1><em>CRD, DTR and PAS</em> Explained: How Da Vinci Prior Authorization Fits CMS-0057-F</h1>
+    <p class="lead">The Prior Authorization API is the most operationally demanding part of CMS-0057-F, and it rests on three Da Vinci implementation guides that most people learn as an alphabet soup. This guide untangles CRD, DTR, and PAS — what each one does, how they chain together, and exactly where the payer's responsibilities begin.</p>
+</div>
+
+<div class="content">
+
+<nav class="toc" aria-label="Table of contents">
+    <h2>On this page</h2>
+    <ul>
+        <li><a href="#big-picture">The big picture</a></li>
+        <li><a href="#crd">What CRD does</a></li>
+        <li><a href="#dtr">What DTR does</a></li>
+        <li><a href="#pas">What PAS does</a></li>
+        <li><a href="#together">How they work together</a></li>
+        <li><a href="#boundary">Where the payer API boundary sits</a></li>
+        <li><a href="#um">Interaction with UM &amp; core administration</a></li>
+        <li><a href="#x12">Where X12 278 still appears</a></li>
+        <li><a href="#mistakes">Common implementation mistakes</a></li>
+        <li><a href="#checklist">Payer implementation checklist</a></li>
+    </ul>
+</nav>
+
+<h2 id="big-picture">The big picture</h2>
+<p>CMS-0057-F requires impacted payers (except QHP issuers on the FFEs for certain timeframe provisions) to stand up a FHIR-based Prior Authorization API. CMS strongly recommends implementing it with the HL7 Da Vinci "Burden Reduction" suite: <strong>Coverage Requirements Discovery (CRD)</strong>, <strong>Documentation Templates and Rules (DTR)</strong>, and <strong>Prior Authorization Support (PAS)</strong>. Each answers a different provider question, and together they move prior authorization out of the fax machine and into the EHR.</p>
+
+<figure class="diagram" role="group" aria-label="Da Vinci prior authorization flow from provider EHR through CRD, DTR, and PAS to the payer interoperability layer, utilization management engine, and payer core">
+    <div class="flow">
+        <div class="flow-node accent-blue"><div class="n-title">Provider / EHR</div><div class="n-sub">Orders an item or service during the clinical workflow</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-amber"><div class="n-title">CRD — Coverage Requirements Discovery</div><div class="n-sub">"Is prior authorization required, and what are the rules?"</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-amber"><div class="n-title">DTR — Documentation Templates &amp; Rules</div><div class="n-sub">Gather the required documentation from the EHR</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-amber"><div class="n-title">PAS — Prior Authorization Support</div><div class="n-sub">Submit the request and receive the decision</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-green"><div class="n-title">Payer interoperability layer</div><div class="n-sub">FHIR gateway · mapping · orchestration</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-purple"><div class="n-title">UM / authorization engine</div><div class="n-sub">Rules, medical policy, human review where needed</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node"><div class="n-title">Payer core</div><div class="n-sub">Legacy or modern core administration backend</div></div>
+    </div>
+    <figcaption>Figure 1 — The Da Vinci prior authorization workflow from EHR to payer core.</figcaption>
+</figure>
+
+<h2 id="crd">What CRD does</h2>
+<p><strong>Coverage Requirements Discovery</strong> answers the first question a provider has: <em>does this item or service even need prior authorization for this patient and plan, and what documentation applies?</em> CRD is built on <a href="https://cds-hooks.org/">CDS Hooks</a> — the payer registers a service that the EHR calls at natural decision points (for example, <code>order-select</code> or <code>order-sign</code>). The payer returns "cards" indicating whether PA is required and, critically, whether a DTR questionnaire is available.</p>
+
+<h2 id="dtr">What DTR does</h2>
+<p><strong>Documentation Templates and Rules</strong> handles the paperwork. The payer publishes FHIR <code>Questionnaire</code> resources (and CQL rules) that describe exactly what clinical documentation a given authorization needs. A DTR app or embedded EHR component runs the questionnaire, auto-populating answers from the EHR's FHIR data wherever possible, and produces a <code>QuestionnaireResponse</code>. The goal is to eliminate the "please fax these ten pages" round-trips by defining the requirements as computable rules.</p>
+
+<h2 id="pas">What PAS does</h2>
+<p><strong>Prior Authorization Support</strong> is the submission and decision channel. PAS wraps the prior authorization request — represented in FHIR as a <code>Claim</code> with <code>use = preauthorization</code> plus the supporting <code>QuestionnaireResponse</code> and clinical bundle — and returns a <code>ClaimResponse</code> carrying the decision (approved, denied with a specific reason, or pended). PAS is the IG that most directly satisfies the "submit a PA request electronically and get a decision" requirement of the rule.</p>
+
+<h2 id="together">How they work together</h2>
+<div class="table-scroll">
+<table class="data-table">
+    <thead><tr><th>IG</th><th>Provider question</th><th>Core FHIR mechanism</th><th>Key resources</th></tr></thead>
+    <tbody>
+        <tr><td class="row-head">CRD</td><td>Is PA required? What rules apply?</td><td>CDS Hooks service</td><td>Hook request → cards</td></tr>
+        <tr><td class="row-head">DTR</td><td>What documentation is needed?</td><td>FHIR Questionnaire + CQL</td><td><code>Questionnaire</code>, <code>QuestionnaireResponse</code></td></tr>
+        <tr><td class="row-head">PAS</td><td>Submit it and give me a decision</td><td>FHIR operation / X12 bridge</td><td><code>Claim</code>, <code>ClaimResponse</code>, <code>Bundle</code></td></tr>
+    </tbody>
+</table>
+</div>
+<p>The chain is intentionally ordered: CRD tells the provider a PA is needed and points to a DTR questionnaire; DTR assembles the documentation; PAS submits the completed package. A payer can implement them incrementally, but the provider experience is best when all three are present.</p>
+
+<h2 id="boundary">Where the payer API boundary sits</h2>
+<p>Everything to the left of the FHIR endpoint is the provider/EHR ecosystem; everything to the right is yours. The payer is responsible for: hosting the CRD CDS Hooks service, publishing DTR questionnaires and rules, exposing the PAS endpoint, and — behind that boundary — routing the request into the utilization management and core administration systems that actually make and record the decision. The FHIR API is a contract, not the decision engine.</p>
+<div class="info-box amber">
+    <strong>Do not equate the API with the UM engine.</strong> PAS defines how a request and decision are exchanged. It does not make the medical-necessity determination. Your existing UM rules, medical policy, and (where required) clinical reviewers still sit behind the API. Plan the orchestration between the PAS endpoint and the UM/core systems explicitly.
+</div>
+
+<h2 id="um">Interaction with utilization management &amp; core administration</h2>
+<p>When a PAS request arrives, the interoperability layer must translate the FHIR <code>Claim</code> into whatever your authorization workflow expects, invoke the UM/authorization engine, and translate the outcome back into a FHIR <code>ClaimResponse</code>. In many payer environments that backend is an established core administration platform such as QNXT, Facets, or HealthEdge, or a custom system. These products were not originally designed around Da Vinci FHIR profiles, so an <strong>adapter/integration layer is generally necessary</strong> to bridge the FHIR request to the platform's native authorization APIs or data model. Do not assume any of these products natively speaks CRD/DTR/PAS unless its own documentation says so; treat the mapping as an onboarding and integration task. The companion guide <a href="/guides/cms-0057-f-qnxt">CMS-0057-F with QNXT</a> works through one such integration in detail.</p>
+
+<h2 id="x12">Where X12 278 still appears</h2>
+<p>Prior authorization has a long-standing HIPAA transaction — the <strong>X12 278</strong> request/response. FHIR does not erase it. The PAS implementation guide is explicitly designed to interoperate with X12 278: in many deployments the FHIR PAS request is transformed into a 278 for the payer's existing transaction infrastructure (or a clearinghouse), and the 278 response is mapped back to a FHIR <code>ClaimResponse</code>. This is why PAS is often described as a "FHIR-to-X12 bridge." Expect X12 278 to remain part of the plumbing behind the FHIR boundary for the foreseeable future, especially where trading-partner agreements and clearinghouses are already built around it.</p>
+
+<h2 id="mistakes">Common implementation mistakes</h2>
+<ul>
+    <li><strong>Treating PAS as the whole solution.</strong> Without CRD and DTR, providers still don't know when PA is required or what to attach — the burden reduction the rule targets doesn't materialize.</li>
+    <li><strong>Hand-authoring DTR questionnaires without governance.</strong> Questionnaires and CQL rules must track your medical policy; stale rules produce wrong documentation asks.</li>
+    <li><strong>Exposing the core system directly.</strong> Binding FHIR resources straight to a core admin schema creates brittle, non-conformant payloads. Map through an interoperability layer.</li>
+    <li><strong>Ignoring the X12 278 bridge.</strong> Building PAS in isolation from existing 278 infrastructure duplicates work and risks decision inconsistencies.</li>
+    <li><strong>Forgetting the process rules.</strong> The 72-hour/7-day timeframes and specific-denial-reason requirements apply regardless of channel — they are not satisfied just by shipping an API.</li>
+</ul>
+
+<h2 id="checklist">Payer implementation checklist</h2>
+<ul class="checklist">
+    <li>Host a CRD CDS Hooks service covering the items/services that require PA.</li>
+    <li>Publish DTR <code>Questionnaire</code> resources and CQL rules aligned to current medical policy.</li>
+    <li>Expose a PAS endpoint accepting <code>Claim</code> (use=preauthorization) and returning <code>ClaimResponse</code>.</li>
+    <li>Map PAS requests/decisions to and from X12 278 where your infrastructure requires it.</li>
+    <li>Build the adapter from the interoperability layer to your UM/authorization engine and core administration platform.</li>
+    <li>Return specific denial reasons and meet the 72-hour (urgent) / 7-day (standard) timeframes.</li>
+    <li>Emit the public PA metrics the rule requires, and capture data for CMS reporting.</li>
+    <li>Conformance-test against the Da Vinci PAS/CRD/DTR profiles before onboarding trading partners.</li>
+</ul>
+
+<div class="info-box green">
+    <strong>Regulatory vs. recommended.</strong> The Prior Authorization API, the response timeframes, the specific-denial-reason rule, and the metrics reporting are <em>regulatory requirements</em>. CRD, DTR, and PAS are <em>strongly recommended</em> implementation guides. The FHIR-to-X12 bridge and the adapter architecture are <em>implementation choices</em> that satisfy the requirements — not mandates in themselves.
+</div>
+
+<div class="related" aria-label="Related pages">
+    <h2>Continue reading</h2>
+    <div class="related-grid">
+        <a href="/prior-authorization-api"><span class="rl-title">Prior Authorization API</span><span class="rl-desc">The rule's requirements, timeframes, and Da Vinci IGs.</span></a>
+        <a href="/guides/fhir-for-cms-0057-f"><span class="rl-title">FHIR for CMS-0057-F</span><span class="rl-desc">Where FHIR fits across all four APIs.</span></a>
+        <a href="/guides/cms-0057-f-qnxt"><span class="rl-title">CMS-0057-F with QNXT</span><span class="rl-desc">Integrating the interoperability layer with a core platform.</span></a>
+        <a href="/fact-sheet"><span class="rl-title">CMS-0057-F Fact Sheet</span><span class="rl-desc">Requirements, APIs, and deadlines at a glance.</span></a>
+    </div>
+</div>
+
+<div class="cta-inline">
+    <a href="/guides/cms-0057-f-qnxt" class="cta-primary">Next: CMS-0057-F with QNXT →</a>
+    <a href="/prior-authorization-api" class="cta-secondary">← Prior Authorization API</a>
+</div>
+
+</div>
+
+<footer>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://hl7.org/fhir/us/davinci-crd/">Da Vinci CRD</a> ·
+      <a href="https://hl7.org/fhir/us/davinci-dtr/">Da Vinci DTR</a> ·
+      <a href="https://hl7.org/fhir/us/davinci-pas/">Da Vinci PAS</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87) and public HL7 implementation guides. Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
+</footer>
+
+    <script src="/js/site.js" defer></script>
+</body>
+</html>
