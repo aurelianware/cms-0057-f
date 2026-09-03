@@ -35,6 +35,10 @@ function routeToFile(route) {
   let r = route.split("#")[0].split("?")[0];
   if (r === "/" || r === "") return join(PUB, "index.html");
   if (r.endsWith("/")) r = r.slice(0, -1);
+  // Make the route relative before join(): routes are site-absolute ("/guides"),
+  // and although path.join (unlike path.resolve) keeps the PUB prefix, stripping
+  // the leading slash makes the intent explicit and avoids any ambiguity.
+  r = r.replace(/^\/+/, "");
   const direct = join(PUB, r);
   if (existsSync(direct) && statSync(direct).isFile()) return direct; // asset (css/js/img)
   const asHtml = join(PUB, r + ".html");
