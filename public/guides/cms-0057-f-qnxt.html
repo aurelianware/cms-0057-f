@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS-0057-F with QNXT: Interoperability Architecture for a Core Admin Platform</title>
+    <meta name="description" content="A reference architecture for implementing CMS-0057-F FHIR APIs alongside a QNXT core administration platform. How the interoperability layer, adapters, and OAuth security fit together — and why the CMS APIs should not be thought of as exposing the core administration database directly.">
+    <meta name="keywords" content="CMS-0057-F QNXT, QNXT interoperability, QNXT FHIR, CMS-0057-F core administration, payer core adapter, QNXT CMS interoperability, TriZetto QNXT FHIR API, payer interoperability architecture">
+    <link rel="canonical" href="https://cms-0057-f.com/guides/cms-0057-f-qnxt">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="CMS-0057-F with QNXT: Interoperability Architecture for a Core Admin Platform">
+    <meta property="og:description" content="A reference architecture for CMS-0057-F FHIR APIs alongside a QNXT core administration platform, using an interoperability layer and adapters.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://cms-0057-f.com/guides/cms-0057-f-qnxt">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <meta name="twitter:title" content="CMS-0057-F with QNXT">
+    <meta name="twitter:description" content="Reference architecture for CMS-0057-F FHIR APIs with a QNXT core administration platform.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/nav-extra.css">
+    <link rel="stylesheet" href="/css/guides.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "CMS-0057-F with QNXT: Interoperability Architecture for a Core Administration Platform",
+        "description": "A reference architecture for implementing CMS-0057-F FHIR APIs alongside a QNXT core administration platform using an interoperability layer and adapters.",
+        "url": "https://cms-0057-f.com/guides/cms-0057-f-qnxt",
+        "datePublished": "2026-09-03",
+        "dateModified": "2026-09-03",
+        "author": { "@type": "Organization", "name": "Aurelianware, Inc." },
+        "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
+        "about": { "@type": "Thing", "name": "CMS-0057-F implementation with QNXT" },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cms-0057-f.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://cms-0057-f.com/guides" },
+                { "@type": "ListItem", "position": 3, "name": "CMS-0057-F with QNXT", "item": "https://cms-0057-f.com/guides/cms-0057-f-qnxt" }
+            ]
+        }
+    }
+    </script>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/in-effect-2026">2026 status</a></li>
+            <li><a href="/patient-access-api">Patient Access API</a></li>
+            <li><a href="/provider-access-api">Provider Access API</a></li>
+            <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+            <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+            <li><a href="/compliance-timeline">Timeline</a></li>
+            <li><a href="/fact-sheet">Fact Sheet</a></li>
+            <li><a href="/guides" class="active">Guides</a></li>
+            <li><a href="/faq">FAQ</a></li>
+        </ul>
+    </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+</nav>
+
+<div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> / <a href="/guides">Guides</a> / <span aria-current="page">CMS-0057-F with QNXT</span></div>
+    <span class="eyebrow">Payer Architecture Guide</span>
+    <h1>CMS-0057-F with <em>QNXT</em>: An Interoperability Architecture</h1>
+    <p class="lead">Many impacted payers run an established core administration platform such as QNXT and now have to expose CMS-0057-F FHIR APIs on top of it. This guide lays out a reference architecture that keeps the core system where it is and adds a standards-based interoperability layer in front of it — using the same adapter pattern that applies to Facets, HealthEdge, or a custom platform.</p>
+</div>
+
+<div class="content">
+
+<nav class="toc" aria-label="Table of contents">
+    <h2>On this page</h2>
+    <ul>
+        <li><a href="#framing">Framing the problem</a></li>
+        <li><a href="#not-the-database">Not "expose the database"</a></li>
+        <li><a href="#architecture">Reference architecture</a></li>
+        <li><a href="#adapters">The adapter layer</a></li>
+        <li><a href="#api-by-api">API-by-API considerations</a></li>
+        <li><a href="#build-buy">Build, overlay, or modern backend</a></li>
+        <li><a href="#checklist">Onboarding checklist</a></li>
+    </ul>
+</nav>
+
+<h2 id="framing">Framing the problem</h2>
+<p>QNXT (a TriZetto/Cognizant core administration platform) manages enrollment, benefits, claims adjudication, and related payer operations for many plans. CMS-0057-F does not ask you to replace it. It asks you to expose FHIR APIs — Patient Access, Provider Access, Payer-to-Payer, and Prior Authorization — whose data largely originates in systems like QNXT. The engineering question is how to connect the two without turning your core platform into a public FHIR server.</p>
+<div class="info-box amber">
+    <strong>No unsupported product claims.</strong> This guide describes an integration pattern, not native product capabilities. It does not assert that QNXT (or any other named platform) ships CMS-0057-F FHIR APIs out of the box. Confirm any specific capability against the vendor's own current documentation. Treat the adapter as your responsibility unless the vendor states otherwise.
+</div>
+
+<h2 id="not-the-database">Why the CMS APIs are not "expose the core database"</h2>
+<p>It is tempting to point a FHIR façade straight at the core administration database. Resist it. The CMS APIs require conformant FHIR profiles (US Core, CARIN Blue Button, Da Vinci PDex/PAS), consistent standard terminology, consent and opt-out enforcement, provenance, and scoping rules (for example, excluding remittances and cost-sharing from provider and payer-to-payer payloads). A raw database projection satisfies none of these reliably, couples your public API to an internal schema, and creates a security and performance liability. The API should be a <em>governed projection</em> of core data, produced by an interoperability layer — not a direct window into the core.</p>
+
+<h2 id="architecture">Reference architecture</h2>
+<figure class="diagram" role="group" aria-label="CMS-0057-F payer architecture from external consumers through OAuth security, a FHIR gateway, interoperability services, mapping and orchestration, and core administration adapters to QNXT, Facets, HealthEdge, or a modern payer core">
+    <div class="flow">
+        <div class="flow-node accent-blue"><div class="n-title">Consumers / EHRs / other payers</div><div class="n-sub">Member apps · provider systems · peer payers</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-cyan"><div class="n-title">OAuth / API security</div><div class="n-sub">SMART App Launch &amp; SMART Backend Services</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-cyan"><div class="n-title">FHIR API gateway</div><div class="n-sub">Conformance, routing, rate limiting, audit</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-green"><div class="n-title">CMS-0057-F interoperability services</div><div class="n-sub">Patient / Provider / Payer-to-Payer / Prior Auth logic</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-green"><div class="n-title">Mapping / terminology / orchestration</div><div class="n-sub">Profiles · code translation · consent · Provenance</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-purple"><div class="n-title">Core administration adapters</div><div class="n-sub">Read/write bridges to native platform interfaces</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-split">
+            <div class="flow-node muted"><div class="n-title">QNXT</div><div class="n-sub">This guide's focus</div></div>
+            <div class="flow-node muted"><div class="n-title">Facets / HealthEdge / custom</div><div class="n-sub">Same pattern, different adapter</div></div>
+            <div class="flow-node muted"><div class="n-title">Modern payer core</div><div class="n-sub">e.g. CloudHealthOffice</div></div>
+        </div>
+    </div>
+    <figcaption>Figure 1 — A layered CMS-0057-F architecture in front of QNXT (or an equivalent core platform).</figcaption>
+</figure>
+
+<h2 id="adapters">The adapter layer</h2>
+<p>The adapter is the seam between standard FHIR and a platform's native interfaces. Its jobs:</p>
+<ul>
+    <li><strong>Read projection</strong> — pull members, coverage, claims/encounters, and PA records from QNXT (via its supported integration interfaces, extracts, or data warehouse) and hand them to the mapping layer.</li>
+    <li><strong>Write/orchestration</strong> — for the Prior Authorization API, route a PAS request into the authorization/UM workflow and return the decision. This is where a <a href="/guides/crd-dtr-pas-cms-0057-f">CRD/DTR/PAS</a> flow meets the core.</li>
+    <li><strong>Terminology normalization</strong> — translate internal or legacy codes to the standard code systems providers expect.</li>
+    <li><strong>Scoping &amp; consent</strong> — apply opt-out (Provider Access) and permission (Payer-to-Payer) before any data leaves.</li>
+</ul>
+<p>Adapters are an onboarding/integration concern: each core platform, and sometimes each plan's configuration, needs its own mapping work. Budget for it explicitly rather than assuming a drop-in connector exists.</p>
+
+<h2 id="api-by-api">API-by-API considerations</h2>
+<div class="table-scroll">
+<table class="data-table">
+    <thead><tr><th>API</th><th>Primary core data</th><th>Adapter emphasis</th></tr></thead>
+    <tbody>
+        <tr><td class="row-head"><a href="/patient-access-api">Patient Access</a></td><td>Coverage, claims (EOB), clinical, PA status</td><td>Read projection + member-scoped auth</td></tr>
+        <tr><td class="row-head"><a href="/provider-access-api">Provider Access</a></td><td>Attributed-member claims/clinical/PA</td><td>Attribution + opt-out enforcement</td></tr>
+        <tr><td class="row-head"><a href="/payer-to-payer-api">Payer-to-Payer</a></td><td>Up to 5 years of claims/clinical/PA</td><td>Consent, Provenance, reconciliation on ingest</td></tr>
+        <tr><td class="row-head"><a href="/prior-authorization-api">Prior Authorization</a></td><td>UM rules, medical policy, auth records</td><td>PAS ↔ UM/X12 orchestration (read + write)</td></tr>
+    </tbody>
+</table>
+</div>
+
+<h2 id="build-buy">Build internally, overlay, or adopt a modern backend</h2>
+<p>There are three broad ways to obtain the interoperability layer above:</p>
+<ol>
+    <li><strong>Build it internally</strong> — maximum control, highest engineering and maintenance cost, and you own conformance as the specifications evolve.</li>
+    <li><strong>Add an interoperability layer in front of QNXT</strong> — an overlay provides the FHIR APIs, mapping, terminology, and orchestration while the core platform stays in place. This is the most common path for payers with a heavy existing core investment.</li>
+    <li><strong>Use a broader modern payer platform</strong> — where a plan is already modernizing, a modern backend can provide these capabilities natively rather than as an overlay.</li>
+</ol>
+<p>These are not mutually exclusive, and the right answer depends on your modernization roadmap. <strong>A modern payer platform such as CloudHealthOffice can serve as either an interoperability layer integrated with an existing core administration system like QNXT or, depending on the implementation model, as part of the core backend itself.</strong> The point of the architecture is that the choice of backend is an adapter concern behind a stable FHIR boundary — you can change it without changing the public API.</p>
+
+<h2 id="checklist">Onboarding checklist</h2>
+<ul class="checklist">
+    <li>Inventory where each required data class lives in QNXT (or your core) today.</li>
+    <li>Choose the integration interface for read projection (supported APIs, extracts, or warehouse).</li>
+    <li>Stand up the FHIR gateway + OAuth (SMART App Launch and Backend Services).</li>
+    <li>Build the mapping/terminology layer to conformant US Core / CARIN / PDex / PAS profiles.</li>
+    <li>Implement consent (Payer-to-Payer) and opt-out (Provider Access) enforcement.</li>
+    <li>Orchestrate the Prior Authorization API into your UM engine and any X12 278 path.</li>
+    <li>Add Provenance, audit logging, and the CMS usage metrics you must report.</li>
+    <li>Conformance-test each API before onboarding trading partners.</li>
+</ul>
+
+<div class="info-box green">
+    <strong>Regulatory vs. architectural.</strong> CMS mandates the API <em>outcome</em> and the standards. The layered architecture, the adapter pattern, and the build/overlay/modern-backend choice are <em>architectural options</em> that satisfy the rule — CMS does not mandate any particular internal design or product.
+</div>
+
+<div class="related" aria-label="Related pages">
+    <h2>Continue reading</h2>
+    <div class="related-grid">
+        <a href="/guides/fhir-for-cms-0057-f"><span class="rl-title">FHIR for CMS-0057-F</span><span class="rl-desc">The FHIR foundations this architecture builds on.</span></a>
+        <a href="/guides/crd-dtr-pas-cms-0057-f"><span class="rl-title">CRD, DTR &amp; PAS explained</span><span class="rl-desc">The prior authorization workflow behind the adapter.</span></a>
+        <a href="/payer-to-payer-api"><span class="rl-title">Payer-to-Payer API</span><span class="rl-desc">Consent, reconciliation, and build-vs-buy.</span></a>
+        <a href="/fact-sheet"><span class="rl-title">CMS-0057-F Fact Sheet</span><span class="rl-desc">Requirements, APIs, and deadlines at a glance.</span></a>
+    </div>
+</div>
+
+<div class="cta-inline">
+    <a href="/guides" class="cta-primary">All guides →</a>
+    <a href="/guides/crd-dtr-pas-cms-0057-f" class="cta-secondary">← CRD, DTR &amp; PAS</a>
+</div>
+
+</div>
+
+<footer>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS. QNXT, Facets, and HealthEdge are trademarks of their respective owners; references are descriptive only.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS rule page</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87). Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
+</footer>
+
+    <script src="/js/site.js" defer></script>
+</body>
+</html>

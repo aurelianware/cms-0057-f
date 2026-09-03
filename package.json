@@ -6,9 +6,10 @@
     "node": ">=22"
   },
   "scripts": {
-    "build": "echo static site",
+    "validate": "node scripts/validate.mjs",
+    "build": "node scripts/validate.mjs",
     "preview": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "npm run validate && wrangler deploy"
   },
   "devDependencies": {
     "wrangler": "^4.128.0"

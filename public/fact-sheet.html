@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS-0057-F Fact Sheet | Key Facts, Impact Numbers & Requirements at a Glance</title>
-    <meta name="description" content="CMS-0057-F fact sheet: the essential numbers, requirements, and impact of the CMS Interoperability and Prior Authorization final rule. 365 impacted payer organizations, four mandated FHIR APIs, $16 billion in projected provider savings, and 220 million hours of burden reduction over 10 years.">
-    <meta name="keywords" content="CMS-0057-F fact sheet, CMS interoperability fact sheet, prior authorization rule summary, CMS-0057-F overview, CMS-0057-F key facts, healthcare interoperability summary, FHIR API mandate summary, prior auth reform fact sheet, CMS final rule 2024 summary">
+    <title>CMS-0057-F Fact Sheet: Requirements, APIs &amp; Deadlines | 2026 Guide</title>
+    <meta name="description" content="An independent CMS-0057-F fact sheet and implementation guide: the four FHIR APIs (Patient Access, Provider Access, Payer-to-Payer, Prior Authorization), FHIR requirements, covered payer types, and compliance deadlines. Not the official CMS fact sheet — an independent reference for health plans.">
+    <meta name="keywords" content="CMS-0057-F fact sheet, CMS 0057 fact sheet, CMS 0057 F fact sheet, CMS interoperability fact sheet, CMS-0057-F requirements, CMS-0057-F APIs, CMS-0057-F deadlines, prior authorization rule summary, FHIR API mandate summary">
     <link rel="canonical" href="https://cms-0057-f.com/fact-sheet">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <meta name="author" content="Aurelianware, Inc.">
@@ -17,8 +17,12 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
     <link rel="stylesheet" href="/css/nav-extra.css">
-    <meta property="og:title" content="CMS-0057-F Fact Sheet — Key Facts at a Glance">
-    <meta property="og:description" content="365 payer organizations. Four FHIR APIs. $16B in projected savings. Everything you need to know about CMS-0057-F in one page.">
+    <link rel="stylesheet" href="/css/guides.css">
+    <meta property="og:title" content="CMS-0057-F Fact Sheet: Requirements, APIs & Deadlines">
+    <meta property="og:description" content="An independent CMS-0057-F fact sheet: the four FHIR APIs, FHIR requirements, covered payer types, and compliance deadlines for health plans.">
+    <meta property="og:url" content="https://cms-0057-f.com/fact-sheet">
+    <meta name="twitter:title" content="CMS-0057-F Fact Sheet: Requirements, APIs & Deadlines">
+    <meta name="twitter:description" content="An independent CMS-0057-F fact sheet — the four APIs, FHIR standards, payer types, and deadlines.">
     <meta property="og:type" content="article">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,10 +31,14 @@
     {
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "CMS-0057-F Fact Sheet",
-        "description": "Key facts, impact numbers, and requirements of the CMS Interoperability and Prior Authorization final rule.",
+        "headline": "CMS-0057-F Fact Sheet: Requirements, APIs & Deadlines",
+        "description": "An independent CMS-0057-F fact sheet covering the four FHIR APIs, FHIR requirements, covered payer types, and compliance deadlines of the CMS Interoperability and Prior Authorization final rule.",
         "url": "https://cms-0057-f.com/fact-sheet",
-        "publisher": { "@type": "Organization", "name": "CMS-0057-F.com" },
+        "datePublished": "2026-09-03",
+        "dateModified": "2026-09-03",
+        "author": { "@type": "Organization", "name": "Aurelianware, Inc." },
+        "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
+        "isBasedOn": "https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f",
         "breadcrumb": {
             "@type": "BreadcrumbList",
             "itemListElement": [
@@ -136,9 +144,9 @@
 </nav>
 
 <div class="page-header">
-    <div class="breadcrumb"><a href="/">Home</a> / Fact Sheet</div>
-    <h1>CMS-0057-F <em>Fact Sheet</em></h1>
-    <p class="lead">The essential numbers, mandates, and projected impacts of the CMS Interoperability and Prior Authorization final rule — distilled into a single reference page.</p>
+    <div class="breadcrumb"><a href="/">Home</a> / <span aria-current="page">Fact Sheet</span></div>
+    <h1>CMS-0057-F <em>Fact Sheet</em>: Requirements, APIs &amp; Deadlines</h1>
+    <p class="lead">An independent, single-page reference to the CMS Interoperability and Prior Authorization final rule — its four FHIR APIs, the standards they use, who must comply, and when. Written for the health plan teams that have to implement it, with links onward to detailed API references and implementation guides.</p>
 </div>
 
 <div class="hero-stats">
@@ -165,6 +173,45 @@
 </div>
 
 <div class="content">
+
+<div class="info-box">
+    <strong>This is an independent implementation guide, not the official CMS fact sheet.</strong> CMS publishes its own fact sheet for this rule; this page is an independent educational summary maintained by Aurelianware, Inc. and is not affiliated with CMS or HHS. For the authoritative text, always consult the <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">official CMS fact sheet</a> and the <a href="https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability">Federal Register</a> entry.
+</div>
+
+<h2>Executive Summary</h2>
+<p>CMS-0057-F, "Advancing Interoperability and Improving Prior Authorization Processes," requires impacted payers to implement four standards-based <strong>FHIR APIs</strong> and to streamline prior authorization. The four APIs — <a href="/patient-access-api">Patient Access</a>, <a href="/provider-access-api">Provider Access</a>, <a href="/payer-to-payer-api">Payer-to-Payer</a>, and <a href="/prior-authorization-api">Prior Authorization</a> — share a common HL7 FHIR R4 foundation but serve different audiences. Prior authorization <em>process</em> reforms (response timeframes, specific denial reasons, and public metrics) have applied since January 1, 2026; the four <em>API</em> requirements are due January 1, 2027. The rest of this page summarizes who is covered, the APIs, the standards, and the deadlines, and links onward to detailed guidance.</p>
+
+<h2>Effective &amp; Compliance Dates</h2>
+<div class="fact-grid">
+    <div class="fact-card">
+        <h3><span class="fact-icon fi-green">✓</span> In effect — Jan 1, 2026</h3>
+        <p>Prior authorization <strong>process</strong> requirements: 72-hour (urgent) / 7-day (standard) decision timeframes, specific denial reasons, and public PA metrics reporting (except QHP timeframe exemptions). See <a href="/in-effect-2026">what's in effect in 2026</a>.</p>
+    </div>
+    <div class="fact-card">
+        <h3><span class="fact-icon fi-amber">!</span> Due — Jan 1, 2027</h3>
+        <p>The four FHIR <strong>APIs</strong> must be live: Patient Access (with PA data), Provider Access, Payer-to-Payer, and Prior Authorization. Managed care and QHP issuers phase in by rating/plan year on or after this date. See the <a href="/compliance-timeline">compliance timeline</a>.</p>
+    </div>
+    <div class="fact-card">
+        <h3><span class="fact-icon fi-blue">▸</span> CY 2027 performance period</h3>
+        <p>New "Electronic Prior Authorization" measures begin under MIPS Promoting Interoperability and the Medicare Promoting Interoperability Program (yes/no attestation).</p>
+    </div>
+</div>
+
+<h2>The Four Interoperability Areas at a Glance</h2>
+<p>All four required APIs are FHIR APIs served by a shared payer interoperability capability. This is the mental model to hold before diving into any one API.</p>
+<figure class="diagram" role="group" aria-label="The four CMS-0057-F APIs — Patient Access, Provider Access, Payer-to-Payer, and Prior Authorization — connected to a shared payer interoperability platform">
+    <div class="landscape">
+        <div class="landscape-row">
+            <div class="landscape-node c-cyan"><div class="n-title">Patient Access API</div><div class="n-sub">Member apps</div></div>
+            <div class="landscape-node c-green"><div class="n-title">Provider Access API</div><div class="n-sub">In-network providers</div></div>
+            <div class="landscape-node c-purple"><div class="n-title">Payer-to-Payer API</div><div class="n-sub">Prior / concurrent payers</div></div>
+            <div class="landscape-node c-amber"><div class="n-title">Prior Authorization API</div><div class="n-sub">CRD · DTR · PAS</div></div>
+        </div>
+        <div class="landscape-connector" aria-hidden="true"></div>
+        <div class="landscape-hub"><div class="n-title">Payer interoperability platform</div><div class="n-sub">FHIR R4 · OAuth / SMART · mapping · terminology · orchestration</div></div>
+    </div>
+    <figcaption>Figure 1 — The four CMS-0057-F APIs share one payer interoperability platform.</figcaption>
+</figure>
 
 <h2>What Is CMS-0057-F?</h2>
 <p>CMS-0057-F is a federal final rule published by the Centers for Medicare &amp; Medicaid Services (CMS) in January 2024. Its full title is <strong>"Advancing Interoperability and Improving Prior Authorization Processes"</strong> and it amends 42 CFR Parts 422, 431, 435, 438, 440, 457, and 45 CFR Part 156 (RIN 0938-AU87).</p>
@@ -310,9 +357,33 @@
     </div>
 </div>
 
+<h2>Implementation Implications for Payers</h2>
+<p>The rule mandates API outcomes and standards, not a specific internal architecture. In practice, most impacted payers converge on a layered approach: a FHIR API gateway with OAuth (SMART App Launch for patients, SMART Backend Services for systems), an interoperability layer for mapping, terminology, consent, and provenance, and adapters into existing core administration platforms. A few implications follow directly from the rule:</p>
+<ul>
+    <li><strong>One data layer, several audiences.</strong> The same member data must be projected into FHIR for patients, providers, and other payers — build it once, authorize it differently.</li>
+    <li><strong>Don't expose the core database directly.</strong> Conformant profiles, terminology, consent, and scoping require a governed projection, not a raw database façade.</li>
+    <li><strong>Adapters are an integration concern.</strong> Core platforms such as QNXT, Facets, or HealthEdge typically need an adapter layer to bridge to Da Vinci FHIR profiles.</li>
+    <li><strong>Process rules apply regardless of channel.</strong> The 2026 timeframes and specific-denial-reason requirements are satisfied by workflow, not just by shipping an API.</li>
+</ul>
+<p>For depth, start with <a href="/guides/fhir-for-cms-0057-f">FHIR for CMS-0057-F</a>, then <a href="/guides/crd-dtr-pas-cms-0057-f">CRD, DTR and PAS</a> and <a href="/guides/cms-0057-f-qnxt">CMS-0057-F with QNXT</a>.</p>
+
+<div class="related" aria-label="Explore CMS-0057-F topics">
+    <h2>Explore the full CMS-0057-F cluster</h2>
+    <div class="related-grid">
+        <a href="/patient-access-api"><span class="rl-title">Patient Access API</span><span class="rl-desc">Consumer-facing FHIR access to claims, clinical data, and PA.</span></a>
+        <a href="/provider-access-api"><span class="rl-title">Provider Access API</span><span class="rl-desc">Attributed-patient data, architecture, and a payer checklist.</span></a>
+        <a href="/payer-to-payer-api"><span class="rl-title">Payer-to-Payer API</span><span class="rl-desc">Consent, reconciliation, provenance, and build-vs-buy.</span></a>
+        <a href="/prior-authorization-api"><span class="rl-title">Prior Authorization API</span><span class="rl-desc">Electronic PA via the Da Vinci CRD/DTR/PAS workflow.</span></a>
+        <a href="/guides/fhir-for-cms-0057-f"><span class="rl-title">FHIR for CMS-0057-F</span><span class="rl-desc">Where FHIR fits across all four APIs.</span></a>
+        <a href="/guides/crd-dtr-pas-cms-0057-f"><span class="rl-title">CRD, DTR &amp; PAS explained</span><span class="rl-desc">The Da Vinci prior authorization guides.</span></a>
+        <a href="/guides/cms-0057-f-qnxt"><span class="rl-title">CMS-0057-F with QNXT</span><span class="rl-desc">Core administration integration architecture.</span></a>
+        <a href="/guides"><span class="rl-title">All implementation guides</span><span class="rl-desc">The full guides index for payer teams.</span></a>
+    </div>
+</div>
+
 <div class="cta-inline">
-    <a href="/faq" class="cta-primary">Read the FAQ →</a>
-    <a href="/" class="cta-secondary">← Back to Overview</a>
+    <a href="/guides" class="cta-primary">Read the implementation guides →</a>
+    <a href="/faq" class="cta-secondary">Read the FAQ</a>
 </div>
 
 </div>

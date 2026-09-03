@@ -15,12 +15,25 @@ Product implementation (separate site, commercial intent):
 - [CMS rule page](https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f)
 - [Federal Register (2024-00895)](https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability)
 
+## Content structure
+
+- Regulatory pages live at the site root (`/fact-sheet`, `/provider-access-api`, …).
+- Implementation guides live under `/guides` (index at `public/guides.html`, articles in `public/guides/*.html`) and share `public/css/guides.css`, including the responsive HTML/CSS diagram framework.
+
+## Validate / build
+
+`scripts/validate.mjs` (Node built-ins only, no dependencies) checks per-page SEO invariants (one `<title>`, one `<h1>`, meta description, canonical), parses every JSON-LD block, verifies internal links resolve to real routes, and checks the sitemap against the files on disk.
+
+```
+npm run validate   # also runs as `npm run build`
+```
+
 ## Deploy
 
 Cloudflare Workers static assets (`wrangler.jsonc`, files in `public/`). After merging this tree:
 
 ```
-npx wrangler deploy
+npx wrangler deploy   # `npm run deploy` runs validate first
 ```
 
 Submit `https://cms-0057-f.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
