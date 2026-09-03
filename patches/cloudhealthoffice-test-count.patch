@@ -1,0 +1,118 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 6 Apr 2026 18:53:00 +0000
+Subject: [PATCH] Update test count from 1,740 to 2,661 across all pages
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Reflects current test suite count of 2,661 (up from 1,740). Updates:
+- cms-0057f-compliance.html: hero badge, stat display, SVG metrics,
+  compliance status, and timeline (5 instances)
+- index.html: hero badge, ticker (×2), stat display, and description
+  (6 instances → 5 unique lines)
+
+---
+ src/site/cms-0057f-compliance.html | 10 +++++-----
+ src/site/index.html                | 10 +++++-----
+ 2 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/src/site/cms-0057f-compliance.html b/src/site/cms-0057f-compliance.html
+--- a/src/site/cms-0057f-compliance.html
++++ b/src/site/cms-0057f-compliance.html
+@@ -326,7 +326,7 @@
+     <span class="badge cyan">FHIR R4</span>
+     <span class="badge cyan">Da Vinci PAS</span>
+     <span class="badge cyan">Da Vinci PDex</span>
+-    <span class="badge green">1,740 Tests</span>
++    <span class="badge green">2,661 Tests</span>
+     <span class="badge green">0 Vulnerabilities</span>
+     <span class="badge">HIPAA</span>
+     <span class="badge">USCDI v1/v2</span>
+@@ -340,7 +340,7 @@
+ 
+   <div class="stats fade-up">
+     <div class="stat">
+-      <div class="stat-num cyan">1,740</div>
++      <div class="stat-num cyan">2,661</div>
+       <div class="stat-label">Tests Passing<br/>85.93% Coverage</div>
+     </div>
+     <div class="stat">
+@@ -637,7 +637,7 @@
+ 
+ <!-- ═══ Metrics bar ═══ -->
+ <rect x="60" y="1185" width="250" height="56" rx="8" fill="rgba(0,255,255,0.04)" stroke="rgba(0,255,255,0.12)" stroke-width="0.5"/>
+-<text x="185" y="1208" text-anchor="middle" font-size="18" font-weight="700" fill="#00ffff" font-family="-apple-system, sans-serif">1,740 tests</text>
++<text x="185" y="1208" text-anchor="middle" font-size="18" font-weight="700" fill="#00ffff" font-family="-apple-system, sans-serif">2,661 tests</text>
+ <text x="185" y="1228" text-anchor="middle" font-size="12" fill="rgba(0,255,255,0.5)" font-family="-apple-system, sans-serif">85.93% coverage</text>
+ 
+ <rect x="340" y="1185" width="250" height="56" rx="8" fill="rgba(0,255,136,0.04)" stroke="rgba(0,255,136,0.12)" stroke-width="0.5"/>
+@@ -1095,7 +1095,7 @@
+   <div class="container">
+     <div class="section-label">Compliance Status</div>
+     <h2 class="section-title">Full CMS-0057-F Coverage — Production v4.0.0</h2>
+-    <p class="section-desc">Every requirement, tested, validated, and running in production. 1,740 tests. 85.93% coverage. Zero security vulnerabilities.</p>
++    <p class="section-desc">Every requirement, tested, validated, and running in production. 2,661 tests. 85.93% coverage. Zero security vulnerabilities.</p>
+ 
+ ```
+ <table class="compliance-table" data-reveal>
+@@ -1156,7 +1156,7 @@
+     <div class="timeline-dot active green"></div>
+     <div class="timeline-date">March 2025 — CHO V4.0 Production SaaS</div>
+     <div class="timeline-title">Multi-Tenant SaaS + Demo Portal Live</div>
+-    <div class="timeline-desc">1,740 tests, 85.93% coverage, zero vulnerabilities. AKS-deployed multi-tenant architecture with RBAC, work queues, appeals, enrollment, and benefit engine.</div>
++    <div class="timeline-desc">2,661 tests, 85.93% coverage, zero vulnerabilities. AKS-deployed multi-tenant architecture with RBAC, work queues, appeals, enrollment, and benefit engine.</div>
+   </div>
+ 
+   <div class="timeline-item">
+diff --git a/src/site/index.html b/src/site/index.html
+--- a/src/site/index.html
++++ b/src/site/index.html
+@@ -111,7 +111,7 @@
+              alt="Cloud Health Office The Sentinel"
+              class="hero-logo" />
+ 
+-        <div class="hero-badge">v4.0.0 &nbsp;&middot;&nbsp; Production SaaS &nbsp;&middot;&nbsp; 1,740 Tests &nbsp;&middot;&nbsp; Zero Vulnerabilities</div>
++        <div class="hero-badge">v4.0.0 &nbsp;&middot;&nbsp; Production SaaS &nbsp;&middot;&nbsp; 2,661 Tests &nbsp;&middot;&nbsp; Zero Vulnerabilities</div>
+ 
+         <h1 class="hero-headline">
+           CMS-0057-F Compliance<br>
+@@ -257,7 +257,7 @@
+       <div class="ticker-track" aria-hidden="true">
+         <span class="ticker-item"><span>250,000+ Repository Clones</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>Zero Security Vulnerabilities</span><span class="ticker-dot">&#9670;</span></span>
+-        <span class="ticker-item"><span>1,740 Tests Passing</span><span class="ticker-dot">&#9670;</span></span>
++        <span class="ticker-item"><span>2,661 Tests Passing</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>CMS-0057-F Compliant &mdash; 18 Months Early</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>Production SaaS Live</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>Multi-Tenant Architecture</span><span class="ticker-dot">&#9670;</span></span>
+@@ -266,7 +266,7 @@
+         <!-- Repeat for seamless loop -->
+         <span class="ticker-item"><span>250,000+ Repository Clones</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>Zero Security Vulnerabilities</span><span class="ticker-dot">&#9670;</span></span>
+-        <span class="ticker-item"><span>1,740 Tests Passing</span><span class="ticker-dot">&#9670;</span></span>
++        <span class="ticker-item"><span>2,661 Tests Passing</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>CMS-0057-F Compliant &mdash; 18 Months Early</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>Production SaaS Live</span><span class="ticker-dot">&#9670;</span></span>
+         <span class="ticker-item"><span>Multi-Tenant Architecture</span><span class="ticker-dot">&#9670;</span></span>
+@@ -291,7 +291,7 @@
+           <span class="stat-label">Production<br>Deployment</span>
+         </div>
+         <div class="stat-item">
+-          <span class="stat-number">1,740</span>
++          <span class="stat-number">2,661</span>
+           <span class="stat-label">Tests,<br>85.93% Coverage</span>
+         </div>
+       </div>
+@@ -372,7 +372,7 @@
+ 
+         <p style="text-align:center; font-size:1.05rem; color:rgba(176,176,176,0.8); max-width:600px; margin:0 auto 36px auto; line-height:1.7;">
+           Transform X12 EDI (270/837/278/835) to FHIR R4 with zero external dependencies.<br>
+-          1,740 comprehensive tests. 85.93% coverage. v4.0.0 production-ready.
++          2,661 comprehensive tests. 85.93% coverage. v4.0.0 production-ready.
+         </p>
+ 
+         <div style="text-align:center;">
+--
+2.43.0
+
