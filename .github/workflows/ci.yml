@@ -22,5 +22,13 @@ jobs:
             echo "Stray Markdown code fences found in HTML" >&2
             exit 1
           fi
+      # `npm run validate` previously ran only from `npm run deploy`, so a PR
+      # could break a canonical, a title or an internal link and CI stayed green.
+      - name: Validate site SEO invariants, links and sitemap
+        run: npm run validate
+
+      - name: Unit-test the HTTPS-redirect Worker
+        run: npm test
+
       - name: Validate Wrangler config
         run: npx wrangler deploy --dry-run --outdir /tmp/wrangler-dist

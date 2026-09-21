@@ -99,6 +99,16 @@ for (const file of htmlFiles) {
     if (REDIRECTS.has(href.split("#")[0])) continue;
     if (routeToFile(href) === null) err(rel, `broken internal link: ${href}`);
   }
+
+  // --- No plain-http references ---
+  // Both schemes of this site were indexed separately in Search Console, with
+  // the http:// variant outranking the https:// one. A single http:// link in
+  // the markup re-seeds that split, so treat any as an error. There are no
+  // legitimate http:// URLs in this tree -- schema.org, Open Graph and Google
+  // Fonts are all referenced over https, and no inline SVG carries an xmlns.
+  for (const m of html.matchAll(/(?:href|src|content)=["'](http:\/\/[^"']*)["']/gi)) {
+    err(rel, `plain-http reference (use https): ${m[1]}`);
+  }
 }
 
 // --- Sitemap consistency ---
@@ -110,6 +120,10 @@ if (!existsSync(sitemapPath)) {
   const locs = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
   const sitemapRoutes = new Set();
   for (const loc of locs) {
+    // The sitemap is the strongest canonicalization signal we control; a single
+    // http:// entry tells Google the http:// variant is a real, distinct URL.
+    if (!loc.startsWith("https://cms-0057-f.com/") && loc !== "https://cms-0057-f.com")
+      err("public/sitemap.xml", `sitemap URL must be an https://cms-0057-f.com URL: ${loc}`);
     const route = loc.replace(/^https?:\/\/cms-0057-f\.com/, "") || "/";
     sitemapRoutes.add(route);
     if (routeToFile(route) === null)

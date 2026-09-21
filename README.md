@@ -20,13 +20,29 @@ Product implementation (separate site, commercial intent):
 - Regulatory pages live at the site root (`/fact-sheet`, `/provider-access-api`, …).
 - Implementation guides live under `/guides` (index at `public/guides.html`, articles in `public/guides/*.html`) and share `public/css/guides.css`, including the responsive HTML/CSS diagram framework.
 
+## HTTPS
+
+`src/worker.mjs` sits in front of the static-asset binding and 301s any
+plain-HTTP request to its `https://` equivalent, preserving path and query
+string. Cloudflare's "Always Use HTTPS" zone setting should be enabled as well.
+Background, the dashboard settings that are not in this repo, and why HSTS is
+deliberately not enabled: [`docs/https-enforcement.md`](docs/https-enforcement.md).
+
+```
+npm run verify:https   # asserts a single 301 hop for every sitemap URL
+```
+
 ## Validate / build
 
-`scripts/validate.mjs` (Node built-ins only, no dependencies) checks per-page SEO invariants (one `<title>`, one `<h1>`, meta description, canonical), parses every JSON-LD block, verifies internal links resolve to real routes, and checks the sitemap against the files on disk.
+`scripts/validate.mjs` (Node built-ins only, no dependencies) checks per-page SEO invariants (one `<title>`, one `<h1>`, meta description, canonical), parses every JSON-LD block, verifies internal links resolve to real routes, rejects any `http://` reference in an `href`/`src`/`content` attribute, and checks the sitemap against the files on disk (https-only, canonical host).
 
 ```
-npm run validate   # also runs as `npm run build`
+npm run validate   # SEO invariants, links, sitemap
+npm test           # unit tests for the HTTPS-redirect Worker
+npm run build      # both of the above; `npm run deploy` runs it first
 ```
+
+Both run in CI on every pull request.
 
 ## Deploy
 
