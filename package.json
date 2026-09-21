@@ -7,9 +7,11 @@
   },
   "scripts": {
     "validate": "node scripts/validate.mjs",
-    "build": "node scripts/validate.mjs",
+    "test": "node --test scripts/worker.test.mjs",
+    "build": "npm run validate && npm test",
     "preview": "wrangler dev",
-    "deploy": "npm run validate && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "verify:https": "node scripts/verify-https.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.128.0"
