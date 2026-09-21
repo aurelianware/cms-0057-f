@@ -1,14 +1,20 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "cms-0057-f",
+  "main": "./src/worker.mjs",
   "compatibility_date": "2025-09-27",
   "observability": {
     "enabled": true
   },
   "assets": {
     "directory": "./public",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // Without this, Cloudflare serves matching static assets directly and never
+    // invokes src/worker.mjs -- which would silently disable the http -> https
+    // redirect for every real page URL.
+    "run_worker_first": true
   },
   "compatibility_flags": [
     "nodejs_compat"
