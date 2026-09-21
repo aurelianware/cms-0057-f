@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prior Authorization API | CMS-0057-F Requirements, Timelines & Da Vinci IGs</title>
-    <meta name="description" content="Complete guide to the Prior Authorization API under CMS-0057-F. Learn about the FHIR-based API for streamlining prior auth — including Da Vinci CRD, DTR, and PAS implementation guides, response timeframe mandates, denial reason requirements, and public reporting obligations.">
+    <title>CMS-0057-F Prior Authorization API: Rules and 2027 Deadline</title>
+    <meta name="description" content="The FHIR Prior Authorization API is due January 1, 2027. Decision timeframes of 72 hours expedited and 7 calendar days standard have applied since 2026.">
     <meta name="keywords" content="Prior Authorization API, CMS-0057-F, PARDD API, Da Vinci CRD, Da Vinci DTR, Da Vinci PAS, prior authorization FHIR, electronic prior authorization, prior auth automation, prior authorization denial reasons, prior auth response times, healthcare prior authorization reform">
     <link rel="canonical" href="https://cms-0057-f.com/prior-authorization-api">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -16,12 +16,12 @@
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
-    <meta property="og:title" content="Prior Authorization API — CMS-0057-F, Da Vinci CRD/DTR/PAS & Workflow">
-    <meta property="og:description" content="The CMS-0057-F Prior Authorization API in depth: the CRD/DTR/PAS Da Vinci workflow, X12 278, payer orchestration into utilization management and core administration systems, timeframes, and Da Vinci implementation guides.">
+    <meta property="og:title" content="CMS-0057-F Prior Authorization API: Rules and 2027 Deadline">
+    <meta property="og:description" content="What is already in force since January 1, 2026, what is due January 1, 2027, and how the Da Vinci CRD, DTR and PAS guides fit with X12 278.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://cms-0057-f.com/prior-authorization-api">
-    <meta name="twitter:title" content="Prior Authorization API — CMS-0057-F">
-    <meta name="twitter:description" content="The Da Vinci CRD/DTR/PAS workflow, X12 278, and payer orchestration behind the CMS-0057-F Prior Authorization API.">
+    <meta name="twitter:title" content="CMS-0057-F Prior Authorization API: Rules and 2027 Deadline">
+    <meta name="twitter:description" content="What is already in force since January 1, 2026, what is due January 1, 2027, and how the Da Vinci CRD, DTR and PAS guides fit with X12 278.">
     <link rel="stylesheet" href="/css/nav-extra.css">
     <link rel="stylesheet" href="/css/guides.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -135,7 +135,7 @@
 </div>
 
 <h2>Prior Authorization Process Requirements</h2>
-<p>Separate from the API itself, CMS finalized process improvements that apply <strong>regardless of how</strong> a payer receives a PA request — whether through the API, fax, phone, or portal. These requirements take effect in 2026, one year before the API mandate:</p>
+<p>Separate from the API itself, CMS finalized process improvements that apply <strong>regardless of how</strong> a payer receives a PA request — whether through the API, fax, phone, or portal. These requirements took effect in 2026, one year before the API mandate. The decision timeframes are <strong>72 hours for expedited requests</strong>, unless a shorter minimum timeframe is established under applicable state law, and <strong>7 calendar days for standard requests</strong>, with the possibility of an extension of up to 14 days in certain circumstances. They cover items and services only, not drugs (<a href="https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability">89 FR 8758</a>; <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a>):</p>
 
 <div class="stat-row">
     <div class="stat-card">
@@ -210,6 +210,8 @@
 
 <h2>Where X12 278 Fits</h2>
 <p>Prior authorization already has a long-standing HIPAA transaction — the <strong>X12 278</strong> request and response. CMS-0057-F does not retire it. The Da Vinci PAS implementation guide is specifically designed to interoperate with X12 278: in many deployments the FHIR PAS request is transformed into a 278 for the payer's existing transaction infrastructure (or a clearinghouse), and the 278 response is mapped back into a FHIR <code>ClaimResponse</code>. This is why PAS is often described as a <strong>FHIR-to-X12 bridge</strong>. Expect X12 278 to remain part of the plumbing behind the FHIR boundary, especially where trading-partner agreements and clearinghouses are already built around it.</p>
+
+<p><strong>Enforcement discretion for all-FHIR implementations.</strong> Alongside the rule, HHS said it would announce enforcement discretion for the HIPAA X12 278 prior authorization transaction standard: covered entities that implement an all-FHIR Prior Authorization API under CMS-0057-F and do not use X12 278 may use a FHIR-only, or FHIR and X12 combination, API to satisfy the requirement (<a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a>). Read that carefully before planning around it. This discretion is stated on the CMS fact sheet, <em>not</em> in the text of the final rule. The rule itself points in the other direction: it describes the existing HIPAA exception process at 45 CFR 162.940 and a Da Vinci pilot testing an alternative to the adopted standard, and states that unless a payer is included in that pilot, it &ldquo;may be required to use the adopted HIPAA standard when implementing the API&rdquo; (<a href="https://www.federalregister.gov/documents/2024/02/08/2024-00895/medicare-and-medicaid-programs-patient-protection-and-affordable-care-act-advancing-interoperability">89 FR 8758</a>). If an all-FHIR path is load-bearing in your architecture, confirm the current posture with counsel rather than relying on a fact-sheet sentence.</p>
 
 <h2>Payer Workflow Orchestration &amp; Core Administration</h2>
 <p>When a PAS request arrives, the payer's interoperability layer must translate the FHIR <code>Claim</code> (use=preauthorization) into whatever the authorization workflow expects, invoke the utilization-management engine and medical-policy rules, and translate the outcome back into a FHIR <code>ClaimResponse</code> — including the specific denial reason the rule requires. In many payer environments the backend that records and adjudicates authorizations is an established core administration platform such as <strong>QNXT, Facets, or HealthEdge</strong>, or a custom system.</p>
