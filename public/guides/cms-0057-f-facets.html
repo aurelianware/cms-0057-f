@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS-0057-F with Facets: Interoperability Architecture for TriZetto Facets Payers</title>
+    <meta name="description" content="A reference architecture for the four CMS-0057-F FHIR APIs beside a TriZetto Facets core: the adapter layer, Facets UM and prior auth, and build vs. overlay vs. TriZetto Unify.">
+    <meta name="keywords" content="CMS-0057-F Facets, Facets interoperability, Facets FHIR, TriZetto Facets FHIR API, Facets prior authorization API, Facets CMS interoperability, TriZetto Unify, payer interoperability architecture">
+    <link rel="canonical" href="https://cms-0057-f.com/guides/cms-0057-f-facets">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="CMS-0057-F with Facets: Interoperability Architecture for TriZetto Facets Payers">
+    <meta property="og:description" content="A reference architecture for CMS-0057-F FHIR APIs alongside a TriZetto Facets core administration platform, using an interoperability layer and adapters.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://cms-0057-f.com/guides/cms-0057-f-facets">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <meta name="twitter:title" content="CMS-0057-F with Facets">
+    <meta name="twitter:description" content="Reference architecture for CMS-0057-F FHIR APIs with a TriZetto Facets core administration platform.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/nav-extra.css">
+    <link rel="stylesheet" href="/css/guides.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "CMS-0057-F with Facets: Interoperability Architecture for TriZetto Facets Payers",
+        "description": "A reference architecture for CMS-0057-F FHIR APIs alongside a TriZetto Facets core administration platform, using an interoperability layer and adapters.",
+        "url": "https://cms-0057-f.com/guides/cms-0057-f-facets",
+        "datePublished": "2026-10-05",
+        "dateModified": "2026-10-05",
+        "author": { "@type": "Organization", "name": "Aurelianware, Inc." },
+        "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
+        "about": { "@type": "Thing", "name": "CMS-0057-F implementation with Facets" },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cms-0057-f.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://cms-0057-f.com/guides" },
+                { "@type": "ListItem", "position": 3, "name": "CMS-0057-F with Facets", "item": "https://cms-0057-f.com/guides/cms-0057-f-facets" }
+            ]
+        }
+    }
+    </script>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/in-effect-2026">2026 status</a></li>
+            <li><a href="/patient-access-api">Patient Access API</a></li>
+            <li><a href="/provider-access-api">Provider Access API</a></li>
+            <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+            <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+            <li><a href="/compliance-timeline">Timeline</a></li>
+            <li><a href="/fact-sheet">Fact Sheet</a></li>
+            <li><a href="/guides" class="active">Guides</a></li>
+            <li><a href="/faq">FAQ</a></li>
+        </ul>
+    </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated October 2026</span></div>
+</nav>
+
+<div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> / <a href="/guides">Guides</a> / <span aria-current="page">CMS-0057-F with Facets</span></div>
+    <span class="eyebrow">Payer Architecture Guide</span>
+    <h1>CMS-0057-F with <em>Facets</em>: An Interoperability Architecture</h1>
+    <p class="lead">Many impacted payers run TriZetto Facets and now have to deliver CMS-0057-F FHIR APIs on top of it. This guide lays out a reference architecture that keeps Facets where it is, adds a standards-based interoperability layer in front of it, and compares building it, adopting Cognizant's own offering, and using a vendor-neutral overlay.</p>
+</div>
+
+<div class="content">
+
+<nav class="toc" aria-label="Table of contents">
+    <h2>On this page</h2>
+    <ul>
+        <li><a href="#framing">Framing the problem</a></li>
+        <li><a href="#not-the-database">Not "expose the database"</a></li>
+        <li><a href="#architecture">Reference architecture</a></li>
+        <li><a href="#adapters">The adapter layer</a></li>
+        <li><a href="#api-by-api">API-by-API considerations</a></li>
+        <li><a href="#options">Build, overlay, or vendor offering</a></li>
+        <li><a href="#checklist">Onboarding checklist</a></li>
+    </ul>
+</nav>
+
+<h2 id="framing">Framing the problem</h2>
+<p>Facets (a Cognizant TriZetto core administration platform) runs enrollment, benefits, provider contracting, claims and related operations for many Medicare Advantage, Medicaid and commercial plans. CMS-0057-F doesn't ask you to replace it. It asks for four FHIR APIs — Patient Access, Provider Access, Payer-to-Payer and Prior Authorization — live by January 1, 2027, built largely on data that lives in Facets today. Facets installations also tend to be heavily configured and extended, so two Facets plans rarely look the same underneath. The engineering question is what sits between Facets and the four APIs, and who owns it.</p>
+<div class="info-box amber">
+    <strong>No unsupported product claims.</strong> This guide describes an integration pattern, not native product capabilities. It does not assert that Facets ships CMS-0057-F FHIR APIs out of the box. Confirm any specific capability against Cognizant's own current documentation and your contract. Treat the adapter as your responsibility unless the vendor states otherwise.
+</div>
+
+<h2 id="not-the-database">Why the CMS APIs are not "expose the core database"</h2>
+<p>Pointing a FHIR façade straight at the core database is the tempting shortcut, and the one to avoid. The CMS APIs require conformant FHIR profiles (US Core, CARIN Blue Button, Da Vinci PDex and PAS), standard terminology, consent and opt-out enforcement, Provenance, and scoping rules (for example, leaving remittances and cost-sharing out of provider and payer-to-payer payloads). A raw database projection meets none of these reliably and ties your public API to an internal schema. The API should be a <em>governed projection</em> of core data, produced by an interoperability layer.</p>
+<p>For Facets in particular, plan-specific configuration, user-defined fields and custom extensions carry meaning only inside the plan. They need translating, not passing through.</p>
+
+<h2 id="architecture">Reference architecture</h2>
+<figure class="diagram" role="group" aria-label="CMS-0057-F payer architecture from external consumers through OAuth security, a FHIR gateway, interoperability services, mapping and orchestration, and core administration adapters to Facets">
+    <div class="flow">
+        <div class="flow-node accent-blue"><div class="n-title">Consumers / EHRs / other payers</div><div class="n-sub">Member apps · provider systems · peer payers</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-cyan"><div class="n-title">OAuth / API security</div><div class="n-sub">SMART App Launch &amp; SMART Backend Services</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-cyan"><div class="n-title">FHIR API gateway</div><div class="n-sub">Conformance, routing, rate limiting, audit</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-green"><div class="n-title">CMS-0057-F interoperability services</div><div class="n-sub">Patient / Provider / Payer-to-Payer / Prior Auth logic</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-green"><div class="n-title">Mapping / terminology / orchestration</div><div class="n-sub">Profiles · code translation · consent · Provenance</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-purple"><div class="n-title">Core administration adapters</div><div class="n-sub">Read/write bridges to the interfaces the plan is licensed for</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-split">
+            <div class="flow-node muted"><div class="n-title">Facets</div><div class="n-sub">This guide's focus</div></div>
+            <div class="flow-node muted"><div class="n-title">Facets UM / CareAdvance</div><div class="n-sub">Authorization system of record</div></div>
+            <div class="flow-node muted"><div class="n-title">Plan data warehouse</div><div class="n-sub">History for Payer-to-Payer</div></div>
+        </div>
+    </div>
+    <figcaption>Figure 1 — A layered CMS-0057-F architecture in front of Facets.</figcaption>
+</figure>
+
+<h2 id="adapters">The adapter layer</h2>
+<p>The adapter is the seam between standard FHIR and the interfaces the plan actually has. For Facets, its jobs are:</p>
+<ul>
+    <li><strong>Read projection</strong> — members, coverage, claims and EOB data, providers and authorization records, from the integration interfaces the plan has licensed, from extracts, or from the plan's data warehouse. Many Facets plans already keep a reporting copy or warehouse, and it is often the practical source for the five-year Payer-to-Payer history.</li>
+    <li><strong>Write/orchestration</strong> — a PAS request must reach the plan's authorization system of record (commonly Facets UM or CareAdvance) and return a decision. Depending on the plan, that path may be a vendor interface, the UM product's own integration, or an X12 278 bridge. See <a href="/guides/crd-dtr-pas-cms-0057-f">CRD, DTR &amp; PAS explained</a>.</li>
+    <li><strong>Terminology normalization</strong> — map plan-specific service codes and custom code sets to CPT, HCPCS, ICD-10 and SNOMED CT.</li>
+    <li><strong>Scoping &amp; consent</strong> — apply Provider Access opt-out and Payer-to-Payer permission before any data leaves. Most plans will track these outside the core.</li>
+</ul>
+<p>Budget for adapter work explicitly. Facets versions, extensions and configuration differ enough between plans that a drop-in connector is the exception, not the rule.</p>
+
+<h2 id="api-by-api">API-by-API considerations</h2>
+<div class="table-scroll">
+<table class="data-table">
+    <thead><tr><th>API</th><th>Primary Facets-side data</th><th>Adapter emphasis</th></tr></thead>
+    <tbody>
+        <tr><td class="row-head"><a href="/patient-access-api">Patient Access</a></td><td>Coverage, claims (EOB), PA status</td><td>Member-scoped auth; EOB shaping to CARIN Blue Button</td></tr>
+        <tr><td class="row-head"><a href="/provider-access-api">Provider Access</a></td><td>Attributed members' claims, clinical data, PA</td><td>Attribution logic + opt-out enforcement</td></tr>
+        <tr><td class="row-head"><a href="/payer-to-payer-api">Payer-to-Payer</a></td><td>Up to 5 years of claims, encounters, PA</td><td>Consent, Provenance, de-duplication on intake</td></tr>
+        <tr><td class="row-head"><a href="/prior-authorization-api">Prior Authorization</a></td><td>UM rules, medical policy, authorization records</td><td>CRD/DTR rule content; PAS ↔ Facets UM, CareAdvance or X12 278</td></tr>
+    </tbody>
+</table>
+</div>
+
+<h2 id="options">Build, overlay, or the vendor's own offering</h2>
+<p>Facets plans have three broad options for the interoperability layer:</p>
+<ol>
+    <li><strong>Build it internally</strong> — maximum control, highest engineering and maintenance cost, and you own conformance as the specifications evolve.</li>
+    <li><strong>Adopt Cognizant's offering</strong> — Cognizant markets <a href="https://www.cognizant.com/us/en/industries/healthcare-technology-solutions/trizetto/unify">TriZetto Unify</a>, which it describes as automating CRD, DTR and PAS and integrating with Facets, QNXT, CareAdvance, Facets UM and QNXT UM. In May 2026 Cognizant <a href="https://www.stocktitan.net/news/CTSH/faster-decisions-faster-care-for-patients-cognizant-opens-tri-zetto-w0bfule94008.html">announced headless, agent-ready APIs</a> for its electronic prior authorization service. The published material centers on prior authorization, so confirm how Patient Access, Provider Access and Payer-to-Payer would be covered.</li>
+    <li><strong>Add a vendor-neutral interoperability layer</strong> — an overlay provides all four APIs, mapping, terminology and orchestration in front of Facets, typically in the plan's own cloud, and keeps the API boundary independent of the core vendor.</li>
+</ol>
+<p>These aren't mutually exclusive. <strong>A modern payer platform such as CloudHealthOffice can serve as either an interoperability layer integrated with Facets or, depending on the implementation model, as part of the core backend itself.</strong> The point of the architecture is that the backend is an adapter concern behind a stable FHIR boundary — you can change it without changing the public API.</p>
+
+<h2 id="checklist">Onboarding checklist</h2>
+<ul class="checklist">
+    <li>Inventory the Facets version, configuration, custom extensions and warehouse, and where each required data class lives.</li>
+    <li>Confirm which integration interfaces and extracts your Facets license and hosting model give you.</li>
+    <li>Stand up the FHIR gateway + OAuth (SMART App Launch and Backend Services).</li>
+    <li>Build the mapping/terminology layer to conformant US Core / CARIN / PDex / PAS profiles.</li>
+    <li>Implement consent (Payer-to-Payer) and opt-out (Provider Access) enforcement.</li>
+    <li>Wire the Prior Authorization API into Facets UM, CareAdvance or the X12 278 path.</li>
+    <li>Add Provenance, audit logging, and the CMS prior authorization metrics you must report.</li>
+    <li>Conformance-test each API before onboarding trading partners.</li>
+</ul>
+
+<div class="info-box green">
+    <strong>Regulatory vs. architectural.</strong> CMS mandates the API <em>outcome</em> and the standards. The layered architecture, the adapter pattern, and the build/overlay/vendor choice are <em>architectural options</em> that satisfy the rule — CMS does not mandate any particular internal design or product.
+</div>
+
+<div class="related" aria-label="Related pages">
+    <h2>Continue reading</h2>
+    <div class="related-grid">
+        <a href="/guides/cms-0057-f-qnxt"><span class="rl-title">CMS-0057-F with QNXT</span><span class="rl-desc">The same pattern for a QNXT core.</span></a>
+        <a href="/guides/cms-0057-f-healthedge"><span class="rl-title">CMS-0057-F with HealthEdge</span><span class="rl-desc">HealthRules Edge and Clinical Edge.</span></a>
+        <a href="/guides/crd-dtr-pas-cms-0057-f"><span class="rl-title">CRD, DTR &amp; PAS explained</span><span class="rl-desc">The prior authorization workflow behind the adapter.</span></a>
+        <a href="/prior-authorization-api"><span class="rl-title">Prior Authorization API</span><span class="rl-desc">Requirements, timeframes and Da Vinci IGs.</span></a>
+    </div>
+</div>
+
+<div class="cta-inline">
+    <a href="/guides" class="cta-primary">All guides →</a>
+    <a href="/guides/cms-0057-f-qnxt" class="cta-secondary">← CMS-0057-F with QNXT</a>
+</div>
+
+</div>
+
+<footer>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS. Facets, QNXT, CareAdvance and TriZetto Unify are trademarks of Cognizant or its affiliates; other names are trademarks of their respective owners; references are descriptive only.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS rule page</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87). Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
+</footer>
+
+    <script src="/js/site.js" defer></script>
+</body>
+</html>
