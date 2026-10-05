@@ -75,7 +75,7 @@
     <div class="breadcrumb"><a href="/">Home</a> / <a href="/guides">Guides</a> / <span aria-current="page">CMS-0057-F with HealthEdge</span></div>
     <span class="eyebrow">Payer Architecture Guide</span>
     <h1>CMS-0057-F with <em>HealthEdge</em>: An Interoperability Architecture for HealthRules Edge</h1>
-    <p class="lead">HealthEdge plans — on HealthRules Edge, formerly HealthRules Payer — have to deliver CMS-0057-F FHIR APIs too, often with a vendor-hosted core. This guide lays out a reference architecture for the interoperability layer, how prior authorization reaches Clinical Edge (formerly GuidingCare), and how the hosting model shapes the adapter.</p>
+    <p class="lead">HealthEdge plans — on HealthRules Edge, formerly HealthRules Payer — have to deliver CMS-0057-F FHIR APIs too, and how the core is hosted shapes the work. This guide lays out a reference architecture for the interoperability layer, how prior authorization reaches Clinical Edge (formerly GuidingCare), and how the hosting model shapes the adapter.</p>
 </div>
 
 <div class="content">
@@ -94,15 +94,15 @@
 </nav>
 
 <h2 id="framing">Framing the problem</h2>
-<p>HealthEdge's core administration platform is <strong>HealthRules Edge</strong> — named <strong>HealthRules Payer</strong> until HealthEdge <a href="https://www.globenewswire.com/news-release/2026/10/01/3373063/0/en/healthedge-launches-unified-ai-powered-platform-to-guarantee-financial-outcomes-for-health-plans.html">renamed its portfolio on October 1, 2026</a>. In the same announcement, GuidingCare became <strong>Clinical Edge</strong>, and HealthEdge introduced two delivery models: Enduring Edge (business process as a service) and Integration Edge (platform as a service). CMS-0057-F doesn't ask a HealthEdge plan to replace any of this. It asks for four FHIR APIs — Patient Access, Provider Access, Payer-to-Payer and Prior Authorization — live by January 1, 2027.</p>
-<p>The difference from QNXT and Facets is hosting. Many HealthRules plans run as a vendor-hosted service, and under a BPaaS model the vendor operates more of the stack. The plan often can't simply connect to a database, so the CMS-0057-F boundary has to be built from the interfaces and data feeds the plan is entitled to — and the plan, not the vendor, stays accountable for the APIs.</p>
+<p>HealthEdge's core administration platform is <strong>HealthRules Edge</strong> — named <strong>HealthRules Payer</strong> until HealthEdge <a href="https://www.globenewswire.com/news-release/2026/10/01/3373063/0/en/healthedge-launches-unified-ai-powered-platform-to-guarantee-financial-outcomes-for-health-plans.html">renamed its portfolio on October 1, 2026</a>. In the same announcement, GuidingCare became <strong>Clinical Edge</strong>, and HealthEdge introduced two delivery models: Enduring Edge (business process as a service) and Integration Edge (platform as a service). CMS-0057-F doesn't ask a HealthEdge plan to replace any of this. It asks for four FHIR APIs — Patient Access, Provider Access, Payer-to-Payer and Prior Authorization — live by the 2027 compliance date that applies to the payer type: January 1, 2027 for Medicare Advantage and state Medicaid/CHIP fee-for-service; the first rating period or plan year beginning on or after that date for Medicaid/CHIP managed care and QHP issuers (see the <a href="/compliance-timeline">compliance timeline</a>).</p>
+<p>Hosting is the variable to settle first. HealthEdge's delivery models range from a platform the plan operates with HealthEdge to a full-service BPaaS partnership, and what a plan can reach — database access, service interfaces, scheduled extracts — depends on its hosting arrangement and contract. Where direct database access isn't available, the CMS-0057-F boundary has to be built from the interfaces and data feeds the plan is entitled to. Either way, the plan, not the vendor, stays accountable for the APIs.</p>
 <div class="info-box amber">
     <strong>No unsupported product claims.</strong> This guide describes an integration pattern, not native product capabilities. It does not assert that HealthRules Edge or Clinical Edge ship CMS-0057-F FHIR APIs out of the box. HealthEdge's October 2026 launch announcement does not address CMS-0057-F. Confirm any specific capability against HealthEdge's own current documentation and your contract.
 </div>
 
 <h2 id="not-the-database">Why the CMS APIs are not "expose the core database"</h2>
 <p>Pointing a FHIR façade straight at the core database is the tempting shortcut, and the one to avoid. The CMS APIs require conformant FHIR profiles (US Core, CARIN Blue Button, Da Vinci PDex and PAS), standard terminology, consent and opt-out enforcement, Provenance, and scoping rules (for example, leaving remittances and cost-sharing out of provider and payer-to-payer payloads). A raw database projection meets none of these reliably and ties your public API to an internal schema. The API should be a <em>governed projection</em> of core data, produced by an interoperability layer.</p>
-<p>With a hosted core this is usually decided for you: the adapter works from vendor interfaces and extracts, not database access, which makes the governed-projection model the natural fit.</p>
+<p>Where the core is vendor-hosted, this may be decided for you: the adapter works from vendor interfaces and extracts rather than database access, which makes the governed-projection model the natural fit.</p>
 
 <h2 id="architecture">Reference architecture</h2>
 <figure class="diagram" role="group" aria-label="CMS-0057-F payer architecture from external consumers through OAuth security, a FHIR gateway, interoperability services, mapping and orchestration, and core administration adapters to HealthRules Edge">
@@ -152,7 +152,7 @@
 
 <h2 id="options">Build, overlay, or wait for the vendor</h2>
 <ol>
-    <li><strong>Wait for a HealthEdge offering</strong> — reasonable only if HealthEdge publishes a complete four-API answer in time; with the deadline on January 1, 2027, leave room for testing and partner onboarding.</li>
+    <li><strong>Wait for a HealthEdge offering</strong> — reasonable only if HealthEdge publishes a complete four-API answer in time; with the 2027 compliance dates close, leave room for testing and partner onboarding.</li>
     <li><strong>Build it internally</strong> — maximum control, highest effort, and the plan owns conformance; feasible where the plan has a FHIR team and reliable access to the feeds.</li>
     <li><strong>Add a vendor-neutral interoperability layer</strong> — an overlay provides all four APIs in the plan's own cloud, independent of how the core is hosted, with the adapter built during onboarding against HealthEdge's interfaces.</li>
 </ol>
