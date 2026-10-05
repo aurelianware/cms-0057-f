@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS-0057-F Fact Sheet Summary: Requirements, APIs &amp; Deadlines</title>
-    <meta name="description" content="CMS-0057-F fact sheet in plain English: the four FHIR APIs, who must comply, prior auth timeframes, and the January 1, 2027 deadline. Links to the official CMS fact sheet.">
+    <title>CMS-0057-F Fact Sheet: Interoperability &amp; Prior Authorization Final Rule</title>
+    <meta name="description" content="Summary of the CMS Interoperability &amp; Prior Authorization Final Rule, with the official CMS fact sheet link: 4 FHIR APIs, 72-hr/7-day decisions, 2026–27 dates.">
     <meta name="keywords" content="CMS-0057-F fact sheet, CMS 0057 fact sheet, CMS 0057 F fact sheet, CMS interoperability fact sheet, CMS-0057-F requirements, CMS-0057-F APIs, CMS-0057-F deadlines, prior authorization rule summary, FHIR API mandate summary">
     <link rel="canonical" href="https://cms-0057-f.com/fact-sheet">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -18,10 +18,10 @@
     <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
     <link rel="stylesheet" href="/css/nav-extra.css">
     <link rel="stylesheet" href="/css/guides.css">
-    <meta property="og:title" content="CMS-0057-F Fact Sheet: Requirements, APIs & Deadlines">
+    <meta property="og:title" content="CMS-0057-F Fact Sheet: Interoperability & Prior Authorization Final Rule">
     <meta property="og:description" content="An independent CMS-0057-F fact sheet: the four FHIR APIs, FHIR requirements, covered payer types, and compliance deadlines for health plans.">
     <meta property="og:url" content="https://cms-0057-f.com/fact-sheet">
-    <meta name="twitter:title" content="CMS-0057-F Fact Sheet: Requirements, APIs & Deadlines">
+    <meta name="twitter:title" content="CMS-0057-F Fact Sheet: Interoperability & Prior Authorization Final Rule">
     <meta name="twitter:description" content="An independent CMS-0057-F fact sheet — the four APIs, FHIR standards, payer types, and deadlines.">
     <meta property="og:type" content="article">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,11 +31,11 @@
     {
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "CMS-0057-F Fact Sheet: Requirements, APIs & Deadlines",
+        "headline": "CMS-0057-F Fact Sheet: Interoperability & Prior Authorization Final Rule",
         "description": "An independent CMS-0057-F fact sheet covering the four FHIR APIs, FHIR requirements, covered payer types, and compliance deadlines of the CMS Interoperability and Prior Authorization final rule.",
         "url": "https://cms-0057-f.com/fact-sheet",
         "datePublished": "2026-09-03",
-        "dateModified": "2026-09-30",
+        "dateModified": "2026-10-05",
         "author": { "@type": "Organization", "name": "Aurelianware, Inc." },
         "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
         "isBasedOn": "https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f",
@@ -76,6 +76,7 @@
     .hs-blue::before{background:var(--accent-blue)}.hs-cyan::before{background:var(--accent-cyan)}.hs-green::before{background:var(--accent-green)}.hs-amber::before{background:var(--accent-amber)}.hs-purple::before{background:var(--accent-purple)}
     .hero-stat .num{font-family:var(--font-mono);font-size:2.2rem;font-weight:700;line-height:1.1;margin-bottom:.35rem}
     .hero-stat .label{font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+    .hero-stat .num.num-date{font-size:1.45rem;white-space:nowrap}
     .num-blue{color:var(--accent-blue)}.num-cyan{color:var(--accent-cyan)}.num-green{color:var(--accent-green)}.num-amber{color:var(--accent-amber)}.num-purple{color:var(--accent-purple)}
 
     /* CONTENT */
@@ -141,7 +142,7 @@
             <li><a href="/faq">FAQ</a></li>
         </ul>
     </div>
-<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated October 2026</span></div>
 </nav>
 
 <div class="page-header">
@@ -151,25 +152,21 @@
     <p class="lead" style="margin-top:1rem;font-size:.95rem;">Looking for the official document? <a style="color:var(--accent-blue)" href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">Read the CMS fact sheet on cms.gov</a>. This page summarizes it and adds what implementers need.</p>
 </div>
 <div class="hero-stats">
-    <div class="hero-stat hs-blue">
-        <div class="num num-blue">4</div>
-        <div class="label">Mandated FHIR APIs</div>
+    <div class="hero-stat hs-green">
+        <div class="num num-green num-date">Jan 1, 2026</div>
+        <div class="label">PA process rules in effect</div>
     </div>
     <div class="hero-stat hs-cyan">
-        <div class="num num-cyan">365</div>
-        <div class="label">Payer Organizations</div>
-    </div>
-    <div class="hero-stat hs-green">
-        <div class="num num-green">$16B+</div>
-        <div class="label">Provider Savings (10yr)</div>
+        <div class="num num-cyan num-date">Mar 31, 2026</div>
+        <div class="label">First public PA metrics due</div>
     </div>
     <div class="hero-stat hs-amber">
-        <div class="num num-amber">220M</div>
-        <div class="label">Hours of Burden Cut</div>
+        <div class="num num-amber num-date">Jan 1, 2027</div>
+        <div class="label">Four FHIR APIs live</div>
     </div>
-    <div class="hero-stat hs-purple">
-        <div class="num num-purple">~900</div>
-        <div class="label">Public Comments</div>
+    <div class="hero-stat hs-blue">
+        <div class="num num-blue num-date">72h / 7d</div>
+        <div class="label">Urgent / standard PA decisions</div>
     </div>
 </div>
 
