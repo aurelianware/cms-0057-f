@@ -103,7 +103,7 @@
 </div>
 
 <h2 id="why">Why ownership terms matter</h2>
-<p>CMS-0057-F requires impacted payers to offer FHIR APIs for patient access, provider access, payer-to-payer exchange, and prior authorization by January 1, 2027. Behind those APIs sits a large amount of implementation work: data mappings to US Core, CARIN Blue Button, and Da Vinci profiles; terminology translation; consent and opt-out logic; adapters into the core administration platform; and the operational procedures that keep it running.</p>
+<p>CMS-0057-F requires impacted payers to offer FHIR APIs for patient access, provider access, payer-to-payer exchange, and prior authorization. January 1, 2027 is a hard date for MA organizations and state Medicaid and CHIP FFS programs; Medicaid and CHIP managed care plans comply by the rating period, and QHP issuers on the FFEs by the plan year, beginning on or after that date (see the <a href="/compliance-timeline">compliance timeline</a>). Behind those APIs sits a large amount of implementation work: data mappings to US Core, CARIN Blue Button, and Da Vinci profiles; terminology translation; consent and opt-out logic; adapters into the core administration platform; and the operational procedures that keep it running.</p>
 <p>Whether that work stays with the plan depends far less on the software license than on the statement of work. When an SOW describes deliverables as a running service rather than as artifacts the plan holds, the knowledge tends to leave with the team that built it, and the next rule change starts from a smaller base than it should. None of this is a criticism of any vendor: vendors deliver what the SOW asks for. These clauses make sure it asks.</p>
 
 <h2 id="c1">1. Work product ownership</h2>
@@ -120,6 +120,7 @@
 
 <h2 id="c4">4. Data access and portability</h2>
 <div class="info-box">[Plan] may obtain its data at any time in standard formats (for example, FHIR R4 or delimited files) within [5] business days of request, at no additional charge.</div>
+<p><strong>Why it matters:</strong> a plan that has to open a ticket, or pay a fee, to see its own data cannot answer a state or auditor request on its own schedule.</p>
 
 <h2 id="c5">5. Plan-owned environments and credentials</h2>
 <div class="info-box">Cloud accounts, tenants, repositories, and administrative credentials used for [Plan]'s solution are owned by [Plan]. Vendor access is granted by [Plan] and revocable by [Plan].</div>
@@ -127,6 +128,7 @@
 
 <h2 id="c6">6. Runbooks</h2>
 <div class="info-box">Vendor will deliver operational runbooks covering deployment, monitoring, incident response, and routine changes before go-live acceptance.</div>
+<p><strong>Why it matters:</strong> the CMS-0057-F APIs are externally visible once live. If only the build team knows how to restart, monitor, or change them, every outage and every small change routes back through that team.</p>
 
 <h2 id="c7">7. Knowledge transfer with a finish line</h2>
 <div class="info-box">Vendor will train [named Plan roles] through [shadowing and reverse-shadowing]. Knowledge transfer is complete when [Plan] staff perform [listed tasks] independently.</div>
@@ -134,9 +136,11 @@
 
 <h2 id="c8">8. Freedom to use other vendors</h2>
 <div class="info-box">[Plan] may engage its own staff or other vendors to operate, maintain, or modify the deliverables. Vendor will not condition support or warranty on exclusivity, except for defects caused by others' modifications.</div>
+<p><strong>Why it matters:</strong> ownership of code means little if touching it voids the warranty. This keeps competition available for the next change without asking the vendor to support work it did not do.</p>
 
 <h2 id="c9">9. Exit assistance</h2>
 <div class="info-box">On termination for any reason, Vendor will deliver all items above in current form and cooperate with [Plan]'s successor for up to [90] days at the rates in this SOW. No exit or transition fees apply beyond those rates.</div>
+<p><strong>Why it matters:</strong> exit terms are cheapest to negotiate at signing, when both sides expect the relationship to go well, and most expensive to negotiate at the end.</p>
 
 <h2 id="c10">10. Predictable change orders</h2>
 <div class="info-box">Change orders will be fixed-fee or capped, itemized by deliverable, and subject to clauses 1&ndash;9.</div>
@@ -167,7 +171,6 @@
 <div class="related" aria-label="Related pages">
     <h2>Continue reading</h2>
     <div class="related-grid">
-        <a href="https://cloudhealthoffice.com/insights/cms-0057-f/own-what-you-pay-for"><span class="rl-title">The Hangover Tax</span><span class="rl-desc">Why lock-in lives in implementation, not the license (Cloud Health Office).</span></a>
         <a href="https://cloudhealthoffice.com/insights/cms-0057-f/caps-vendor-sow-questions"><span class="rl-title">10 questions before signing a CMS-0057-F SOW</span><span class="rl-desc">Scope, system of record, and the support boundary (Cloud Health Office).</span></a>
         <a href="/guides/fhir-for-cms-0057-f"><span class="rl-title">FHIR for CMS-0057-F</span><span class="rl-desc">The profiles and mappings these clauses protect.</span></a>
         <a href="/guides/cms-0057-f-qnxt"><span class="rl-title">CMS-0057-F with QNXT</span><span class="rl-desc">Where adapters and mappings sit in a reference architecture.</span></a>
