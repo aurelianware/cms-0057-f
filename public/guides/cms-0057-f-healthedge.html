@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS-0057-F with HealthEdge: HealthRules Edge (HealthRules Payer) Architecture</title>
+    <meta name="description" content="How to deliver the four CMS-0057-F FHIR APIs beside HealthRules Edge (formerly HealthRules Payer) and Clinical Edge (formerly GuidingCare): adapter, prior auth and hosting model.">
+    <meta name="keywords" content="CMS-0057-F HealthEdge, HealthRules Payer CMS-0057-F, HealthRules Edge, HealthEdge FHIR, HealthEdge prior authorization API, GuidingCare FHIR, Clinical Edge, payer interoperability architecture">
+    <link rel="canonical" href="https://cms-0057-f.com/guides/cms-0057-f-healthedge">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="Aurelianware, Inc.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="CMS-0057-F with HealthEdge: HealthRules Edge (HealthRules Payer) Architecture">
+    <meta property="og:description" content="A reference architecture for CMS-0057-F FHIR APIs alongside HealthEdge HealthRules Edge (formerly HealthRules Payer) and Clinical Edge (formerly GuidingCare).">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://cms-0057-f.com/guides/cms-0057-f-healthedge">
+    <meta property="og:image" content="https://cms-0057-f.com/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
+    <meta name="twitter:title" content="CMS-0057-F with HealthEdge">
+    <meta name="twitter:description" content="Reference architecture for CMS-0057-F FHIR APIs with HealthRules Edge (formerly HealthRules Payer).">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/nav-extra.css">
+    <link rel="stylesheet" href="/css/guides.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "CMS-0057-F with HealthEdge: Interoperability Architecture for HealthRules Edge (HealthRules Payer)",
+        "description": "A reference architecture for CMS-0057-F FHIR APIs alongside HealthEdge HealthRules Edge (formerly HealthRules Payer) and Clinical Edge (formerly GuidingCare).",
+        "url": "https://cms-0057-f.com/guides/cms-0057-f-healthedge",
+        "datePublished": "2026-10-05",
+        "dateModified": "2026-10-05",
+        "author": { "@type": "Organization", "name": "Aurelianware, Inc." },
+        "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
+        "about": { "@type": "Thing", "name": "CMS-0057-F implementation with HealthEdge HealthRules Edge" },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cms-0057-f.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://cms-0057-f.com/guides" },
+                { "@type": "ListItem", "position": 3, "name": "CMS-0057-F with HealthEdge", "item": "https://cms-0057-f.com/guides/cms-0057-f-healthedge" }
+            ]
+        }
+    }
+    </script>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">CMS-0057-F<span>.com</span></a>
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/in-effect-2026">2026 status</a></li>
+            <li><a href="/patient-access-api">Patient Access API</a></li>
+            <li><a href="/provider-access-api">Provider Access API</a></li>
+            <li><a href="/payer-to-payer-api">Payer-to-Payer API</a></li>
+            <li><a href="/prior-authorization-api">Prior Auth API</a></li>
+            <li><a href="/compliance-timeline">Timeline</a></li>
+            <li><a href="/fact-sheet">Fact Sheet</a></li>
+            <li><a href="/guides" class="active">Guides</a></li>
+            <li><a href="/faq">FAQ</a></li>
+        </ul>
+    </div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated October 2026</span></div>
+</nav>
+
+<div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> / <a href="/guides">Guides</a> / <span aria-current="page">CMS-0057-F with HealthEdge</span></div>
+    <span class="eyebrow">Payer Architecture Guide</span>
+    <h1>CMS-0057-F with <em>HealthEdge</em>: An Interoperability Architecture for HealthRules Edge</h1>
+    <p class="lead">HealthEdge plans — on HealthRules Edge, formerly HealthRules Payer — have to deliver CMS-0057-F FHIR APIs too, and how the core is hosted shapes the work. This guide lays out a reference architecture for the interoperability layer, how prior authorization reaches Clinical Edge (formerly GuidingCare), and how the hosting model shapes the adapter.</p>
+</div>
+
+<div class="content">
+
+<nav class="toc" aria-label="Table of contents">
+    <h2>On this page</h2>
+    <ul>
+        <li><a href="#framing">Framing the problem</a></li>
+        <li><a href="#not-the-database">Not "expose the database"</a></li>
+        <li><a href="#architecture">Reference architecture</a></li>
+        <li><a href="#adapters">The adapter layer</a></li>
+        <li><a href="#api-by-api">API-by-API considerations</a></li>
+        <li><a href="#options">Build, overlay, or vendor offering</a></li>
+        <li><a href="#checklist">Onboarding checklist</a></li>
+    </ul>
+</nav>
+
+<h2 id="framing">Framing the problem</h2>
+<p>HealthEdge's core administration platform is <strong>HealthRules Edge</strong> — named <strong>HealthRules Payer</strong> until HealthEdge <a href="https://www.globenewswire.com/news-release/2026/10/01/3373063/0/en/healthedge-launches-unified-ai-powered-platform-to-guarantee-financial-outcomes-for-health-plans.html">renamed its portfolio on October 1, 2026</a>. In the same announcement, GuidingCare became <strong>Clinical Edge</strong>, and HealthEdge introduced two delivery models: Enduring Edge (business process as a service) and Integration Edge (platform as a service). CMS-0057-F doesn't ask a HealthEdge plan to replace any of this. It asks for four FHIR APIs — Patient Access, Provider Access, Payer-to-Payer and Prior Authorization — live by the 2027 compliance date that applies to the payer type: January 1, 2027 for Medicare Advantage and state Medicaid/CHIP fee-for-service; the first rating period or plan year beginning on or after that date for Medicaid/CHIP managed care and QHP issuers (see the <a href="/compliance-timeline">compliance timeline</a>).</p>
+<p>Hosting is the variable to settle first. HealthEdge's delivery models range from a platform the plan operates with HealthEdge to a full-service BPaaS partnership, and what a plan can reach — database access, service interfaces, scheduled extracts — depends on its hosting arrangement and contract. Where direct database access isn't available, the CMS-0057-F boundary has to be built from the interfaces and data feeds the plan is entitled to. Either way, the plan, not the vendor, stays accountable for the APIs.</p>
+<div class="info-box amber">
+    <strong>No unsupported product claims.</strong> This guide describes an integration pattern, not native product capabilities. It does not assert that HealthRules Edge or Clinical Edge ship CMS-0057-F FHIR APIs out of the box. HealthEdge's October 2026 launch announcement does not address CMS-0057-F. Confirm any specific capability against HealthEdge's own current documentation and your contract.
+</div>
+
+<h2 id="not-the-database">Why the CMS APIs are not "expose the core database"</h2>
+<p>Pointing a FHIR façade straight at the core database is the tempting shortcut, and the one to avoid. The CMS APIs require conformant FHIR profiles (US Core, CARIN Blue Button, Da Vinci PDex and PAS), standard terminology, consent and opt-out enforcement, Provenance, and scoping rules (for example, leaving remittances and cost-sharing out of provider and payer-to-payer payloads). A raw database projection meets none of these reliably and ties your public API to an internal schema. The API should be a <em>governed projection</em> of core data, produced by an interoperability layer.</p>
+<p>Where the core is vendor-hosted, this may be decided for you: the adapter works from vendor interfaces and extracts rather than database access, which makes the governed-projection model the natural fit.</p>
+
+<h2 id="architecture">Reference architecture</h2>
+<figure class="diagram" role="group" aria-label="CMS-0057-F payer architecture from external consumers through OAuth security, a FHIR gateway, interoperability services, mapping and orchestration, and core administration adapters to HealthRules Edge">
+    <div class="flow">
+        <div class="flow-node accent-blue"><div class="n-title">Consumers / EHRs / other payers</div><div class="n-sub">Member apps · provider systems · peer payers</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-cyan"><div class="n-title">OAuth / API security</div><div class="n-sub">SMART App Launch &amp; SMART Backend Services</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-cyan"><div class="n-title">FHIR API gateway</div><div class="n-sub">Conformance, routing, rate limiting, audit</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-green"><div class="n-title">CMS-0057-F interoperability services</div><div class="n-sub">Patient / Provider / Payer-to-Payer / Prior Auth logic</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-green"><div class="n-title">Mapping / terminology / orchestration</div><div class="n-sub">Profiles · code translation · consent · Provenance</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-node accent-purple"><div class="n-title">Core administration adapters</div><div class="n-sub">Read/write bridges to the interfaces the plan is licensed for</div></div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div class="flow-split">
+            <div class="flow-node muted"><div class="n-title">HealthRules Edge</div><div class="n-sub">Formerly HealthRules Payer</div></div>
+            <div class="flow-node muted"><div class="n-title">Clinical Edge</div><div class="n-sub">Formerly GuidingCare · UM &amp; care management</div></div>
+            <div class="flow-node muted"><div class="n-title">Plan data warehouse</div><div class="n-sub">History for Payer-to-Payer</div></div>
+        </div>
+    </div>
+    <figcaption>Figure 1 — A layered CMS-0057-F architecture in front of HealthRules Edge.</figcaption>
+</figure>
+
+<h2 id="adapters">The adapter layer</h2>
+<p>For a HealthEdge plan, the adapter's jobs are:</p>
+<ul>
+    <li><strong>Read projection</strong> — claims, benefits and eligibility from HealthRules Edge; authorizations and clinical data from Clinical Edge; provider data from wherever the plan masters it. Expect a mix of real-time service calls and scheduled extracts, and plan for the five-year Payer-to-Payer history to come from the warehouse.</li>
+    <li><strong>Write/orchestration</strong> — a PAS request must reach the UM system of record, typically Clinical Edge, and return a decision. HealthEdge has <a href="https://healthedge.com/resources/blog/gc-modernizing-prior-authorization-a-critical-step-toward-delivering-higher-quality-care">described GuidingCare prior authorization</a> as offering "FHIR-native APIs" (August 2025) without naming Da Vinci CRD, DTR or PAS, so confirm whether PAS can be accepted directly or needs a translation path. See <a href="/guides/crd-dtr-pas-cms-0057-f">CRD, DTR &amp; PAS explained</a>.</li>
+    <li><strong>Joining products</strong> — Patient Access needs coverage and claims from HealthRules Edge alongside PA status from Clinical Edge in one member view, keyed consistently across both.</li>
+    <li><strong>Terminology &amp; consent</strong> — map plan codes to standard code sets; track Provider Access opt-out and Payer-to-Payer permission outside the core unless the plan has already built it.</li>
+</ul>
+
+<h2 id="api-by-api">API-by-API considerations</h2>
+<div class="table-scroll">
+<table class="data-table">
+    <thead><tr><th>API</th><th>Primary HealthEdge-side data</th><th>Adapter emphasis</th></tr></thead>
+    <tbody>
+        <tr><td class="row-head"><a href="/patient-access-api">Patient Access</a></td><td>Coverage and claims (HealthRules Edge); PA status (Clinical Edge)</td><td>Joining two products into one member view</td></tr>
+        <tr><td class="row-head"><a href="/provider-access-api">Provider Access</a></td><td>Attributed members' claims, clinical data, PA</td><td>Attribution + opt-out enforcement</td></tr>
+        <tr><td class="row-head"><a href="/payer-to-payer-api">Payer-to-Payer</a></td><td>Up to 5 years of claims, encounters, PA</td><td>Feed coverage and timing under a hosted model</td></tr>
+        <tr><td class="row-head"><a href="/prior-authorization-api">Prior Authorization</a></td><td>Clinical Edge UM rules and decisions</td><td>CRD/DTR rule content; the PAS path into Clinical Edge</td></tr>
+    </tbody>
+</table>
+</div>
+
+<h2 id="options">Build, overlay, or wait for the vendor</h2>
+<ol>
+    <li><strong>Wait for a HealthEdge offering</strong> — reasonable only if HealthEdge publishes a complete four-API answer in time; with the 2027 compliance dates close, leave room for testing and partner onboarding.</li>
+    <li><strong>Build it internally</strong> — maximum control, highest effort, and the plan owns conformance; feasible where the plan has a FHIR team and reliable access to the feeds.</li>
+    <li><strong>Add a vendor-neutral interoperability layer</strong> — an overlay provides all four APIs in the plan's own cloud, independent of how the core is hosted, with the adapter built during onboarding against HealthEdge's interfaces.</li>
+</ol>
+<p><strong>A modern payer platform such as CloudHealthOffice can serve as either an interoperability layer integrated with HealthRules Edge or, depending on the implementation model, as part of the core backend itself.</strong> Either way, the backend stays an adapter concern behind a stable FHIR boundary.</p>
+
+<h2 id="checklist">Onboarding checklist</h2>
+<ul class="checklist">
+    <li>Confirm the hosting model (vendor-hosted, Enduring Edge or Integration Edge) and which interfaces and extracts the plan is entitled to.</li>
+    <li>Map which required data classes live in HealthRules Edge, Clinical Edge, provider data systems and the warehouse.</li>
+    <li>Stand up the FHIR gateway + OAuth (SMART App Launch and Backend Services).</li>
+    <li>Build the mapping/terminology layer to conformant US Core / CARIN / PDex / PAS profiles.</li>
+    <li>Implement consent (Payer-to-Payer) and opt-out (Provider Access) enforcement.</li>
+    <li>Wire the Prior Authorization API into Clinical Edge, directly or through a translation path.</li>
+    <li>Add Provenance, audit logging, and the CMS prior authorization metrics you must report.</li>
+    <li>Conformance-test each API before onboarding trading partners.</li>
+</ul>
+
+<div class="info-box green">
+    <strong>Regulatory vs. architectural.</strong> CMS mandates the API <em>outcome</em> and the standards. The layered architecture, the adapter pattern, and the build/overlay/vendor choice are <em>architectural options</em> that satisfy the rule — CMS does not mandate any particular internal design or product.
+</div>
+
+<div class="related" aria-label="Related pages">
+    <h2>Continue reading</h2>
+    <div class="related-grid">
+        <a href="/guides/cms-0057-f-qnxt"><span class="rl-title">CMS-0057-F with QNXT</span><span class="rl-desc">The same pattern for a QNXT core.</span></a>
+        <a href="/guides/cms-0057-f-facets"><span class="rl-title">CMS-0057-F with Facets</span><span class="rl-desc">The same pattern for TriZetto Facets.</span></a>
+        <a href="/guides/crd-dtr-pas-cms-0057-f"><span class="rl-title">CRD, DTR &amp; PAS explained</span><span class="rl-desc">The prior authorization workflow behind the adapter.</span></a>
+        <a href="/payer-to-payer-api"><span class="rl-title">Payer-to-Payer API</span><span class="rl-desc">Consent, reconciliation, and build-vs-buy.</span></a>
+    </div>
+</div>
+
+<div class="cta-inline">
+    <a href="/guides" class="cta-primary">All guides →</a>
+    <a href="/guides/cms-0057-f-facets" class="cta-secondary">← CMS-0057-F with Facets</a>
+</div>
+
+</div>
+
+<footer>
+    <p>Published by <a href="https://cloudhealthoffice.com">Aurelianware, Inc.</a> Independent educational resource. Not affiliated with CMS or HHS. HealthEdge, HealthRules, Clinical Edge and GuidingCare are trademarks of HealthEdge Software, Inc.; QNXT and Facets are trademarks of Cognizant or its affiliates; references are descriptive only.</p>
+    <p>Official sources:
+      <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS fact sheet</a> ·
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS rule page</a>
+    </p>
+    <p class="pub">Content is based on the publicly available final rule (RIN 0938-AU87). Implementation of APIs is a product concern — see <a href="https://cloudhealthoffice.com/cms-0057f-compliance">Cloud Health Office</a>.<br>
+    &copy; 2024–2026 Aurelianware, Inc. All rights reserved.</p>
+</footer>
+
+    <script src="/js/site.js" defer></script>
+</body>
+</html>
