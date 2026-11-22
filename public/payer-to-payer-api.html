@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payer-to-Payer API | CMS-0057-F Data Exchange Requirements</title>
-    <meta name="description" content="Guide to the Payer-to-Payer API under CMS-0057-F. Requirements for automated health data exchange between payers when patients change coverage — including five-year data lookback, quarterly concurrent payer exchange, and patient opt-in processes.">
+    <title>Payer-to-Payer API &amp; Data Exchange (CMS-0057-F): FHIR Requirements</title>
+    <meta name="description" content="How CMS-0057-F payer-to-payer data exchange works: patient opt-in, the five-year lookback, member matching, FHIR PDex and Bulk Data, concurrent payers, and the January 1, 2027 deadline.">
     <meta name="keywords" content="Payer-to-Payer API, CMS-0057-F, payer data exchange, health plan data portability, patient data transfer, care continuity, concurrent payer exchange, five year data lookback, FHIR payer exchange, health plan interoperability">
     <link rel="canonical" href="https://cms-0057-f.com/payer-to-payer-api">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -16,11 +16,11 @@
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
-    <meta property="og:title" content="Payer-to-Payer API — CMS-0057-F FHIR Data Exchange">
+    <meta property="og:title" content="Payer-to-Payer API &amp; Data Exchange (CMS-0057-F): FHIR Requirements">
     <meta property="og:description" content="The CMS-0057-F Payer-to-Payer API: member consent, FHIR-based data retrieval, source vs new payer responsibilities, data persistence, reconciliation, provenance, identity matching, security, architecture, and build vs buy.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://cms-0057-f.com/payer-to-payer-api">
-    <meta name="twitter:title" content="Payer-to-Payer API — CMS-0057-F">
+    <meta name="twitter:title" content="Payer-to-Payer API &amp; Data Exchange (CMS-0057-F): FHIR Requirements">
     <meta name="twitter:description" content="Consent, FHIR exchange, provenance, identity matching, reconciliation, and build-vs-buy for the CMS-0057-F Payer-to-Payer API.">
     <link rel="stylesheet" href="/css/nav-extra.css">
     <link rel="stylesheet" href="/css/guides.css">
@@ -35,7 +35,7 @@
         "description": "The CMS-0057-F Payer-to-Payer API: member consent, FHIR-based data retrieval, source vs new payer responsibilities, data persistence, reconciliation, provenance, identity matching, security, architecture, and build vs buy.",
         "url": "https://cms-0057-f.com/payer-to-payer-api",
         "datePublished": "2026-09-03",
-        "dateModified": "2026-09-03",
+        "dateModified": "2026-11-22",
         "author": { "@type": "Organization", "name": "Aurelianware, Inc." },
         "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
         "about": { "@type": "Thing", "name": "CMS Payer-to-Payer API" },
@@ -85,6 +85,54 @@
         footer p{font-size:.78rem;color:var(--text-muted);line-height:1.8;max-width:700px;margin:0 auto}
         @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
     </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is payer-to-payer data exchange opt-in or opt-out?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Opt-in. The new payer must ask the member for permission before requesting data from a previous or concurrent payer, and must explain the exchange in plain language. Provider Access, by contrast, is opt-out."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How many years of data must payers exchange?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Data with dates of service within five years of the request. CMS narrowed this from the proposed rule, which would have covered the full record."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How fast must the previous payer respond?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Within one business day of receiving a valid request from the new payer."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What happens to the 2020 payer-to-payer requirement?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "CMS-0057-F rescinded the 2020 Interoperability and Patient Access rule's payer-to-payer data exchange policy and replaced it with this API-based requirement, using the same FHIR standards as the Provider Access API."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Which standards does the Payer-to-Payer API use?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "FHIR R4.0.1, US Core, and FHIR Bulk Data Access are required. CMS recommends the Da Vinci Payer Data Exchange (PDex) IG, including its member-match operation for identifying the member at the other payer."
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
 
@@ -105,7 +153,7 @@
             <li><a href="/faq">FAQ</a></li>
         </ul>
     </div>
-<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated November 2026</span></div>
 </nav>
 
 <div class="page-header">
@@ -115,6 +163,18 @@
 </div>
 
 <div class="content">
+
+<div class="quick-answer">
+    <p class="qa-label">Payer-to-Payer API at a glance</p>
+    <ul>
+        <li><strong>What it is:</strong> a FHIR R4 API that moves a member's data from their previous payer to their new payer, and between concurrent payers.</li>
+        <li><strong>What it shares:</strong> up to five years of claims and encounter data (without remittance or cost-sharing details), USCDI clinical data, and prior authorization information other than for drugs.</li>
+        <li><strong>Consent:</strong> opt-in. The new payer asks the member for permission and for their previous or concurrent coverage details.</li>
+        <li><strong>Timing:</strong> the new payer requests data within one week of the start of coverage (or of the member's request), and the previous payer responds within one business day of receiving it. Concurrent payers exchange at least quarterly.</li>
+        <li><strong>Deadline:</strong> January 1, 2027 (for managed care plans and QHP issuers, the rating period or plan year beginning on or after that date).</li>
+    </ul>
+</div>
+
 
 <h2>Core Requirements</h2>
 <p>The Payer-to-Payer API establishes a bidirectional data exchange obligation between impacted payers. When a patient enrolls with a new payer, the new payer must request data from the previous payer — with the patient's permission — and integrate that data into the patient's record.</p>
@@ -238,6 +298,30 @@
     <li><strong>Use a broader modern payer platform.</strong> Where a plan is modernizing, a modern backend can provide these capabilities natively rather than as an overlay.</li>
 </ol>
 <p>These approaches are not mutually exclusive. <strong>A modern payer platform such as CloudHealthOffice can serve as either an interoperability layer integrated with an existing core administration system or, depending on the implementation model, as part of the core backend itself.</strong> The <a href="/guides/cms-0057-f-qnxt">CMS-0057-F with QNXT</a> guide walks through the overlay pattern in detail.</p>
+
+<section class="page-faq" aria-labelledby="page-faq-heading">
+    <h2 id="page-faq-heading">Payer-to-payer data exchange: common questions</h2>
+    <h3>Is payer-to-payer data exchange opt-in or opt-out?</h3>
+    <div class="pf-a"><p>Opt-in. The new payer must ask the member for permission before requesting data from a previous or concurrent payer, and must explain the exchange in plain language. Provider Access, by contrast, is opt-out.</p></div>
+    <h3>How many years of data must payers exchange?</h3>
+    <div class="pf-a"><p>Data with dates of service within five years of the request. CMS narrowed this from the proposed rule, which would have covered the full record.</p></div>
+    <h3>How fast must the previous payer respond?</h3>
+    <div class="pf-a"><p>Within one business day of receiving a valid request from the new payer.</p></div>
+    <h3>What happens to the 2020 payer-to-payer requirement?</h3>
+    <div class="pf-a"><p>CMS-0057-F rescinded the 2020 Interoperability and Patient Access rule's payer-to-payer data exchange policy and replaced it with this API-based requirement, using the same FHIR standards as the Provider Access API.</p></div>
+    <h3>Which standards does the Payer-to-Payer API use?</h3>
+    <div class="pf-a"><p>FHIR R4.0.1, US Core, and FHIR Bulk Data Access are required. CMS recommends the Da Vinci Payer Data Exchange (PDex) IG, including its member-match operation for identifying the member at the other payer.</p></div>
+</section>
+
+<aside class="cho-cta" aria-label="Cloud Health Office">
+    <p class="cho-cta-kicker">From the publisher of this guide</p>
+    <p class="cho-cta-title">Need payer-to-payer exchange live by January 1, 2027?</p>
+    <p>Cloud Health Office, from Aurelianware, is a source-available, FHIR-native health plan administration platform. It serves the CMS-0057-F APIs beside QNXT, Facets or HealthEdge in a tenant your plan controls, then can take over one function at a time, on your schedule.</p>
+    <div class="cho-cta-actions">
+        <a class="cho-cta-primary" href="https://cloudhealthoffice.com/schedule-demo/?utm_source=cms-0057-f.com&amp;utm_medium=referral&amp;utm_campaign=seo-cta&amp;utm_content=payer-to-payer-api">Schedule a demo</a>
+        <a class="cho-cta-secondary" href="https://cloudhealthoffice.com/cms-0057f-compliance?utm_source=cms-0057-f.com&amp;utm_medium=referral&amp;utm_campaign=seo-cta&amp;utm_content=payer-to-payer-api">See how Cloud Health Office covers CMS-0057-F →</a>
+    </div>
+</aside>
 
 <div class="related" aria-label="Related pages">
     <h2>Related pages</h2>

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Access API | CMS-0057-F Requirements & Implementation Guide</title>
-    <meta name="description" content="Complete guide to the Patient Access API requirements under CMS-0057-F. Learn about FHIR R4 implementation, USCDI data classes, prior authorization data sharing, compliance dates, and reporting obligations for impacted payers.">
+    <title>Patient Access API (CMS-0057-F): FHIR Requirements &amp; Prior Auth Data</title>
+    <meta name="description" content="CMS Patient Access API requirements under CMS-0057-F: FHIR R4, CARIN Blue Button and US Core data, the new prior authorization data, annual usage reporting, and the 2027 dates.">
     <meta name="keywords" content="Patient Access API, CMS-0057-F, FHIR Patient Access, HL7 FHIR R4, USCDI, patient health data API, claims data API, prior authorization patient access, SMART App Launch, OAuth 2.0, healthcare interoperability">
     <link rel="canonical" href="https://cms-0057-f.com/patient-access-api">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -17,7 +17,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
     <link rel="stylesheet" href="/css/nav-extra.css">
-    <meta property="og:title" content="Patient Access API — CMS-0057-F Requirements">
+    <meta property="og:title" content="Patient Access API (CMS-0057-F): FHIR Requirements &amp; Prior Auth Data">
     <meta property="og:description" content="What health plans need to know about implementing the Patient Access API under the CMS Interoperability and Prior Authorization final rule.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,6 +89,46 @@
     @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
 </style>
 
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What did CMS-0057-F change about the Patient Access API?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "It added prior authorization information (other than for drugs) to the data payers must share, and it added annual reporting of Patient Access API usage metrics to CMS. The core requirement, a FHIR API members can reach through third-party apps, dates from the 2020 Interoperability and Patient Access rule."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does the Patient Access API include drug prior authorizations?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Prior authorization information for drugs of any type is excluded. Drug claims data that the payer maintains is still shared."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How long must prior authorization data stay available?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "For as long as the authorization is active, and for at least one year after its last status change."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Which implementation guides do payers use for the Patient Access API?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "US Core and SMART App Launch are required. CMS recommends CARIN Consumer Directed Payer Data Exchange (CARIN Blue Button) for claims, Da Vinci PDex for clinical and prior authorization data, and Da Vinci PDex US Drug Formulary for formularies."
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
 
@@ -109,7 +149,7 @@
             <li><a href="/faq">FAQ</a></li>
         </ul>
     </div>
-<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated November 2026</span></div>
 </nav>
 
 <div class="page-header">
@@ -119,6 +159,18 @@
 </div>
 
 <div class="content">
+
+<div class="quick-answer">
+    <p class="qa-label">Patient Access API at a glance</p>
+    <ul>
+        <li><strong>What it is:</strong> a FHIR R4 API, first required by the 2020 Patient Access rule, that lets members pull their own data into the app of their choice.</li>
+        <li><strong>What CMS-0057-F adds:</strong> prior authorization information other than for drugs, available no later than one business day after the payer receives a request or the authorization's status changes.</li>
+        <li><strong>Data shared:</strong> claims and encounter data (including cost-sharing), USCDI clinical data, and prior authorization information, with a lookback to January 1, 2016.</li>
+        <li><strong>Reporting:</strong> annual Patient Access API usage metrics to CMS, starting in 2026 for the prior calendar year.</li>
+        <li><strong>Deadline:</strong> January 1, 2027 for the prior authorization data (for managed care plans and QHP issuers, the rating period or plan year beginning on or after that date).</li>
+    </ul>
+</div>
+
 
 <h2>What the Patient Access API Requires</h2>
 <p>The Patient Access API must allow patients to access their health data through third-party applications of their choice. Using HL7 FHIR Release 4.0.1 as the foundational standard, payers expose a standards-based endpoint secured with OAuth 2.0 and SMART App Launch protocols that any authorized consumer app can connect to.</p>
@@ -182,6 +234,55 @@
 
 <h2>Terminology Change</h2>
 <p>CMS finalized terminology changes related to the Patient Access API that take effect on the final rule's effective date. This is a non-substantive update that does not change the underlying requirements but aligns regulatory language with current usage.</p>
+
+<h2>Patient Access vs. Provider Access vs. Payer-to-Payer</h2>
+<p>All three CMS-0057-F data APIs are built on FHIR R4 and share most of the same data. The differences are who asks, how consent works, and how much cost data goes out.</p>
+<div style="overflow-x:auto;">
+<table class="cmp-table">
+    <thead><tr><th></th><th>Patient Access API</th><th>Provider Access API</th><th>Payer-to-Payer API</th></tr></thead>
+    <tbody>
+        <tr><th scope="row">Who requests</th><td>The member, through an app</td><td>In-network, attributed providers</td><td>The member's new or concurrent payer</td></tr>
+        <tr><th scope="row">Consent</th><td>Member authorizes the app</td><td>Opt-out</td><td>Opt-in</td></tr>
+        <tr><th scope="row">Cost-sharing and remittance data</th><td>Included</td><td>Excluded</td><td>Excluded</td></tr>
+        <tr><th scope="row">Lookback</th><td>Dates of service from Jan 1, 2016</td><td>Dates of service from Jan 1, 2016</td><td>Five years</td></tr>
+        <tr><th scope="row">Authorization model</th><td>SMART App Launch, OpenID Connect</td><td>SMART Backend Services</td><td>SMART Backend Services</td></tr>
+        <tr><th scope="row">Bulk Data required</th><td>No</td><td>Yes</td><td>Yes</td></tr>
+    </tbody>
+</table>
+</div>
+<p>Details: <a href="/provider-access-api">Provider Access API</a> · <a href="/payer-to-payer-api">Payer-to-Payer API</a> · <a href="/prior-authorization-api">Prior Authorization API</a> · <a href="/guides/fhir-for-cms-0057-f">FHIR for CMS-0057-F</a></p>
+
+<section class="page-faq" aria-labelledby="page-faq-heading">
+    <h2 id="page-faq-heading">Patient Access API: common questions</h2>
+    <h3>What did CMS-0057-F change about the Patient Access API?</h3>
+    <div class="pf-a"><p>It added prior authorization information (other than for drugs) to the data payers must share, and it added annual reporting of Patient Access API usage metrics to CMS. The core requirement, a FHIR API members can reach through third-party apps, dates from the 2020 Interoperability and Patient Access rule.</p></div>
+    <h3>Does the Patient Access API include drug prior authorizations?</h3>
+    <div class="pf-a"><p>No. Prior authorization information for drugs of any type is excluded. Drug claims data that the payer maintains is still shared.</p></div>
+    <h3>How long must prior authorization data stay available?</h3>
+    <div class="pf-a"><p>For as long as the authorization is active, and for at least one year after its last status change.</p></div>
+    <h3>Which implementation guides do payers use for the Patient Access API?</h3>
+    <div class="pf-a"><p>US Core and SMART App Launch are required. CMS recommends CARIN Consumer Directed Payer Data Exchange (CARIN Blue Button) for claims, Da Vinci PDex for clinical and prior authorization data, and Da Vinci PDex US Drug Formulary for formularies.</p></div>
+</section>
+
+<aside class="cho-cta" aria-label="Cloud Health Office">
+    <p class="cho-cta-kicker">From the publisher of this guide</p>
+    <p class="cho-cta-title">Adding prior authorization data to your Patient Access API?</p>
+    <p>Cloud Health Office, from Aurelianware, is a source-available, FHIR-native health plan administration platform. It serves the CMS-0057-F APIs beside QNXT, Facets or HealthEdge in a tenant your plan controls, then can take over one function at a time, on your schedule.</p>
+    <div class="cho-cta-actions">
+        <a class="cho-cta-primary" href="https://cloudhealthoffice.com/schedule-demo/?utm_source=cms-0057-f.com&amp;utm_medium=referral&amp;utm_campaign=seo-cta&amp;utm_content=patient-access-api">Schedule a demo</a>
+        <a class="cho-cta-secondary" href="https://cloudhealthoffice.com/cms-0057f-compliance?utm_source=cms-0057-f.com&amp;utm_medium=referral&amp;utm_campaign=seo-cta&amp;utm_content=patient-access-api">See how Cloud Health Office covers CMS-0057-F →</a>
+    </div>
+</aside>
+
+<div class="related" aria-label="Related pages">
+    <h2>Related pages</h2>
+    <div class="related-grid">
+        <a href="/fact-sheet"><span class="rl-title">CMS-0057-F Fact Sheet</span><span class="rl-desc">Requirements, APIs, and deadlines at a glance.</span></a>
+        <a href="/provider-access-api"><span class="rl-title">Provider Access API</span><span class="rl-desc">The provider-facing companion API.</span></a>
+        <a href="/payer-to-payer-api"><span class="rl-title">Payer-to-Payer API</span><span class="rl-desc">Data exchange when members change plans.</span></a>
+        <a href="/guides/fhir-for-cms-0057-f"><span class="rl-title">FHIR for CMS-0057-F</span><span class="rl-desc">How FHIR maps to existing payer data.</span></a>
+    </div>
+</div>
 
 <div class="cta-inline">
     <a href="/provider-access-api" class="cta-primary">Next: Provider Access API →</a>
