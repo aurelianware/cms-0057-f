@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS-0057-F Final Rule: Requirements, FHIR APIs &amp; 2027 Deadlines</title>
-    <meta name="description" content="CMS-0057-F explained: who must comply, the four FHIR APIs due January 1, 2027, the prior authorization rules in effect since January 2026, and the standards payers must use.">
+    <title>CMS-0057-F Final Rule: Interoperability &amp; Prior Authorization Guide</title>
+    <meta name="description" content="CMS-0057-F in plain English: who must comply, the prior authorization rules in effect since January 2026, and the four FHIR APIs due January 1, 2027. Free summary, timeline and checklist.">
     <meta name="keywords" content="CMS-0057-F, interoperability, prior authorization, FHIR API, Patient Access API, Provider Access API, Payer-to-Payer API, Prior Authorization API, Medicare Advantage, Medicaid managed care, CHIP, QHP, HL7 FHIR, healthcare compliance">
     <link rel="canonical" href="https://cms-0057-f.com/">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -17,7 +17,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
     <link rel="stylesheet" href="/css/nav-extra.css">
-    <meta property="og:title" content="CMS-0057-F Final Rule: Requirements, FHIR APIs &amp; 2027 Deadlines">
+    <meta property="og:title" content="CMS-0057-F Final Rule: Interoperability &amp; Prior Authorization Guide">
     <meta property="og:description" content="Everything health plans need to know about the CMS Interoperability and Prior Authorization final rule — APIs, timelines, and implementation requirements.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cms-0057-f.com/">
@@ -32,7 +32,7 @@
         "name": "CMS-0057-F Final Rule Compliance Guide",
         "description": "Comprehensive guide to the CMS-0057-F final rule on advancing interoperability and improving prior authorization processes.",
         "url": "https://cms-0057-f.com/",
-        "dateModified": "2026-09-30",
+        "dateModified": "2026-11-22",
         "publisher": {
             "@type": "Organization",
             "name": "Aurelianware, Inc.",
@@ -399,6 +399,62 @@
         ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Does CMS-0057-F apply to prescription drug prior authorizations?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. The prior authorization API and process requirements in this rule explicitly exclude drugs of any type — including self-administered, provider-administered, pharmacy-dispensed, and hospital-administered drugs. Prescription and other drug claims data are still shared through the Patient Access API, but the PA workflow provisions do not cover drug authorizations."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What are the mandated prior authorization response timeframes?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Impacted payers (except QHP issuers on the FFEs) must respond to urgent prior authorization requests within 72 hours and standard requests within 7 calendar days. Payers must also include a specific reason when denying a prior authorization request."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How much historical data must be exchanged via the Payer-to-Payer API?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Payers are required to exchange up to five years of patient data when a patient transitions between payers. This was modified from the proposed rule, which would have required the entire patient health record. Five years was deemed sufficient for care continuity and PA continuation."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can payers request extensions or exemptions?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "State Medicaid and CHIP FFS programs may request extensions to the compliance dates or exemptions from certain requirements in specific circumstances. QHP issuers on the FFEs have a separate exceptions process requiring annual CMS approval of a narrative justification. MA organizations do not have an extension pathway."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does CMS-0057-F apply to Medicare Fee-for-Service?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The rule does not directly mandate Medicare FFS compliance. However, CMS has stated its intention for the Medicare FFS program to be a \"market leader on data exchange\" and comply with the rule's requirements by the same compliance dates. CMS solicited comments on applying these provisions to Medicare FFS and is considering them for future rulemaking."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are State-based Exchanges (SBEs) affected?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. The rule applies to QHP issuers on the Federally-facilitated Exchanges (FFEs). State-based Exchanges on the Federal Platform (SBE-FPs) and State-based Exchanges operating their own platforms (SBEs) are not subject to these requirements, though CMS encourages them to adopt similar policies voluntarily."
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
 
@@ -419,12 +475,12 @@
             <li><a href="/faq">FAQ</a></li>
         </ul>
     </div>
-<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated November 2026</span></div>
 </nav>
 
 <header class="hero">
     <div class="hero-inner">
-        <div class="hero-badge">Independent guide · Updated September 2026</div>
+        <div class="hero-badge">Independent guide · Updated November 2026</div>
         <h1>CMS-0057-F:<br>Advancing <em>Interoperability</em> &amp; Prior Authorization</h1>
         <p class="hero-sub">
             The definitive guide to the CMS final rule requiring Medicare Advantage organizations, Medicaid managed care plans, state Medicaid and CHIP agencies, and QHP issuers to implement FHIR-based APIs and streamline prior authorization processes.
@@ -643,6 +699,27 @@
 
 <div class="divider"></div>
 
+<section class="section" id="readiness" aria-labelledby="readiness-heading">
+    <div class="section-label">Where to Start</div>
+    <h2 id="readiness-heading">CMS-0057-F Readiness Checklist for Health Plans</h2>
+    <p class="section-desc">With the prior authorization process rules live since January 2026 and the API deadline on January 1, 2027, most plans are working through the same short list. Each item links to the detail.</p>
+    <div style="overflow-x:auto;">
+    <table class="standards-table">
+        <thead><tr><th>Workstream</th><th>What "done" looks like</th></tr></thead>
+        <tbody>
+            <tr><td style="color:var(--text-primary);font-weight:500;min-width:9rem;"><a href="/in-effect-2026" style="color:var(--accent-blue)">2026 process rules</a></td><td>Urgent decisions in 72 hours and standard decisions in 7 calendar days (except FFE QHP issuers), a specific reason on every denial, and prior authorization metrics posted publicly.</td></tr>
+            <tr><td style="color:var(--text-primary);font-weight:500;min-width:9rem;"><a href="/patient-access-api" style="color:var(--accent-blue)">Patient Access API</a></td><td>Prior authorization data added to the existing FHIR API, and annual usage metrics reported to CMS.</td></tr>
+            <tr><td style="color:var(--text-primary);font-weight:500;min-width:9rem;"><a href="/provider-access-api" style="color:var(--accent-blue)">Provider Access API</a></td><td>Provider attribution, patient opt-out, Bulk Data export, and SMART Backend Services authorization in production.</td></tr>
+            <tr><td style="color:var(--text-primary);font-weight:500;min-width:9rem;"><a href="/payer-to-payer-api" style="color:var(--accent-blue)">Payer-to-Payer API</a></td><td>Opt-in capture at enrollment, member match, five-year exchange, and quarterly exchange with concurrent payers.</td></tr>
+            <tr><td style="color:var(--text-primary);font-weight:500;min-width:9rem;"><a href="/prior-authorization-api" style="color:var(--accent-blue)">Prior Authorization API</a></td><td>Da Vinci CRD, DTR and PAS endpoints connected to utilization management, with X12 278 handled where it still applies.</td></tr>
+            <tr><td style="color:var(--text-primary);font-weight:500;min-width:9rem;"><a href="/guides" style="color:var(--accent-blue)">Core system integration</a></td><td>Adapters from your core administration platform (<a href="/guides/cms-0057-f-qnxt" style="color:var(--accent-blue)">QNXT</a>, <a href="/guides/cms-0057-f-facets" style="color:var(--accent-blue)">Facets</a>, <a href="/guides/cms-0057-f-healthedge" style="color:var(--accent-blue)">HealthEdge</a>) to FHIR, with a plan-owned deployment.</td></tr>
+        </tbody>
+    </table>
+    </div>
+</section>
+
+<div class="divider"></div>
+
 <section class="section" id="faq">
     <div class="section-label">Frequently Asked Questions</div>
     <h2>CMS-0057-F FAQs</h2>
@@ -679,7 +756,8 @@
     <div class="cta-box">
         <h2>Implementing this on a core admin system?</h2>
         <p>Cloud Health Office is a vendor-neutral overlay for CMS-0057-F — FHIR APIs and prior authorization support without replacing QNXT, Facets, or HealthEdge. Source-available.</p>
-        <a href="https://cloudhealthoffice.com/cms-0057f-compliance" class="cta-btn">Read the CHO compliance layer →</a>
+        <a href="https://cloudhealthoffice.com/schedule-demo/?utm_source=cms-0057-f.com&amp;utm_medium=referral&amp;utm_campaign=seo-cta&amp;utm_content=home" class="cta-btn">Schedule a demo →</a>
+        <a href="https://cloudhealthoffice.com/cms-0057f-compliance?utm_source=cms-0057-f.com&amp;utm_medium=referral&amp;utm_campaign=seo-cta&amp;utm_content=home" class="cta-btn cta-btn-secondary">See the CHO compliance layer</a>
     </div>
 </section>
 
