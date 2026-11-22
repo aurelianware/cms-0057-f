@@ -57,3 +57,4 @@ footer .pub{margin-top:.75rem;color:var(--text-secondary)}
 .cmp-table th,.cmp-table td{border:1px solid var(--border);padding:.65rem .8rem;text-align:left;vertical-align:top;color:var(--text-secondary);line-height:1.55}
 .cmp-table thead th{background:var(--bg-card);color:var(--text-primary);font-weight:600}
 .cmp-table tbody th{color:var(--text-primary);font-weight:500;background:var(--bg-secondary)}
+.cho-cta .cho-cta-video{margin:1.1rem 0 0}.cho-cta-video a{color:var(--accent-blue)}
