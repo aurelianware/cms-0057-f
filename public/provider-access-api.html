@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Provider Access API | CMS-0057-F Requirements & Implementation Guide</title>
-    <meta name="description" content="Guide to the Provider Access API mandated by CMS-0057-F. New FHIR-based API enabling providers to access patient claims, clinical data, and prior authorization information directly from payers for coordinated care delivery.">
+    <title>Provider Access API (CMS-0057-F): FHIR Requirements &amp; 2027 Deadline</title>
+    <meta name="description" content="What the CMS Provider Access API must share (claims, USCDI and prior auth data), attribution and opt-out, FHIR Bulk Data and SMART auth, the January 1, 2027 deadline, and a payer checklist.">
     <meta name="keywords" content="Provider Access API, CMS-0057-F, FHIR provider API, provider data access, payer provider interoperability, claims data provider, USCDI, care coordination API, value-based care, HL7 FHIR R4">
     <link rel="canonical" href="https://cms-0057-f.com/provider-access-api">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -16,11 +16,11 @@
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://cms-0057-f.com/og.png">
-    <meta property="og:title" content="FHIR Provider Access API — CMS-0057-F Requirements & Architecture">
+    <meta property="og:title" content="Provider Access API (CMS-0057-F): FHIR Requirements &amp; 2027 Deadline">
     <meta property="og:description" content="What the CMS-0057-F Provider Access API is, who must implement it, what data it exposes, how FHIR and SMART Backend Services authorization work, plus a reference architecture and payer checklist.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://cms-0057-f.com/provider-access-api">
-    <meta name="twitter:title" content="FHIR Provider Access API — CMS-0057-F">
+    <meta name="twitter:title" content="Provider Access API (CMS-0057-F): FHIR Requirements &amp; 2027 Deadline">
     <meta name="twitter:description" content="Requirements, FHIR, authorization, architecture, and a payer checklist for the CMS-0057-F Provider Access API.">
     <link rel="stylesheet" href="/css/nav-extra.css">
     <link rel="stylesheet" href="/css/guides.css">
@@ -35,7 +35,7 @@
         "description": "What the CMS-0057-F Provider Access API is, who must implement it, what data must be exposed, how FHIR and SMART Backend Services authorization work, a reference architecture, and a payer implementation checklist.",
         "url": "https://cms-0057-f.com/provider-access-api",
         "datePublished": "2026-09-03",
-        "dateModified": "2026-09-03",
+        "dateModified": "2026-11-22",
         "author": { "@type": "Organization", "name": "Aurelianware, Inc." },
         "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
         "about": { "@type": "Thing", "name": "CMS Provider Access API" },
@@ -86,6 +86,54 @@
         footer p{font-size:.78rem;color:var(--text-muted);line-height:1.8;max-width:700px;margin:0 auto}
         @media(max-width:768px){.nav-links{display:none}.page-header{padding:6rem 1.25rem 3rem}.content{padding:0 1.25rem 3rem}}
     </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Can out-of-network providers use the Provider Access API?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. The requirement covers in-network providers who have a treatment relationship with the patient, established through the payer's attribution process. Payers may choose to share more widely, but the rule does not require it."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do patients have to opt in to Provider Access data sharing?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Provider Access is opt-out. Data flows to attributed in-network providers unless the patient opts out, and payers must explain the API and the opt-out process to patients in plain language. Payer-to-Payer exchange is the opposite: it is opt-in."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How quickly must a payer answer a Provider Access API request?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The payer must make the requested data available no later than one business day after it receives the provider's request."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How far back does Provider Access API data go?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Payers must share data they maintain with a date of service on or after January 1, 2016, the same lookback as the Patient Access API."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is FHIR Bulk Data required for the Provider Access API?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. CMS-0057-F requires the HL7 FHIR Bulk Data Access IG (v1.0.0) for Provider Access, alongside FHIR R4.0.1 and US Core, because providers usually request data for a group of attributed patients rather than one at a time. CMS also recommends Da Vinci PDex and the Da Vinci Member Attribution (ATR) list IG."
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
 
@@ -106,7 +154,7 @@
             <li><a href="/faq">FAQ</a></li>
         </ul>
     </div>
-<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated November 2026</span></div>
 </nav>
 
 <div class="page-header">
@@ -116,6 +164,18 @@
 </div>
 
 <div class="content">
+
+<div class="quick-answer">
+    <p class="qa-label">Provider Access API at a glance</p>
+    <ul>
+        <li><strong>What it is:</strong> a FHIR R4 API that lets in-network providers pull the data a payer holds about the patients attributed to them.</li>
+        <li><strong>What it shares:</strong> claims and encounter data (without remittance or cost-sharing details), USCDI clinical data, and prior authorization information other than for drugs.</li>
+        <li><strong>Who must build it:</strong> Medicare Advantage organizations, state Medicaid and CHIP fee-for-service programs, Medicaid and CHIP managed care plans, and QHP issuers on the Federally-facilitated Exchanges.</li>
+        <li><strong>Deadline:</strong> January 1, 2027 (for managed care plans and QHP issuers, the rating period or plan year beginning on or after that date).</li>
+        <li><strong>Key mechanics:</strong> a provider attribution process, patient opt-out, data back to January 1, 2016, and a response no later than one business day after the provider's request.</li>
+    </ul>
+</div>
+
 
 <h2>What Is the CMS Provider Access API?</h2>
 <p>The <strong>Provider Access API</strong> is a FHIR-based application programming interface that CMS-0057-F requires impacted payers to build so that <strong>in-network providers can retrieve the data a payer holds about their attributed patients</strong> — claims and encounter data, USCDI clinical data, and prior authorization information. Today, providers lack a standardized mechanism to retrieve patient data held by payers, which creates redundant testing, delayed care decisions, and fragmented records. The Provider Access API closes that gap by exposing a standards-based FHIR endpoint providers can query from their own systems, using the same technical standards that already underpin EHR interoperability.</p>
@@ -236,6 +296,30 @@
     <li>Exclude provider remittances and patient cost-sharing from the payload.</li>
     <li>Add <code>Provenance</code>, audit logging, and conformance testing before onboarding trading partners.</li>
 </ul>
+
+<section class="page-faq" aria-labelledby="page-faq-heading">
+    <h2 id="page-faq-heading">Provider Access API: common questions</h2>
+    <h3>Can out-of-network providers use the Provider Access API?</h3>
+    <div class="pf-a"><p>No. The requirement covers in-network providers who have a treatment relationship with the patient, established through the payer's attribution process. Payers may choose to share more widely, but the rule does not require it.</p></div>
+    <h3>Do patients have to opt in to Provider Access data sharing?</h3>
+    <div class="pf-a"><p>No. Provider Access is opt-out. Data flows to attributed in-network providers unless the patient opts out, and payers must explain the API and the opt-out process to patients in plain language. Payer-to-Payer exchange is the opposite: it is opt-in.</p></div>
+    <h3>How quickly must a payer answer a Provider Access API request?</h3>
+    <div class="pf-a"><p>The payer must make the requested data available no later than one business day after it receives the provider's request.</p></div>
+    <h3>How far back does Provider Access API data go?</h3>
+    <div class="pf-a"><p>Payers must share data they maintain with a date of service on or after January 1, 2016, the same lookback as the Patient Access API.</p></div>
+    <h3>Is FHIR Bulk Data required for the Provider Access API?</h3>
+    <div class="pf-a"><p>Yes. CMS-0057-F requires the HL7 FHIR Bulk Data Access IG (v1.0.0) for Provider Access, alongside FHIR R4.0.1 and US Core, because providers usually request data for a group of attributed patients rather than one at a time. CMS also recommends Da Vinci PDex and the Da Vinci Member Attribution (ATR) list IG.</p></div>
+</section>
+
+<aside class="cho-cta" aria-label="Cloud Health Office">
+    <p class="cho-cta-kicker">From the publisher of this guide</p>
+    <p class="cho-cta-title">Need a Provider Access API live by January 1, 2027?</p>
+    <p>Cloud Health Office, from Aurelianware, is a source-available, FHIR-native health plan administration platform. It serves the CMS-0057-F APIs beside QNXT, Facets or HealthEdge in a tenant your plan controls, then can take over one function at a time, on your schedule.</p>
+    <div class="cho-cta-actions">
+        <a class="cho-cta-primary" href="https://cloudhealthoffice.com/schedule-demo/?utm_source=cms-0057-f.com&amp;utm_medium=referral&amp;utm_campaign=seo-cta&amp;utm_content=provider-access-api">Schedule a demo</a>
+        <a class="cho-cta-secondary" href="https://cloudhealthoffice.com/cms-0057f-compliance?utm_source=cms-0057-f.com&amp;utm_medium=referral&amp;utm_campaign=seo-cta&amp;utm_content=provider-access-api">See how Cloud Health Office covers CMS-0057-F →</a>
+    </div>
+</aside>
 
 <div class="related" aria-label="Related pages">
     <h2>Related pages</h2>
