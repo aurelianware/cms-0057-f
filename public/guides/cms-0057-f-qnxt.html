@@ -34,7 +34,7 @@
         "description": "A reference architecture for implementing CMS-0057-F FHIR APIs alongside a QNXT core administration platform using an interoperability layer and adapters.",
         "url": "https://cms-0057-f.com/guides/cms-0057-f-qnxt",
         "datePublished": "2026-09-03",
-        "dateModified": "2026-10-05",
+        "dateModified": "2026-11-23",
         "author": { "@type": "Organization", "name": "Aurelianware, Inc." },
         "publisher": { "@type": "Organization", "name": "Aurelianware, Inc.", "url": "https://cloudhealthoffice.com" },
         "about": { "@type": "Thing", "name": "CMS-0057-F implementation with QNXT" },
@@ -68,7 +68,7 @@
             <li><a href="/faq">FAQ</a></li>
         </ul>
     </div>
-<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated September 2026</span></div>
+<div class="publisher-bar">Published by <a href="https://cloudhealthoffice.com">Aurelianware / Cloud Health Office</a> · Not CMS or HHS <span class="updated-chip">Updated November 2026</span></div>
 </nav>
 
 <div class="page-header">
@@ -89,6 +89,7 @@
         <li><a href="#adapters">The adapter layer</a></li>
         <li><a href="#api-by-api">API-by-API considerations</a></li>
         <li><a href="#build-buy">Build, overlay, or modern backend</a></li>
+        <li><a href="#interface-engine">Where an interface engine fits</a></li>
         <li><a href="#checklist">Onboarding checklist</a></li>
     </ul>
 </nav>
@@ -157,6 +158,10 @@
     <li><strong>Use a broader modern payer platform</strong> — where a plan is already modernizing, a modern backend can provide these capabilities natively rather than as an overlay.</li>
 </ol>
 <p>These are not mutually exclusive, and the right answer depends on your modernization roadmap. <strong>A modern payer platform such as CloudHealthOffice can serve as either an interoperability layer integrated with an existing core administration system like QNXT or, depending on the implementation model, as part of the core backend itself.</strong> The point of the architecture is that the choice of backend is an adapter concern behind a stable FHIR boundary — you can change it without changing the public API.</p>
+
+<h3 id="interface-engine">Where an interface engine such as Mirth Connect fits</h3>
+<p>Many plans already run an interface engine such as Mirth Connect (NextGen Healthcare) or an open-source fork of it. An engine routes and transforms messages (HL7 v2, FHIR, X12) between systems, and your integration team builds each channel and its business logic. It is useful plumbing for the read projection and the X12 278 path, but it does not by itself provide the conformant FHIR APIs, OAuth, consent and opt-out enforcement, prior authorization clocks, metrics, or conformance testing described above.</p>
+<p>So the engine choice sits inside option 1 or under option 2: a plan <em>can</em> build CMS-0057-F on an engine, but that is a long custom project. A packaged interoperability layer is that project already built and tested, and the engine, where one exists, stays underneath as transport. If you rely on Mirth Connect, note that NextGen <a href="https://www.nextgen.com/blog/industry-news/a-new-era-for-mirth-connect-by-nextgen-healthcare" rel="noopener">moved it to a single commercial license from version 4.6</a> (announced March 2025), which affects build-it-yourself cost assumptions.</p>
 
 <h2 id="checklist">Onboarding checklist</h2>
 <ul class="checklist">

@@ -251,6 +251,14 @@
                     "@type": "Answer",
                     "text": "Starting with the CY 2027 performance period (affecting MIPS 2029 payment year), eligible clinicians must report an \"Electronic Prior Authorization\" measure under the Promoting Interoperability performance category. CMS modified this from the proposed numerator/denominator approach to a yes/no attestation (or exclusion if applicable). The same measure applies to eligible hospitals and CAHs under the Medicare Promoting Interoperability Program beginning with the CY 2027 EHR reporting period."
                 }
+            },
+            {
+                "@type": "Question",
+                "name": "Can we meet CMS-0057-F with an interface engine like Mirth Connect?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "An interface engine can be part of the answer, but it is not the whole answer. Engines such as Mirth Connect (NextGen Healthcare), and its open-source forks such as BridgeLink and Open Integration Engine, route and transform messages like HL7 v2, FHIR and X12 between systems. Each channel and all of the business logic are built by the plan's integration team. CMS-0057-F asks for more than message movement: conformant FHIR APIs for Patient Access, Provider Access, Payer-to-Payer and Prior Authorization (Da Vinci CRD, DTR and PAS), SMART on FHIR and backend OAuth, consent and opt-out enforcement, prior authorization decision timeframes, public metrics reporting, and conformance testing as the implementation guides change. A plan can build all of that on top of an engine, but it is a substantial custom project. The alternative is a packaged CMS-0057-F layer that delivers those capabilities already built and tested, with an engine kept as plumbing underneath where it already exists. Note that NextGen announced in March 2025 that Mirth Connect moves to a single commercial license from version 4.6; 4.5.2 was the last open-source release."
+                }
             }
         ]
     }
@@ -582,6 +590,16 @@
         <div class="faq-q">What is the relationship between CMS-0057-F and the ONC HTI-1 rule?</div>
         <div class="faq-a"><div class="faq-a-inner">
             <p>The ONC HTI-1 final rule (89 FR 1192, January 9, 2024) reorganized the structure of <strong>45 CFR 170.215</strong> to more clearly delineate the purpose and scope of each technical standard. CMS-0057-F references the updated HTI-1 citations for all required standards, ensuring alignment between the two rules. The standards themselves are substantively the same; HTI-1 primarily affected the regulatory citation structure.</p>
+        </div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Can we meet CMS-0057-F with an interface engine like Mirth Connect?</div>
+        <div class="faq-a"><div class="faq-a-inner">
+            <p>An interface engine can be part of the answer, but it is not the whole answer. Engines such as <strong>Mirth Connect</strong> (NextGen Healthcare), and its open-source forks such as BridgeLink and Open Integration Engine, route and transform messages like HL7 v2, FHIR and X12 between systems. Each channel and all of the business logic are built by the plan's integration team.</p>
+            <p>CMS-0057-F asks for more than message movement: conformant FHIR APIs for Patient Access, Provider Access, Payer-to-Payer and Prior Authorization (Da Vinci CRD, DTR and PAS), SMART on FHIR and backend OAuth, consent and opt-out enforcement, prior authorization decision timeframes, public metrics reporting, and conformance testing as the implementation guides change.</p>
+            <p>A plan can build all of that on top of an engine, but it is a substantial custom project. The alternative is a <strong>packaged CMS-0057-F layer</strong> that delivers those capabilities already built and tested, with an engine kept as plumbing underneath where it already exists. See <a href="/guides/cms-0057-f-qnxt#interface-engine">the QNXT integration guide</a> for where an engine fits in the architecture.</p>
+            <p>Note that NextGen <a href="https://www.nextgen.com/blog/industry-news/a-new-era-for-mirth-connect-by-nextgen-healthcare" rel="noopener">announced in March 2025</a> that Mirth Connect moves to a single commercial license from version 4.6; 4.5.2 was the last open-source release.</p>
         </div></div>
     </div>
 
